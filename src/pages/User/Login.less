@@ -1,0 +1,111 @@
+@import '~antd/lib/style/themes/default.less';
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.header {
+    background: #fff;
+    .container {
+        background: transparent;
+        height: 64px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        min-width: 1080px; 
+        width:80%;
+        padding: 0 20px;
+        margin: 0 auto;
+        .logo {
+            display: flex;
+            img {
+                width: 32px;
+                height: 32px;
+                margin-right: 10px;
+            }
+            .title {
+                font-size: 20px;
+                color: @heading-color;
+                font-family: '微软雅黑', Arial, Helvetica, sans-serif, 'Helvetica Neue', ;
+                font-weight: 600;
+                position: relative;
+                top: 2px;
+            }
+        }
+        .toolbar {
+            font-size: @font-size-base; //color: @text-color;
+        }
+    }
+}
+
+.content {
+    background: #35aef8;
+    background: -webkit-linear-gradient(-45deg, #35aef8, #7681ff 76%, #7681ff 0);
+    background: -webkit-linear-gradient(315deg, #35aef8, #7681ff 76%, #7681ff 0);
+    background: linear-gradient(135deg, #35aef8, #7681ff 76%, #7681ff 0);
+    position: relative;
+    min-width: 1080px;
+    padding: 77px 0 107px;
+    height: 640px;
+    .banner {
+        text-align: center;
+        img {
+            width: 600px;
+            height: 350px;
+        }
+        p {
+            font-size: 24px;
+            color: #fff;
+            font-family: '微软雅黑', Arial, Helvetica, sans-serif, 'Helvetica Neue',
+        }
+    }
+    .loginTab {
+        width: 350px;
+        height: 400px;
+        border: 1px solid #e8e8e8;
+        border-radius: 5px;
+        //background: #f9f9f9;
+        background:#fff;
+        overflow: hidden;
+        position: relative;
+        :global(.ant-tabs-nav){
+            width:100%;
+        }
+        :global(.ant-tabs-tabpane){
+            background:#fff;
+            padding:16px;
+        }
+        :global(.ant-tabs-tab){
+            width:50%;
+            text-align:center;
+            margin:0;
+            font-size:18px;
+            padding: 16px;
+        }
+    }
+}
+
+.footer {
+    padding: 0 16px;
+    margin: 48px 0 24px 0;
+    text-align: center;
+    color: @text-color-secondary;
+    .links {
+        margin-bottom: 8px;
+        a {
+            transition: all 0.3s;
+            color: @text-color-secondary;
+            &:not(:last-child) {
+                margin-right: 40px;
+            }
+            &:hover {
+                color: @text-color;
+            }
+        }
+    }
+    .copyright {
+        font-size: @font-size-base;
+    }
+}

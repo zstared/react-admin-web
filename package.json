@@ -1,0 +1,19 @@
+{
+  "name": "xinhong-web",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "umi dev",
+    "build": "umi build"
+  },
+  "author": "zhengxinhong",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0"
+  },
+  "devDependencies": {
+    "umi": "^2.2.7",
+    "umi-plugin-react": "^1.2.3"
+  },
+  "description": ""
+}
