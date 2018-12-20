@@ -1,0 +1,73 @@
+@import '~antd/lib/style/themes/default.less';
+
+ @header-hover-bg: rgba(0, 0, 0, 0.025);
+// @header-hover-bg:rgba(24, 144, 255,0.035);
+// @header-hover-bg:rgba(114, 46, 209,0.035);
+// @header-hover-bg:rgba(245, 34, 45,0.035);
+.header {
+    height: @layout-header-height;
+    padding: 0;
+    background: #fff;
+    // box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+    position: relative;
+    
+}
+
+.trigger {
+    font-size: 20px;
+    height: @layout-header-height;
+    cursor: pointer;
+    transition: all 0.3s, padding 0s;
+    padding: ~'calc((@{layout-header-height} - 20px) / 2)' 24px;
+    &:hover {
+      background: @header-hover-bg;
+    }
+}
+
+.nav{
+   height:30px;
+   padding: 0;
+   background: #fff;
+   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+}
+
+.right{
+    float:right;
+    height:100%;
+    overflow: hidden;
+    padding:0px 5px;
+    
+    .action {
+        cursor: pointer;
+        padding: 0 14px;
+        display: inline-block;
+        transition: all 0.3s;
+        height: 100%;
+        > i {
+          font-size:18px;
+          color: @text-color;
+        }
+        &:hover {
+          background: @header-hover-bg;
+        }
+        :global(&.ant-popover-open) {
+          background: @header-hover-bg;
+        }
+    }
+
+    .account{
+        .avatar{
+            margin: ~'calc((@{layout-header-height} - 36px) / 2)' 0;
+            margin-right: 8px;
+            //color: @primary-color;
+            //background: rgba(255, 255, 255, 0.85);
+            vertical-align: top;
+        }
+    }
+}
+
+@media only screen and(max-width: @screen-md){
+    .name{
+        display: none;
+    }
+}

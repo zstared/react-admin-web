@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { Dropdown, Menu,Icon } from 'antd'
-import { setLocale, getLocale, FormattedMessage } from 'umi/locale';
+import classNames from 'classnames'
+import { setLocale, getLocale, formatMessage,FormattedMessage } from 'umi/locale';
 const MenuItem = Menu.Item;
 
 
@@ -12,6 +13,7 @@ class SelectLang extends PureComponent {
     }
 
     render() {
+        const { className, type } = this.props;
         const selectedLang = getLocale();
         const langMenu = (
             <Menu onClick={this.changLang} selectedKeys={[selectedLang]}>
@@ -20,13 +22,14 @@ class SelectLang extends PureComponent {
                 <MenuItem key="en-US"> 🇬🇧 English</MenuItem>
             </Menu>
         )
-
         return (
             <Dropdown overlay={langMenu}>
-                <a href="#">
-                    <FormattedMessage id="navbar.lang" />
-                    <Icon type="caret-down" />
-                </a>
+                {type == "icon" ? (<span className={classNames(className)}><Icon style={{fontSize:18}} type="global" /></span>):
+                    (<a href="#">
+                        <FormattedMessage id="app.lang" />
+                        <Icon type="caret-down" />
+                    </a>)
+                }
             </Dropdown>
         )
     }

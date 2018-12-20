@@ -14,4 +14,5 @@ app.use(createLoading());
   app.use(plugin);
 });
 
+app.model({ namespace: 'app', ...(require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/models/app.js').default) });
 app.model({ namespace: 'login', ...(require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/models/login.js').default) });

@@ -8,9 +8,59 @@ let Router = require('dva/router').routerRedux.ConnectedRouter;
 
 let routes = [
   {
-    "path": "/login",
-    "component": require('../User/Login').default,
+    "path": "/",
+    "redirect": "/home",
     "exact": true
+  },
+  {
+    "path": "/login",
+    "component": dynamic({ loader: () => import('../User/Login'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+    "exact": true
+  },
+  {
+    "path": "/",
+    "component": dynamic({ loader: () => import('../../layouts/BasicLayout'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+    "routes": [
+      {
+        "path": "/home",
+        "component": dynamic({ loader: () => import('../Home'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+        "exact": true
+      },
+      {
+        "path": "/user/setting",
+        "name": "setting",
+        "component": dynamic({ loader: () => import('../User/Setting'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+        "exact": true
+      },
+      {
+        "path": "/system",
+        "name": "system",
+        "routes": [
+          {
+            "path": "/system/user",
+            "name": "user",
+            "component": dynamic({ loader: () => import('../System/User'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+            "exact": true
+          },
+          {
+            "path": "/system/role",
+            "component": dynamic({ loader: () => import('../System/Role'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+            "exact": true
+          },
+          {
+            "path": "/system/resource",
+            "component": dynamic({ loader: () => import('../System/Resource'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+            "exact": true
+          },
+          {
+            "component": () => React.createElement(require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'src/pages', hasRoutesInConfig: true })
+          }
+        ]
+      },
+      {
+        "component": () => React.createElement(require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'src/pages', hasRoutesInConfig: true })
+      }
+    ]
   },
   {
     "component": () => React.createElement(require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'src/pages', hasRoutesInConfig: true })

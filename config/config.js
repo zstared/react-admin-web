@@ -1,23 +1,33 @@
+import routes from './router.config';
+import defaultSettings from '../src/defaultSettings';
 export default {
     plugins: [
         ['umi-plugin-react', {
             antd: true,
-            dva:{
-                hmr:true,
+            dva: {
+                hmr: true,
             },
             locale: {
-                enable: true, 
-                default: 'zh-CN', 
-                baseNavigator: true, 
+                enable: true,
+                default: 'zh-CN',
+                baseNavigator: true,
             },
+            targets: {
+                ie: 11,
+            },
+            dynamicImport: {
+                loadingComponent: './components/PageLoading/index',
+            },
+            dll: {
+                include: ['dva', 'dva/router', 'dva/saga'],
+                //exclude: ['@babel/runtime'],
+            },
+            hardSource: true,
         }]
     ],
-    routes: [{
-        path: '/login',
-        component: './User/Login'
-    }],
-    cssnano: {
-        mergeRules: false,
+    routes: routes,
+    theme: {
+        'primary-color': defaultSettings.primaryColor,
     },
     cssLoaderOptions: {
         modules: true,
@@ -39,5 +49,8 @@ export default {
             }
             return localName;
         },
+    },
+    manifest: {
+        basePath: '/',
     },
 }

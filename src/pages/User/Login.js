@@ -21,10 +21,6 @@ class Login extends PureComponent {
         password:localStorage.getItem('password')?decryptData(localStorage.getItem('password'),'zhengxinhong'):''
     }
 
-    componentDidMount(){
-
-    }
-
     /**
      * 登录
      */
