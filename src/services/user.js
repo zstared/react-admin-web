@@ -4,3 +4,8 @@ import request from '../utils/request'
 export async function login(params){
     return await request.post('/core/user/login',params);
 }
+
+/**获取用菜单 */
+export async function getMenus(){
+   return await request.get('/core/user/menus');
+}

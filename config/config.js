@@ -22,7 +22,6 @@ export default {
                 include: ['dva', 'dva/router', 'dva/saga'],
                 //exclude: ['@babel/runtime'],
             },
-            hardSource: true,
         }]
     ],
     routes: routes,

@@ -32,10 +32,10 @@ class Request {
                     switch (data.code) {
                         case 0:
                             break;
-                        case 1001:
+                        case 1000001:
                             router.push('/login')
                             break;
-                        case 1002:
+                        case 1000002:
                             message.error(data.message);
                             router.push('/login')
                             break;
@@ -43,7 +43,6 @@ class Request {
                             message.error(data.message);
                             break;
                     }
-                    console.log(data, response)
                     resolve(data);
                 } else {
                     reject()

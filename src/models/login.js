@@ -10,7 +10,7 @@ export default {
     },
     effects: {
         //登录
-        *login({ payload }, { call, put }) {
+        *login({ payload }, { call }) {
             try {
                 const response = yield call(login, payload);
                 const { code, data: { token } } = response;
