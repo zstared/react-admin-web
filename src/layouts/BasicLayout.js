@@ -50,7 +50,7 @@ class BasicLayout extends PureComponent {
                 <Layout>
                     <Header {...this.props} onCollapse={this.toggleCollapsed} ></Header>
                     <NavBar />
-                    <Content style={{ padding: '12px 8px 0', overflow: 'initial' }}>{children}</Content>
+                    <Content style={{ padding: '12px 12px 0', overflow: 'initial' }}>{children}</Content>
                 </Layout>
             </Layout>
         )

@@ -43,7 +43,6 @@ export default {
             try {
                 const response = yield call(getMenus);
                 const { data:{menuData} } = response;
-                console.log(menuData)
                 yield put({
                     type: 'setMenus',
                     payload: menuData?menuData:[]

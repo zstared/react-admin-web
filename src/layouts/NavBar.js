@@ -54,7 +54,7 @@ class NavBar extends PureComponent {
                     onEdit={this.onEdit}
                     onChange={this.onChange}
                     activeKey={navActiveKey}
-                    tabBarStyle={{ background: '#f0f2f5', margin: 0, marginLeft: 2 }}>
+                    tabBarStyle={{ margin: 0 }}>
                     <TabPane tab={<span><Icon type="home"></Icon><FormattedMessage id="menu.home" /></span>} key="/home" closable={false}></TabPane>
                     {navs.map(nav => (<TabPane tab={nav.name} key={nav.path}></TabPane>))}
                 </Tabs>

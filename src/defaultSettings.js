@@ -1,6 +1,6 @@
 module.exports = {
-    siderStyle: 'light', //侧边栏风格 dark light
-    primaryColor: '#FA541C', // 主色调
+    siderStyle: 'dark', //侧边栏风格 dark light
+    primaryColor: '#722ED1', // 主色调
   };
   
  
