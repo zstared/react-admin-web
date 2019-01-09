@@ -8,6 +8,9 @@ import styles from './Header.less'
 import avatar from '../assets/avatar.svg'
 const { Header } = Layout
 const MenuItem = Menu.Item
+
+
+   
 class HeaderContent extends PureComponent {
 
     /**侧边栏折叠/展开 */
@@ -17,7 +20,7 @@ class HeaderContent extends PureComponent {
     }
 
     render() {
-        const { collapsed } = this.props;
+        const { collapsed,currentUser } = this.props;
         const userMenu = (
             <Menu onClick={this.changLang}>
                 <MenuItem key="setting">
@@ -49,7 +52,7 @@ class HeaderContent extends PureComponent {
                         <Dropdown overlay={userMenu} className={`${styles.action} ${styles.account}`} >
                             <span>
                                 <Avatar className={styles.avatar} src={avatar} ></Avatar>
-                                <span className={styles.name}>系统管理员</span>
+                                <span className={styles.name}>{currentUser.name_cn}</span>
                             </span>
                         </Dropdown>
                     </div>

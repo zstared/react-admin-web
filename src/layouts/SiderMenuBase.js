@@ -38,7 +38,7 @@ class SiderBaseMenu extends PureComponent {
         if (item.children&&item.children.length > 0) {
             const { name, icon, path, children,locale } = item
             return (
-                <SubMenu title={icon ? (<span>{getIcon(icon)}<span>{this.getLocaleName(locale)}</span></span>) : (name)} key={locale}>
+                <SubMenu title={icon ? (<span>{getIcon(icon)}<span>{this.getLocaleName(locale)}</span></span>) : (name)} key={path}>
                     {this.getNavMenuItems(children)}
                 </SubMenu>
             )
@@ -72,10 +72,18 @@ class SiderBaseMenu extends PureComponent {
         )
     }
 
+    //获取初始打开的菜单目录
+    getOpenKeys=(activeKey)=>{
+       if(activeKey){
+          return [activeKey.split('/').slice(0,-1).join('/')]
+       }
+       return []
+    }
+
     render() {
         const { theme, mode, menuData,navActiveKey } = this.props;
         return (
-            <Menu theme={theme} mode={mode}  selectedKeys={[navActiveKey]} >
+            <Menu theme={theme} mode={mode}  selectedKeys={[navActiveKey]} defaultOpenKeys={this.getOpenKeys(navActiveKey)} >
                {this.getNavMenuItems(menuData)}  
             </Menu>
         )

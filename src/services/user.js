@@ -14,3 +14,8 @@ export async function getMenus() {
 export async function getUserList(params) {
     return await request.get('/core/user/list', params)
 }
+
+/**获取当前用户 */
+export async function getCurrentUser(){
+    return await request.get('/core/user/current')
+}

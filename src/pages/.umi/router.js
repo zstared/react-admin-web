@@ -8,6 +8,11 @@ let Router = require('dva/router').routerRedux.ConnectedRouter;
 
 let routes = [
   {
+    "path": "/user/setting",
+    "redirect": "/user/setting/base",
+    "exact": true
+  },
+  {
     "path": "/",
     "redirect": "/home",
     "exact": true
@@ -28,9 +33,27 @@ let routes = [
       },
       {
         "path": "/user/setting",
-        "name": "setting",
-        "component": dynamic({ loader: () => import('../User/Setting'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
-        "exact": true
+        "component": dynamic({ loader: () => import('../User/Setting/Index'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+        "routes": [
+          {
+            "path": "/user/setting/base",
+            "component": dynamic({ loader: () => import('../User/Setting/Base'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+            "exact": true
+          },
+          {
+            "path": "/user/setting/security",
+            "component": dynamic({ loader: () => import('../User/Setting/Security'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+            "exact": true
+          },
+          {
+            "path": "/user/setting/theme",
+            "component": dynamic({ loader: () => import('../User/Setting/Theme'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+            "exact": true
+          },
+          {
+            "component": () => React.createElement(require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'src/pages', hasRoutesInConfig: true })
+          }
+        ]
       },
       {
         "path": "/system",

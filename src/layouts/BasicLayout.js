@@ -3,6 +3,7 @@ import { Layout } from 'antd';
 import Header from './Header'
 import SideMenu from './SiderMenu'
 import NavBar from './NavBar'
+import Breadcrumb from './Breadcrumb'
 import { connect } from 'dva'
 import styles from './BasicLayout.less'
 const { Content } = Layout
@@ -10,8 +11,11 @@ const { Content } = Layout
 @connect(({ app }) => ({
     collapsed: app.collapsed,
     theme: app.siderStyle,
-    menuData:app.menuData,
-    navActiveKey:app.navActiveKey
+    navStyle: app.navStyle,
+    menuData: app.menuData,
+    navActiveKey: app.navActiveKey,
+    breadcrumbList: app.breadcrumbList,
+    currentUser:app.currentUser
 }))
 class BasicLayout extends PureComponent {
 
@@ -19,10 +23,13 @@ class BasicLayout extends PureComponent {
         super(props)
     }
 
-    componentDidMount(){
-        const {dispatch}=this.props;
+    componentWillMount() {
+        const { dispatch } = this.props;
         dispatch({
-            type:'app/getMenus'
+            type: 'app/getMenus'
+        })
+        dispatch({
+            type: 'app/getCurrentUser'
         })
     }
 
@@ -49,7 +56,7 @@ class BasicLayout extends PureComponent {
                 <SideMenu {...this.props} onCollapse={this.toggleCollapsed}></SideMenu>
                 <Layout>
                     <Header {...this.props} onCollapse={this.toggleCollapsed} ></Header>
-                    <NavBar />
+                    {this.props.navStyle === "breadcrumb" ? <Breadcrumb {...this.props} /> : <NavBar />}
                     <Content style={{ padding: '12px 12px 0', overflow: 'initial' }}>{children}</Content>
                 </Layout>
             </Layout>

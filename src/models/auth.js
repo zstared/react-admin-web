@@ -4,7 +4,7 @@ import router from 'umi/router';
 import { encryptData } from '../utils/utils'
 
 export default {
-    namespace: 'login',
+    namespace: 'auth',
     state: {
         status: ''
     },
