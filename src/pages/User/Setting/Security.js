@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react'
-
+import { FormattedMessage } from 'umi/locale'
 class Security extends PureComponent{
     render(){
-        return <h1>安全设置</h1>
+        return <h2><FormattedMessage id="menu.setting.security"/></h2>
     }
 }
 export default Security;

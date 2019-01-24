@@ -15,7 +15,12 @@ export async function getUserList(params) {
     return await request.get('/core/user/list', params)
 }
 
-/**获取当前用户 */
+/**获取当前用户信息 */
 export async function getCurrentUser(){
     return await request.get('/core/user/current')
+}
+
+/**修改当前用户信息 */
+export async function updateCurrentUser(params){
+    return await request.post('/core/user/updateCurrent',params)
 }

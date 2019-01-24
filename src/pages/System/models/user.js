@@ -1,6 +1,6 @@
 import { getUserList } from '@/services/user'
 export default {
-    namespace: 'system',
+    namespace: 'user',
     state: {
         list: []
     },

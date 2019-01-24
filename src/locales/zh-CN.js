@@ -1,5 +1,7 @@
 import login from './zh-CN/login'
 import menu from './zh-CN/menu'
+import component from './zh-CN/component'
+import common from './zh-CN/common'
 export default{
     "app.lang":'选择语言',
     "app.no-data":'暂无数据',
@@ -27,6 +29,8 @@ export default{
     'home.theme.themecolor.daybreak': '拂晓蓝（默认）',
     'home.theme.themecolor.geekblue': '极客蓝',
     'home.theme.themecolor.purple': '酱紫',
+    ...common,
     ...login,
-    ...menu
+    ...menu,
+    ...component
 }

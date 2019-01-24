@@ -1,5 +1,7 @@
 import login from './zh-TW/login'
 import menu from './zh-TW/menu'
+import component from './zh-TW/component'
+import common from './zh-TW/common'
 export default{
     "app.lang":'選擇語言',
     "app.no-data":'暫無數據',
@@ -27,6 +29,8 @@ export default{
     'home.theme.themecolor.daybreak': '拂曉藍（默認）',
     'home.theme.themecolor.geekblue': '極客藍',
     'home.theme.themecolor.purple': '醬紫',
+    ...common,
     ...login,
-    ...menu
+    ...menu,
+    ...component
 }

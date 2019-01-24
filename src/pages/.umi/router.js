@@ -46,8 +46,8 @@ let routes = [
             "exact": true
           },
           {
-            "path": "/user/setting/theme",
-            "component": dynamic({ loader: () => import('../User/Setting/Theme'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+            "path": "/user/setting/personalization",
+            "component": dynamic({ loader: () => import('../User/Setting/Personalization'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
             "exact": true
           },
           {

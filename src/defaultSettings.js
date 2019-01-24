@@ -1,5 +1,7 @@
 module.exports = {
-    siderStyle: 'dark', //侧边栏风格 dark light
+    api_url:'http://localhost:8081',
+    
+    siderStyle: 'light', //侧边栏风格 dark light
     primaryColor: '#722ED1', // 主色调
     navStyle:'breadcrumb',//导航类型  breadcrumb-面包屑 nav-导航栏
   };

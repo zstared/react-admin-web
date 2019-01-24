@@ -1,5 +1,6 @@
 import React, { PureComponent, Suspense } from 'react';
 import { Layout } from 'antd';
+import DocumentTitle from 'react-document-title'
 import Header from './Header'
 import SideMenu from './SiderMenu'
 import NavBar from './NavBar'
@@ -15,7 +16,7 @@ const { Content } = Layout
     menuData: app.menuData,
     navActiveKey: app.navActiveKey,
     breadcrumbList: app.breadcrumbList,
-    currentUser:app.currentUser
+    currentUser: app.currentUser
 }))
 class BasicLayout extends PureComponent {
 
@@ -23,7 +24,7 @@ class BasicLayout extends PureComponent {
         super(props)
     }
 
-    componentWillMount() {
+    componentDidMount() {
         const { dispatch } = this.props;
         dispatch({
             type: 'app/getMenus'
@@ -49,17 +50,29 @@ class BasicLayout extends PureComponent {
         }
     }
 
+    //获取页面标题
+    getPageTitle = () => {
+        const {breadcrumbList} = this.props;
+        if(breadcrumbList&&breadcrumbList.length>0){
+            const page=breadcrumbList.pop();
+            return page.name+" - "+'Management Sys'
+        }
+        return 'Management Sys'
+    }
+
     render() {
         const children = this.props.children;
         return (
-            <Layout className={styles.layout} style={{ ...this.getLayoutStyle() }}>
-                <SideMenu {...this.props} onCollapse={this.toggleCollapsed}></SideMenu>
-                <Layout>
-                    <Header {...this.props} onCollapse={this.toggleCollapsed} ></Header>
-                    {this.props.navStyle === "breadcrumb" ? <Breadcrumb {...this.props} /> : <NavBar />}
-                    <Content style={{ padding: '12px 12px 0', overflow: 'initial' }}>{children}</Content>
+            <DocumentTitle title={this.getPageTitle()}>
+                <Layout className={styles.layout} style={{ ...this.getLayoutStyle() }}>
+                    <SideMenu {...this.props} onCollapse={this.toggleCollapsed}></SideMenu>
+                    <Layout>
+                        <Header {...this.props} onCollapse={this.toggleCollapsed} ></Header>
+                        {this.props.navStyle === "breadcrumb" ? <Breadcrumb {...this.props} /> : <NavBar />}
+                        <Content style={{ padding: '12px 12px 0', overflow: 'initial' }}>{children}</Content>
+                    </Layout>
                 </Layout>
-            </Layout>
+            </DocumentTitle>
         )
     }
 }

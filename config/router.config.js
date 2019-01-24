@@ -9,7 +9,7 @@ export default [
                     { path: '/user/setting', redirect: '/user/setting/base' },
                     { path: '/user/setting/base', component: './User/Setting/Base' },
                     { path: '/user/setting/security', component: './User/Setting/Security' },
-                    { path: '/user/setting/theme', component: './User/Setting/Theme' },
+                    { path: '/user/setting/personalization', component: './User/Setting/Personalization' },
                 ]
             },
             {

@@ -11,7 +11,9 @@
   "dependencies": {
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
-    "path-to-regexp": "^2.4.0"
+    "path-to-regexp": "^2.4.0",
+    "react-document-title": "^2.0.3",
+    "react-viewer": "^2.8.0"
   },
   "devDependencies": {
     "koa": "^2.6.2",

@@ -1,8 +1,9 @@
 import defaultSettings from '../defaultSettings'
-import { getMenus,getCurrentUser } from '../services/user';
+import { getMenus,getCurrentUser,updateCurrentUser } from '../services/user';
 import pathToRegexp from 'path-to-regexp'
 import { formatMessage } from 'umi/locale';
 import { urlToList } from '../utils/utils'
+import {message as msg} from 'antd'
 /**菜单导航标签数据 */
 const navData = {};
 /**生成菜单导航标签数据 */
@@ -90,7 +91,27 @@ export default {
             } catch (e) {
                 console.log(e)
             }
+        },
+
+        //修改当前用户信息
+        *updateCurrentUser({payload},{call,put}){
+            try{
+                const response=yield call(updateCurrentUser,payload);
+                const {code,message}=response;
+                if(!code){
+                    yield put({
+                        type: 'setCurrentUser',
+                        payload: payload
+                    })
+                    msg.success(message)  
+                }else{
+                    msg.error(message)  
+                }
+            }catch(e){
+                console.log(e)
+            }
         }
+
     },
     reducers: {
         /**侧边栏收缩、展开切换 */

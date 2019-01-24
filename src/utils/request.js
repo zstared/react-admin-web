@@ -1,14 +1,17 @@
 import axios from 'axios';
 import router from 'umi/router';
-import {getLocale} from 'umi/locale';
+import {
+    getLocale
+} from 'umi/locale';
 import qs from 'querystring';
+import config from '../defaultSettings'
 import {
     message
 } from 'antd';
 class Request {
     constructor() {
         this.instance = axios.create({
-            baseURL: 'http://localhost:8081',
+            baseURL: config.api_url,
             timeout: 5000,
             headers: {
                 'content-type': 'application/json'
@@ -18,7 +21,7 @@ class Request {
         //请求拦截
         this.instance.interceptors.request.use(config => {
             config.headers.common['token'] = localStorage.getItem('token');
-            config.headers.common['language']=getLocale();
+            config.headers.common['language'] = getLocale();
             return config;
         }, error => {
             return Promise.reject(error);
@@ -81,6 +84,22 @@ class Request {
      */
     async delete(url, data, config) {
         return await this.instance.delete(url + `/${data.id}`, config)
+    }
+
+    /**
+     * download 下载
+     * @param {string} path 接口路径
+     * @param {string|array} code 文件唯一编号/编号集
+     * @param {stirng} name 下载文件名称
+     */
+    async download(path, code, name='', is_package = false) {
+        let url;
+        if (!is_package) {
+            url=`${config.api_url}${path}?code=${code}&token=${localStorage.getItem('token')}&name=${name}`
+        } else {
+            url=`${config.api_url}${path}?code=${code.join(',')}&token=${localStorage.getItem('token')}&name=${name}`
+        }
+        window.open(url, 'download');
     }
 }
 export default new Request();

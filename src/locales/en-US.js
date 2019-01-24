@@ -1,5 +1,7 @@
 import login from './en-US/login'
 import menu from './en-US/menu'
+import component from './en-US/component'
+import common from './en-US/common'
 export default{
     "app.lang":'Languages',
     "app.no-data":'No Data',
@@ -27,6 +29,8 @@ export default{
     'home.theme.themecolor.daybreak': 'Daybreak Blue (default)',
     'home.theme.themecolor.geekblue': 'Geek Glue',
     'home.theme.themecolor.purple': 'Golden Purple',
+    ...common,
     ...login,
-    ...menu
+    ...menu,
+    ...component
 }
