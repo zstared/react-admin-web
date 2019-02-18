@@ -173,7 +173,7 @@ class Notification extends PureComponent {
                 popupAlign={{ offset: [0, -15] }}
             >
                 <span>
-                    <Badge count={100} overflowCount={99} > <Icon type="bell" style={{ fontSize: 18 }} /></Badge>
+                    <Badge count={18} overflowCount={99} > <Icon type="bell" style={{ fontSize: 18 }} /></Badge>
                 </span>
             </Popover>
         )

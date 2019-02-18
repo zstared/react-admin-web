@@ -54,7 +54,7 @@ class BasicLayout extends PureComponent {
     getPageTitle = () => {
         const {breadcrumbList} = this.props;
         if(breadcrumbList&&breadcrumbList.length>0){
-            const page=breadcrumbList.pop();
+            const page=breadcrumbList[breadcrumbList.length-1];
             return page.name+" - "+'Management Sys'
         }
         return 'Management Sys'

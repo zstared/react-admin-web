@@ -36,7 +36,7 @@ class UploadImage extends PureComponent {
     };
 
     static defaultProps = {
-        uploadText: formatMessage({id:'button.upload'}),
+        uploadText: formatMessage({id:'label.upload'}),
         data: {
             folder_name: '',
             is_static: true,

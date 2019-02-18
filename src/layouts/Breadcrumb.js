@@ -23,7 +23,7 @@ class BreadcrumbWrapper extends PureComponent {
     render() {
         const { navActiveKey } = this.props;
         return (
-            navActiveKey === '/home' ? null : <Breadcrumb style={{ padding: "10px 15px", background: '#fff' }}>
+            navActiveKey === '/home' ? null : <Breadcrumb style={{ padding: "9px 15px", background: '#fff' }}>
                 <Breadcrumb.Item key='home'>
                     <Link to="/home"><Icon type="home"></Icon> <FormattedMessage id="menu.home" /></Link>
                 </Breadcrumb.Item>

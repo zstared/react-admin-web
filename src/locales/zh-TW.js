@@ -2,6 +2,7 @@ import login from './zh-TW/login'
 import menu from './zh-TW/menu'
 import component from './zh-TW/component'
 import common from './zh-TW/common'
+import setting from './zh-TW/setting'
 export default{
     "app.lang":'選擇語言',
     "app.no-data":'暫無數據',
@@ -32,5 +33,6 @@ export default{
     ...common,
     ...login,
     ...menu,
-    ...component
+    ...component,
+    ...setting
 }

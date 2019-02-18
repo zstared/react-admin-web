@@ -1,12 +1,13 @@
 import React, { PureComponent } from 'react'
 import { Table, Form, Col, Row, Button, Icon } from 'antd'
 import { connect } from 'dva';
+import {formatMessage,FormattedMessage} from 'umi/locale'
 import styles from './index.less'
 const FormItem = Form.Item;
 
 
 class TablePage extends PureComponent {
-    // static QueryItem = Col;
+    static QueryItem = Col;
     state = {
         expand: false,
     }
@@ -83,7 +84,7 @@ class TablePage extends PureComponent {
             lg: 16,
             md: 8,
         }
-        const { data, columns, buttons } = this.props;
+        const { list, columns, buttons } = this.props;
         const queryItem = this.getQueryItem();
         return (
             <div className={styles.pageWrapper}>
@@ -92,10 +93,10 @@ class TablePage extends PureComponent {
                         {queryItem.base}
                         <Col span={6}>
                             <FormItem>
-                                <Button type="primary" htmlType="submit" icon="search" > 查询 </Button>
-                                <Button style={{ marginLeft: 8 }}>重置</Button>
+                                <Button type="primary" htmlType="submit" icon="search" ><FormattedMessage id="button.search" /></Button>
+                                <Button style={{ marginLeft: 8 }}><FormattedMessage id="button.reset" /></Button>
                                 <a style={{ marginLeft: 8 }} onClick={this.handleExpand}>
-                                    {this.state.expand ? (<span>收起 <Icon type="up" /></span>) : (<span>展开 <Icon type="down" /></span>)}
+                                    {this.state.expand ? (<span><FormattedMessage id="label.collapse" /> <Icon type="up" /></span>) : (<span><FormattedMessage id="label.expand" /> <Icon type="down" /></span>)}
                                 </a>
                             </FormItem>
                         </Col>
@@ -111,7 +112,7 @@ class TablePage extends PureComponent {
                             {queryItem.more}
                         </Row>) : null}
                 </Form>
-                <Table dataSource={data} columns={columns} ></Table>
+                <Table dataSource={list} columns={columns} ></Table>
             </div>
         )
     }

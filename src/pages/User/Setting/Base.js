@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'dva'
 import { Form, Input, Radio, Button } from 'antd'
-import { formatMessage,FormattedMessage } from 'umi/locale'
+import { formatMessage, FormattedMessage } from 'umi/locale'
 import UploadImage from '../../../components/UploadImage'
-import { regPhone } from '../../../utils/validate'
+import { regPhone, regName, regNameEn } from '../../../utils/validate'
 
 const FormItem = Form.Item
 
@@ -51,9 +51,9 @@ class Base extends PureComponent {
         };
         return (
             <div style={{ width: '600px' }}>
-                <h2><FormattedMessage id="menu.setting.base"/></h2>
+                <h2><FormattedMessage id="menu.setting.base" /></h2>
                 <Form onSubmit={this.handleSubmit}>
-                    <FormItem {...formItemLayout} label={formatMessage({id:'label.avatar'})}>
+                    <FormItem {...formItemLayout} label={formatMessage({ id: 'label.avatar' })}>
                         {getFieldDecorator('avatar_file', {
                             valuePropName: 'fileList',
                             initialValue: currentUser.avatar_file ? [currentUser.avatar_file] : []
@@ -65,33 +65,40 @@ class Base extends PureComponent {
                             }} />
                         )}
                     </FormItem>
-                    <FormItem {...formItemLayout} label={formatMessage({id:'label.name'})}>
+                    <FormItem {...formItemLayout} label={formatMessage({ id: 'label.name' })}>
                         {getFieldDecorator('name_cn', {
                             initialValue: currentUser.name_cn,
-                            rules: [{ max: 50, min: 1 }]
+                            rules: [
+                                { required: true, whitespace: false, message: formatMessage({ id: 'validation.name.required' }) },
+                                { max: 50, min: 1, pattern: regName, message: formatMessage({ id: 'validation.name' }) }
+                            ]
                         })(
-                            <Input readOnly ></Input>
+                            <Input ></Input>
                         )}
                     </FormItem>
-                    <FormItem {...formItemLayout} label={formatMessage({id:'label.name-en'})}>
+                    <FormItem {...formItemLayout} label={formatMessage({ id: 'label.name-en' })}>
                         {getFieldDecorator('name_en', {
                             initialValue: currentUser.name_en,
-                            rules: [{ max: 50, min: 1 }]
+                            rules: [
+                                { whitespace: true, message: formatMessage({ id: 'validation.name-en.required' }) },
+                                { max: 50, min: 1, pattern: regNameEn, message: formatMessage({ id: 'validation.name-en' }) }
+                            ]
                         })(
-                            <Input readOnly></Input>
+                            <Input ></Input>
                         )}
                     </FormItem>
-                    <FormItem {...formItemLayout} label={formatMessage({id:'label.sex'})}>
+                    <FormItem {...formItemLayout} label={formatMessage({ id: 'label.sex' })}>
                         {getFieldDecorator('sex', {
-                            initialValue: currentUser.sex
+                            initialValue: currentUser.sex,
+                            rules: [{ required: true }]
                         })(
-                            <Radio.Group readOnly>
-                                <Radio value={1}>男</Radio>
-                                <Radio value={2}>女</Radio>
+                            <Radio.Group >
+                                <Radio value={1}><FormattedMessage id="label.sex.male"/></Radio>
+                                <Radio value={2}><FormattedMessage id="label.sex.female"/></Radio>
                             </Radio.Group>
                         )}
                     </FormItem>
-                    <FormItem {...formItemLayout} label={formatMessage({id:'label.phone'})}>
+                    <FormItem {...formItemLayout} label={formatMessage({ id: 'label.phone' })}>
                         {getFieldDecorator('mobile', {
                             initialValue: currentUser.mobile,
                             rules: [
@@ -102,11 +109,11 @@ class Base extends PureComponent {
                             <Input></Input>
                         )}
                     </FormItem>
-                    <FormItem {...formItemLayout} label={formatMessage({id:'label.email'})}>
+                    <FormItem {...formItemLayout} label={formatMessage({ id: 'label.email' })}>
                         {getFieldDecorator('mail', {
                             initialValue: currentUser.mail,
                             rules: [{
-                                type: 'email', message: ''
+                                type: 'email', message: formatMessage({ id: 'validation.email' })
                             }]
                         })(
                             <Input></Input>

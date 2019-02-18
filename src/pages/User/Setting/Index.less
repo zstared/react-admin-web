@@ -1,3 +1,4 @@
+@import '~antd/lib/style/themes/default.less';
 .setting {
     padding: 12px 0;
     display: flex;
@@ -7,3 +8,16 @@
         width:100%;
     }
 }
+
+:global {
+    // 密码强度
+    font.strong {
+      color: @success-color;
+    }
+    font.medium {
+      color: @warning-color;
+    }
+    font.weak {
+      color: @error-color;
+    }
+  }

@@ -7,11 +7,13 @@ export default {
     effects: {
         *getList({ payload }, { call, put }) {
             try {
-                const { data: data } = yield call(getUserList);
-                yield put({
-                    type: 'list',
-                    payload: data
-                })
+                const { code, data } = yield call(getUserList,payload);
+                if (!code) {
+                    yield put({
+                        type: 'list',
+                        payload: data
+                    })
+                }
             } catch{
                 console.log(e)
             }

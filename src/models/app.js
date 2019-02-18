@@ -1,9 +1,10 @@
 import defaultSettings from '../defaultSettings'
-import { getMenus,getCurrentUser,updateCurrentUser } from '../services/user';
+import { getMenus, getCurrentUser, updateCurrentUser, updatePassword } from '../services/user';
 import pathToRegexp from 'path-to-regexp'
 import { formatMessage } from 'umi/locale';
 import { urlToList } from '../utils/utils'
-import {message as msg} from 'antd'
+import { message as msg } from 'antd'
+
 /**菜单导航标签数据 */
 const navData = {};
 /**生成菜单导航标签数据 */
@@ -49,11 +50,11 @@ export default {
         navs: [], //当前菜单导航标签项 
         navActiveKey: '', //当前打开的菜单
         breadcrumbList: [],
-        currentUser:{}
+        currentUser: {}
     },
     effects: {
         /**获取菜单 */
-        *getMenus(_, { call, put }) {
+        *getMenus(_, { call, put, select }) {
             try {
                 const response = yield call(getMenus);
                 const { data: { menuData } } = response;
@@ -61,7 +62,8 @@ export default {
                     type: 'setMenus',
                     payload: menuData ? menuData : []
                 })
-                if (defaultSettings.navStyle === "breadcrumb") {
+                const {navStyle} = yield select(state => state.app)
+                if (navStyle === "breadcrumb") {
                     yield put({
                         type: 'setBreadcrumb',
                         payload: null,
@@ -94,24 +96,59 @@ export default {
         },
 
         //修改当前用户信息
-        *updateCurrentUser({payload},{call,put}){
-            try{
-                const response=yield call(updateCurrentUser,payload);
-                const {code,message}=response;
-                if(!code){
+        *updateCurrentUser({ payload }, { call, put }) {
+            try {
+                const response = yield call(updateCurrentUser, payload);
+                const { code, message } = response;
+                if (!code) {
                     yield put({
                         type: 'setCurrentUser',
                         payload: payload
                     })
-                    msg.success(message)  
-                }else{
-                    msg.error(message)  
+                    msg.success(message)
                 }
-            }catch(e){
+            } catch (e) {
                 console.log(e)
             }
-        }
+        },
 
+        /**修改用户密码 */
+        *updatePassword({ payload }, { call, put }) {
+            try {
+                const response = yield call(updatePassword, payload);
+                const { code, message, data } = response;
+                if (!code) {
+                    yield put({
+                        type: 'setCurrentUserPwd',
+                        payload: data
+                    })
+                    msg.success(message)
+                }
+            } catch (e) {
+
+            }
+        },
+
+        /**添加菜单导航标签或面包屑 */
+        *setNavBar({ payload }, { put, select }) {
+            try {
+                const {navStyle} = yield select(state => state.app)
+                if (navStyle === "breadcrumb") {
+                    yield put({
+                        type: 'setBreadcrumb',
+                        payload: payload
+                    })
+                } else {
+                    const navItem = getNavItem(payload)
+                    if (navItem) {
+                        yield put({
+                            type: 'addNav',
+                            payload: navItem
+                        })
+                    }
+                }
+            } catch (e) { }
+        }
     },
     reducers: {
         /**侧边栏收缩、展开切换 */
@@ -132,7 +169,7 @@ export default {
         addNav(state, { payload }) {
             let { navs, navActiveKey } = state;
             let activeNav = payload ? payload : getNavItem(navActiveKey);
-            if (navs.some(item => item.path === activeNav.path)) {
+            if (activeNav&&navs.some(item => item.path === activeNav.path)) {
                 return {
                     ...state,
                 }
@@ -168,41 +205,69 @@ export default {
             const list = getBreadcrumpList(payload ? payload : state.navActiveKey)
             return {
                 ...state,
-                breadcrumbList: list
+                breadcrumbList: [...list]
             }
         },
-        
+
         /**设置当前用户信息 */
         setCurrentUser(state, { payload }) {
             return {
                 ...state,
-                currentUser: payload
+                currentUser: { ...payload }
+            }
+        },
+
+        /**设置当前用户密码信息 */
+        setCurrentUserPwd(state, { payload }) {
+            const pre_currentUser = Object.assign(state.currentUser, payload);
+            return {
+                ...state,
+                currentUser: { ...pre_currentUser }
+            }
+        },
+
+        /**设置侧边栏风格 */
+        setSideStyle(state, { payload }) {
+            localStorage.setItem('siderStyle', payload)
+            return {
+                ...state,
+                siderStyle: payload
+            }
+        },
+
+        /**设置导航栏风格 */
+        setNavStyle(state, { payload }) {
+            localStorage.setItem('navStyle', payload)
+            return {
+                ...state,
+                navStyle: payload
+            }
+        },
+
+        /**设置色弱模式 */
+        setColorWeak(state, { payload }) {
+            document.body.className = payload ? 'colorWeak' : '';
+            localStorage.setItem('colorWeak', payload)
+            return {
+                ...state,
+                colorWeak: payload
             }
         }
 
 
     },
     subscriptions: {
-        setup({ dispatch, history }) {
+        setup({ dispatch, history, state }) {
+
             history.listen((router) => {
                 const {
                     pathname
                 } = router;
-                //添加菜单导航标签
-                const navItem = getNavItem(pathname)
-                if (defaultSettings.navStyle === "breadcrumb") {
-                    dispatch({
-                        type: 'setBreadcrumb',
-                        payload: pathname
-                    })
-                } else {
-                    if (navItem) {
-                        dispatch({
-                            type: 'addNav',
-                            payload: navItem
-                        })
-                    }
-                }
+
+                dispatch({
+                    type: 'setNavBar',
+                    payload: pathname
+                })
 
                 dispatch({
                     type: 'activeNav',

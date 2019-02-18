@@ -2,6 +2,7 @@ import login from './zh-CN/login'
 import menu from './zh-CN/menu'
 import component from './zh-CN/component'
 import common from './zh-CN/common'
+import setting from './zh-CN/setting'
 export default{
     "app.lang":'选择语言',
     "app.no-data":'暂无数据',
@@ -32,5 +33,6 @@ export default{
     ...common,
     ...login,
     ...menu,
-    ...component
+    ...component,
+    ...setting
 }
