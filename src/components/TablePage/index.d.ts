@@ -2,9 +2,11 @@ import * as React from "react";
 import QueryItem from './QueryItem'
 export interface ITablePageProps {
     url:string,
-    list: any[],
+    data: Object,
     columns: any[],
+    rowKey:string,
     loading?: any,
+    onChange:(filters:object,sorter:object)=>void
     onSearch: (params: object) => void,
     buttons?: React.ReactNode
 }

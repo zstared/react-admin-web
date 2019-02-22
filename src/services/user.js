@@ -27,5 +27,25 @@ export async function updatePassword(params){
 
 /**获取用户列表 */
 export async function getUserList(params) {
-    return await request.get('/core/user/list', params)
+    return await request.get('/core/user/pageList', params)
+}
+
+/**新增用户 */
+export async function create(params) {
+    return await request.post('/core/user/create', params)
+}
+
+/**编辑用户 */
+export async function update(params) {
+    return await request.post('/core/user/update', params)
+}
+
+/**禁用/启用用户 */
+export async function updateState(params) {
+    return await request.post('/core/user/updateState', params)
+}
+
+/**删除用户 */
+export async function deleteUser(params) {
+    return await request.post('/core/user/delete', params)
 }

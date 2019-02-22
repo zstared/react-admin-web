@@ -2,10 +2,10 @@ html,
 body,
 #root {
     height: 100%;
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
     font-family: 'Helvetica Neue,Helvetica,Hiragino Sans GB,Microsoft Yahei,Heiti SC,WenQuanYi Micro Hei,Arial,sans-serif';
-    font-size:14px;
+    font-size: 14px;
 }
 
 ul,
@@ -15,4 +15,24 @@ ol {
 
 .colorWeak {
     filter: invert(80%);
+}
+
+a:focus {
+    text-decoration: none;
+}
+
+.ant-table td {
+    white-space: nowrap;
+}
+
+.ant-popover-message>.svg-inline--fa {
+    position: absolute;
+    top: 8px;
+    font-size: 14px;
+    &.danger {
+        color: #f5222d
+    }
+    &.warning {
+        color: #faad14;
+    }
 }

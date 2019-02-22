@@ -1,5 +1,4 @@
 import routes from './router.config';
-import defaultSettings from '../src/defaultSettings';
 export default {
     plugins: [
         ['umi-plugin-react', {
@@ -26,7 +25,7 @@ export default {
     ],
     routes: routes,
     theme: {
-        'primary-color': defaultSettings.primaryColor,
+        'primary-color': '#722ED1',
     },
     cssLoaderOptions: {
         modules: true,

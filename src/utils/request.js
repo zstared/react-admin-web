@@ -79,11 +79,11 @@ class Request {
     /**
      * DELETE请求
      * @param {String} url 
-     * @param {Object} data? {id:1} 
+     * @param {Object} data? 
      * @param {Object} config? 
      */
     async delete(url, data, config) {
-        return await this.instance.delete(url + `/${data.id}`, config)
+        return await this.instance.delete(url, {data:data})
     }
 
     /**
