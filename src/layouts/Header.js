@@ -10,7 +10,7 @@ const { Header } = Layout
 const MenuItem = Menu.Item
 
 
-   
+
 class HeaderContent extends PureComponent {
 
     /**侧边栏折叠/展开 */
@@ -20,7 +20,7 @@ class HeaderContent extends PureComponent {
     }
 
     render() {
-        const { collapsed,currentUser } = this.props;
+        const { collapsed, currentUser } = this.props;
         const userMenu = (
             <Menu onClick={this.changLang}>
                 <MenuItem key="setting">
@@ -51,7 +51,7 @@ class HeaderContent extends PureComponent {
                         <Notification className={styles.action}></Notification>
                         <Dropdown overlay={userMenu} className={`${styles.action} ${styles.account}`} >
                             <span>
-                                <Avatar className={styles.avatar} src={avatar} ></Avatar>
+                                <Avatar className={styles.avatar} src={currentUser.avatar ? currentUser.avatar_file.thumbUrl : avatar} ></Avatar>
                                 <span className={styles.name}>{currentUser.name_cn}</span>
                             </span>
                         </Dropdown>

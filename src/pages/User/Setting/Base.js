@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'dva'
-import { Form, Input, Radio, Button } from 'antd'
+import { Form, Input, Radio, Button,message} from 'antd'
 import { formatMessage, FormattedMessage } from 'umi/locale'
 import UploadImage from '../../../components/UploadImage'
 import { regPhone, regName, regNameEn } from '../../../utils/validate'
@@ -27,7 +27,10 @@ class Base extends PureComponent {
                 const { dispatch } = this.props;
                 await dispatch({
                     type: 'app/updateCurrentUser',
-                    payload: newUserInfo
+                    payload: newUserInfo,
+                    callback:()=>{
+                        message.success(formatMessage({id:'msg.saved'}))
+                    }
                 })
             }
         })
@@ -98,12 +101,12 @@ class Base extends PureComponent {
                             </Radio.Group>
                         )}
                     </FormItem>
-                    <FormItem {...formItemLayout} label={formatMessage({ id: 'label.phone' })}>
+                    <FormItem {...formItemLayout} label={formatMessage({ id: 'label.mobile' })}>
                         {getFieldDecorator('mobile', {
                             initialValue: currentUser.mobile,
                             rules: [
-                                { required: true, message: formatMessage({ id: 'validation.phone.required' }) },
-                                { pattern: regPhone, message: formatMessage({ id: 'validation.phone' }) }
+                                { required: true, message: formatMessage({ id: 'validation.mobile.required' }) },
+                                { pattern: regPhone, message: formatMessage({ id: 'validation.mobile' }) }
                             ]
                         })(
                             <Input></Input>

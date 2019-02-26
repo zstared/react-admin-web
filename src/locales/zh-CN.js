@@ -3,6 +3,8 @@ import menu from './zh-CN/menu'
 import component from './zh-CN/component'
 import common from './zh-CN/common'
 import setting from './zh-CN/setting'
+import message from './zh-CN/message'
+import system from './zh-CN/system'
 export default{
     "app.lang":'选择语言',
     "app.no-data":'暂无数据',
@@ -31,8 +33,10 @@ export default{
     'home.theme.themecolor.geekblue': '极客蓝',
     'home.theme.themecolor.purple': '酱紫',
     ...common,
+    ...message,
     ...login,
     ...menu,
     ...component,
-    ...setting
+    ...setting,
+    ...system,
 }

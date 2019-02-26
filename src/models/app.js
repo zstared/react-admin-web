@@ -3,7 +3,6 @@ import { getMenus, getCurrentUser, updateCurrentUser, updatePassword } from '../
 import pathToRegexp from 'path-to-regexp'
 import { formatMessage } from 'umi/locale';
 import { urlToList } from '../utils/utils'
-import { message as msg } from 'antd'
 
 /**菜单导航标签数据 */
 const navData = {};
@@ -43,7 +42,7 @@ const getBreadcrumpList = (url) => {
 export default {
     namespace: 'app',
     state: {
-        collapsed: false, //侧边栏收缩/折叠状态
+        collapsed: true, //侧边栏收缩/折叠状态
         siderStyle: defaultSettings.siderStyle, //侧边栏样式 dark or light
         navStyle: defaultSettings.navStyle, //导航类型  breadcrumb-面包屑 nav-导航栏
         menuData: [], //菜单数据
@@ -96,7 +95,7 @@ export default {
         },
 
         //修改当前用户信息
-        *updateCurrentUser({ payload }, { call, put }) {
+        *updateCurrentUser({ payload,callback }, { call, put }) {
             try {
                 const response = yield call(updateCurrentUser, payload);
                 const { code, message } = response;
@@ -105,7 +104,7 @@ export default {
                         type: 'setCurrentUser',
                         payload: payload
                     })
-                    msg.success(message)
+                    if(callback) callback();
                 }
             } catch (e) {
                 console.log(e)
@@ -113,7 +112,7 @@ export default {
         },
 
         /**修改用户密码 */
-        *updatePassword({ payload }, { call, put }) {
+        *updatePassword({ payload,callback}, { call, put }) {
             try {
                 const response = yield call(updatePassword, payload);
                 const { code, message, data } = response;
@@ -122,7 +121,7 @@ export default {
                         type: 'setCurrentUserPwd',
                         payload: data
                     })
-                    msg.success(message)
+                    if(callback) callback();
                 }
             } catch (e) {
 

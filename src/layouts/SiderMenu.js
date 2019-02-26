@@ -23,7 +23,9 @@ class SiderMenu extends PureComponent {
             <Sider className={className(styles.sider, styles.fixSiderbar,{[styles.light]:theme==='light'})}
                 width={268} collapsible trigger={null}
                 theme={theme}
-                collapsed={collapsed} breakpoint="lg" onCollapse={onCollapse} >
+                defaultCollapsed={collapsed}
+                collapsed={collapsed}
+                breakpoint="lg" onCollapse={()=>onCollapse} >
                 <div className={styles.logo} id="logo">
                     <Link to="/">
                         <img src={logo} alt="logo" />

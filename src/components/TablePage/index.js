@@ -144,7 +144,7 @@ class TablePage extends PureComponent {
                 <Table dataSource={data.rows} columns={columns} rowKey={rowKey}
                     onChange={this.handleTableChange}
                     loading={loading}
-                    scroll={{ x: true }}
+                    scroll={{x: 'max-content'}}
                     pagination={{
                         showSizeChanger: true,
                         showQuickJumper: true,

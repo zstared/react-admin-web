@@ -83,7 +83,7 @@ class SiderBaseMenu extends PureComponent {
     render() {
         const { theme, mode, menuData,navActiveKey } = this.props;
         return (
-            <Menu theme={theme} mode={mode}  selectedKeys={[navActiveKey]} defaultOpenKeys={this.getOpenKeys(navActiveKey)} >
+            <Menu theme={theme} mode={mode}  selectedKeys={[navActiveKey]}  >
                {this.getNavMenuItems(menuData)}  
             </Menu>
         )

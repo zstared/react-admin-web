@@ -1,10 +1,11 @@
 import { getUserList, create, update, updateState, deleteUser } from '@/services/user'
-import { message as msg } from 'antd'
+import { getRoleDropList } from '@/services/role'
 export default {
     namespace: 'user',
     state: {
         data: [],
-        params: {}
+        params: {},
+        roleList: []
     },
     effects: {
         /**获取用户列表 */
@@ -17,12 +18,12 @@ export default {
                         payload: { data: data, params: payload }
                     })
                 }
-            } catch{
+            } catch (e) {
                 console.log(e)
             }
         },
         /**新增用户 */
-        *create({ payload }, { call, put, select }) {
+        *create({ payload, callback }, { call, put, select }) {
             try {
                 const { code } = yield call(create, payload);
                 if (!code) {
@@ -31,14 +32,15 @@ export default {
                         type: 'getList',
                         payload: params,
                     })
+                    if (callback) callback()
                 }
-            } catch{
+            } catch (e) {
                 console.log(e)
-            } aa
+            }
         },
 
         /**修改用户 */
-        *update({ payload }, { call, put }) {
+        *update({ payload, callback }, { call, put, select }) {
             try {
                 const { code } = yield call(update, payload);
                 if (!code) {
@@ -47,14 +49,15 @@ export default {
                         type: 'getList',
                         payload: params,
                     })
+                    if (callback) callback()
                 }
-            } catch{
+            } catch (e) {
                 console.log(e)
             }
         },
 
         /**禁用、启用用户 */
-        *updateState({ payload }, { call, put, select }) {
+        *updateState({ payload, callback }, { call, put, select }) {
             try {
                 const { code, message } = yield call(updateState, payload);
                 if (!code) {
@@ -62,20 +65,20 @@ export default {
                     let index = data.rows.findIndex((item) => {
                         return item.user_id == payload.user_id
                     });
-                    data.rows[index].state = payload.state;
+                    data.rows[index].status = payload.status;
                     yield put({
                         type: 'setData',
                         payload: { data: data, params: params }
                     })
-                    msg.success(!payload.state ? '已启用' : '已禁用')
+                    if (callback) callback()
                 }
-            } catch{
+            } catch (e) {
                 console.log(e)
             }
         },
 
         /**删除用户 */
-        *delete({ payload }, { call, put, select }) {
+        *delete({ payload, callback }, { call, put, select }) {
             try {
                 const { code } = yield call(deleteUser, payload);
                 if (!code) {
@@ -83,14 +86,29 @@ export default {
                     let index = data.rows.findIndex((item) => {
                         return item.user_id == payload.user_id
                     });
-                    data.rows[index].state = 2;
+                    data.rows[index].status = 2;
                     yield put({
                         type: 'setData',
                         payload: { data: data, params: params }
                     })
-                    msg.success('已删除')
+                    if (callback) callback()
                 }
-            } catch{
+            } catch (e) {
+                console.log(e)
+            }
+        },
+
+        /**获取角色下拉列表 */
+        *getRoleDropList(_, { call, put }) {
+            try {
+                const { code, data } = yield call(getRoleDropList);
+                if (!code) {
+                    yield put({
+                        type: 'setRoleList',
+                        payload: data
+                    })
+                }
+            } catch (e) {
                 console.log(e)
             }
         }
@@ -104,5 +122,12 @@ export default {
                 params: { ...payload.params }
             }
         },
+        /**设置角色下拉列表数据 */
+        setRoleList(state, { payload }) {
+            return {
+                ...state,
+                roleList: payload
+            }
+        }
     }
 }

@@ -71,6 +71,11 @@ let routes = [
             "exact": true
           },
           {
+            "path": "/system/menu",
+            "component": dynamic({ loader: () => import('../System/Menu'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+            "exact": true
+          },
+          {
             "path": "/system/resource",
             "component": dynamic({ loader: () => import('../System/Resource'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
             "exact": true

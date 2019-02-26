@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react'
 import { FormattedMessage, formatMessage } from 'umi/locale'
 import { connect } from 'dva'
-import { List, Modal, Form, Input } from 'antd';
+import { List, Modal, Form, Input,message } from 'antd';
 import { regPassword } from '../../../utils/validate'
 
 @connect(({ app }) => ({
@@ -37,7 +37,10 @@ class Security extends PureComponent {
                 values.user_name = currentUser.user_name
                 dispatch({
                     type: 'app/updatePassword',
-                    payload: values
+                    payload: values,
+                    callback:()=>{
+                        message.success(formatMessage({id:'msg.updated'}))
+                    }
                 })
                 this.handleCloseModal()
             }
@@ -136,8 +139,6 @@ class Security extends PureComponent {
                     visible={this.state.modalVisible}
                     onCancel={this.handleCloseModal}
                     onOk={this.handUpdatePwd}
-                    cancelText={formatMessage({ id: 'button.cancel' })}
-                    okText={formatMessage({ id: 'button.confirm' })}
                 >
                     {this.getModelContent()}
                 </Modal>

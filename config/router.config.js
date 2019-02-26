@@ -16,6 +16,7 @@ export default [
                 path: '/system', name: 'system', routes: [
                     { path: '/system/user', name: 'user', component: './System/User' },
                     { path: '/system/role', component: './System/Role' },
+                    { path: '/system/menu', component: './System/Menu' },
                     { path: '/system/resource', component: './System/Resource' },
                 ]
             }

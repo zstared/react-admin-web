@@ -1,26 +1,50 @@
 import React, { PureComponent, Fragment } from 'react';
 import TablePage from '../../components/TablePage'
-import { Button, Dropdown, Menu, Icon, Input, Select, Tag, Divider, Popconfirm, Form, Modal,Radio } from 'antd';
+import { Button, Input, Select, Tag, Divider, Popconfirm, Form, Modal, Radio, message } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { formatMessage, FormattedMessage } from 'umi/locale'
 import { connect } from 'dva'
 import { formatTime } from '../../utils/utils'
-import {regName,regNameEn,regPhone,regAccount} from '../../utils/validate'
-
+import { regName, regNameEn, regPhone, regAccount } from '../../utils/validate'
+import { existAccount, existMobile } from '../../services/user'
 
 @Form.create()
-class CreateForm extends PureComponent {
+class UserForm extends PureComponent {
 
+    //保存
     handleOk = () => {
-        const {form,handleCreate}=this.props;
-        form.validateFields((err, fieldsValue) => {
+        const { form, handleSave } = this.props;
+        form.validateFieldsAndScroll((err, fieldsValue) => {
             if (err) return;
-            handleCreate(fieldsValue);
+            handleSave(fieldsValue);
         })
+    }
+    //验证账号是否已存在 
+    handleExistAccount = async (rule, value, callback) => {
+        const { mode } = this.props;
+        if (mode) {
+            let { code, data } = await existAccount({ user_name: value });
+            if (!code && data.exist) {
+                callback(formatMessage({ id: 'validation.account.existed' }))
+            }
+        }
+        callback()
+    }
+
+    //验证手机号是否已存在
+    handleExistMobile = async (rule, value, callback) => {
+        const { editInfo, mode } = this.props;
+        const params = { mobile: value };
+        if (!mode) params.user_id = editInfo.user_id;
+        let { code, data } = await existMobile(params);
+        if (!code && data.exist) {
+            callback(formatMessage({ id: 'validation.mobile.existed' }))
+        }
+        callback()
     }
 
     render() {
-        const { form: { getFieldDecorator }, handleModalVisible, modalVisible } = this.props;
+        const { form: { getFieldDecorator }, handleModalVisible, modalVisible, roleList, mode, editInfo } = this.props;
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
@@ -34,25 +58,31 @@ class CreateForm extends PureComponent {
         return (
             <Modal
                 destroyOnClose
-                title="新增用户"
+                title={
+                    mode ? <span><FontAwesomeIcon icon="user-plus"></FontAwesomeIcon> <FormattedMessage id="system.user.modal.add" /></span> :
+                        <span><FontAwesomeIcon icon="user-edit"></FontAwesomeIcon> <FormattedMessage id="system.user.modal.edit" /></span>}
                 visible={modalVisible}
                 onOk={this.handleOk}
                 onCancel={handleModalVisible}
             >
                 <Form>
                     <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.account' })}>
-                        {getFieldDecorator('user_name',{
-                            rules:[
+                        {getFieldDecorator('user_name', {
+                            initialValue: !mode ? editInfo.user_name : '',
+                            validateFirst: true,
+                            rules: [
                                 { required: true, whitespace: false, message: formatMessage({ id: 'validation.account.required' }) },
-                                { max: 50, min: 1, pattern: regAccount, message: formatMessage({ id: 'validation.account' }) }
+                                { pattern: regAccount, message: formatMessage({ id: 'validation.account' }) },
+                                { validator: this.handleExistAccount }
                             ]
                         })(
-                            <Input></Input>
+                            <Input disabled={!mode}></Input>
                         )}
                     </Form.Item>
                     <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.name' })}>
-                        {getFieldDecorator('name_cn',{
-                            rules:[
+                        {getFieldDecorator('name_cn', {
+                            initialValue: !mode ? editInfo.name_cn : '',
+                            rules: [
                                 { required: true, whitespace: false, message: formatMessage({ id: 'validation.name.required' }) },
                                 { max: 50, min: 1, pattern: regName, message: formatMessage({ id: 'validation.name' }) }
                             ]
@@ -61,8 +91,9 @@ class CreateForm extends PureComponent {
                         )}
                     </Form.Item>
                     <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.name-en' })}>
-                        {getFieldDecorator('name_en',{
-                            rules:[
+                        {getFieldDecorator('name_en', {
+                            initialValue: !mode ? editInfo.name_en : '',
+                            rules: [
                                 { whitespace: true, message: formatMessage({ id: 'validation.name-en.required' }) },
                                 { max: 50, min: 1, pattern: regNameEn, message: formatMessage({ id: 'validation.name-en' }) }
                             ]
@@ -72,34 +103,41 @@ class CreateForm extends PureComponent {
                     </Form.Item>
                     <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.sex' })}>
                         {getFieldDecorator('sex', {
+                            initialValue: !mode ? editInfo.sex : '',
                             rules: [
                                 { required: true, message: formatMessage({ id: 'validation.sex.required' }) },
                             ]
                         })(
                             <Radio.Group >
-                                <Radio value={1}><FormattedMessage id="label.sex.male"/></Radio>
-                                <Radio value={2}><FormattedMessage id="label.sex.female"/></Radio>
+                                <Radio value={1}><FormattedMessage id="label.sex.male" /></Radio>
+                                <Radio value={2}><FormattedMessage id="label.sex.female" /></Radio>
                             </Radio.Group>
                         )}
                     </Form.Item>
                     <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.role' })}>
                         {getFieldDecorator('role', {
+                            initialValue: !mode ? editInfo.role.map(item => (item.role_id)) : [],
                             rules: [
                                 { required: true, message: formatMessage({ id: 'validation.role.required' }) },
                             ]
                         })(
-                            <Select>
-                               <Select.Option value={1}>角色一</Select.Option>
-                               <Select.Option value={2}>角色二</Select.Option>
-                               <Select.Option value={3}>角色三</Select.Option>
+                            <Select mode="multiple">
+                                {
+                                    roleList.map(item => (
+                                        <Select.Option key={item.role_id} value={item.role_id}>{item.role_name}</Select.Option>
+                                    ))
+                                }
                             </Select>
                         )}
                     </Form.Item>
-                    <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.phone' })}>
+                    <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.mobile' })}>
                         {getFieldDecorator('mobile', {
+                            initialValue: !mode ? editInfo.mobile : '',
+                            validateFirst: true,
                             rules: [
-                                { required: true, message: formatMessage({ id: 'validation.phone.required' }) },
-                                { pattern: regPhone, message: formatMessage({ id: 'validation.phone' }) }
+                                { required: true, message: formatMessage({ id: 'validation.mobile.required' }) },
+                                { pattern: regPhone, message: formatMessage({ id: 'validation.mobile' }) },
+                                { validator: this.handleExistMobile }
                             ]
                         })(
                             <Input></Input>
@@ -107,6 +145,7 @@ class CreateForm extends PureComponent {
                     </Form.Item>
                     <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.email' })}>
                         {getFieldDecorator('mail', {
+                            initialValue: !mode ? editInfo.mail : '',
                             rules: [{
                                 type: 'email', message: formatMessage({ id: 'validation.email' })
                             }]
@@ -123,6 +162,7 @@ class CreateForm extends PureComponent {
 
 @connect(({ user, loading }) => ({
     data: user.data,
+    roleList: user.roleList,
     loading: loading.effects['user/getList']
 }))
 class User extends PureComponent {
@@ -131,6 +171,19 @@ class User extends PureComponent {
         sortedInfo: {},//排序信息
         filteredInfo: {},//筛选信息
         modalVisible: false,
+        modalMode: true,//弹框模式 true-新增；false-编辑
+        editInfo: {},
+    }
+
+    componentDidMount() {
+        this.initRoleDropList();
+    }
+
+    initRoleDropList = () => {
+        const { dispatch } = this.props;
+        dispatch({
+            type: 'user/getRoleDropList',
+        })
     }
 
     /**表格排序、筛选变化时触发 */
@@ -146,94 +199,125 @@ class User extends PureComponent {
         const { dispatch } = this.props;
         dispatch({
             type: 'user/delete',
-            payload: { user_id }
+            payload: { user_id },
+            callback: () => {
+                message.success(formatMessage({ id: 'msg.deleted' }))
+            }
         })
     }
 
     /**禁用或启用用户 */
-    handleChangeState = (user_id, state) => {
+    handleChangeState = (user_id, status) => {
         const { dispatch } = this.props;
         dispatch({
             type: 'user/updateState',
-            payload: { user_id, state: state ? 0 : 1 }
+            payload: { user_id, status: status ? 0 : 1 },
+            callback: () => {
+                message.success(status ? formatMessage({ id: 'msg.enabled' }) : formatMessage({ id: 'msg.disabled' }))
+            }
         })
     }
 
     /**弹框状态 */
     handleModalVisible = () => {
         this.setState({
+            modalVisible: !this.state.modalVisible,
+        })
+    }
+
+    /**打开弹框 model true-新增；false-编辑 */
+    handleModalOpen = (mode) => {
+        this.setState({
+            modalMode: mode,
             modalVisible: !this.state.modalVisible
         })
     }
 
-    /**新增用户 */
-    handleCreate = (fieldsValue) => {
-        const { dispatch } = this.props;
-        dispatch({
-            type: 'user/create',
-            payload: fieldsValue
-        })
-    }
-    
     /**修改用户 */
     handleUpdate = (fieldsValue) => {
-        console.log(fieldsValue)
+        this.setState({
+            editInfo: fieldsValue
+        }, () => {
+            this.handleModalOpen(false)
+        })
+    }
+
+    /**保存(新增、编辑)用户 */
+    handleSave = (fieldsValue) => {
+        const { dispatch } = this.props;
+        const { modalMode, editInfo } = this.state;
+
+        dispatch({
+            type: modalMode ? 'user/create' : 'user/update',
+            payload: modalMode ? fieldsValue : Object.assign(fieldsValue, { user_id: editInfo.user_id }),
+            callback: () => {
+                this.setState({
+                    modalVisible: false
+                })
+                message.success(modalMode ? formatMessage({ id: 'msg.created' }) : formatMessage({ id: 'msg.updated' }))
+            }
+        })
     }
 
     render() {
-        const { data, loading } = this.props;
+        const { data, roleList, loading } = this.props;
         const { sortedInfo } = this.state;
         const columns = [{
-            title: '账号',
+            title: formatMessage({ id: 'label.account' }),
             key: 'user_name',
             dataIndex: 'user_name',
             fixed: true,
             width: 200,
         }, {
-            title: '中文名',
+            title: formatMessage({ id: 'label.name' }),
             key: 'name_cn',
             dataIndex: 'name_cn',
             fixed: true,
             width: 120,
         }, {
-            title: '英文名',
+            title: formatMessage({ id: 'label.name-en' }),
             key: 'name_en',
             dataIndex: 'name_en',
             width: 180,
         }, {
-            title: '手机号码',
+            title: formatMessage({ id: 'label.status' }),
+            key: 'status',
+            dataIndex: 'status',
+            sorter: true,
+            sortOrder: sortedInfo.columnKey === 'status' && sortedInfo.order,
+            width: 120,
+            render: (text) => (<span>{text == 0 ?
+                <Tag color="green"><FormattedMessage id="label.status.normal" /></Tag> : text == 1 ?
+                    <Tag color="red"><FormattedMessage id="label.status.disabled" /></Tag> :
+                    <Tag color="grey"><FormattedMessage id="label.status.deleted" /></Tag>}</span>)
+        }, {
+            title: formatMessage({ id: 'label.mobile' }),
             key: 'mobile',
             dataIndex: 'mobile',
             width: 180,
         }, {
-            title: '邮箱',
-            key: 'mail',
-            dataIndex: 'mail',
+            title: formatMessage({ id: 'label.role' }),
+            key: 'role',
+            dataIndex: 'role',
             width: 200,
+            render: (text) => (
+                <span>{text.map(item => (<Tag key={item.role_id} >{item.role_name}</Tag>))}</span>
+            )
         }, {
-            title: '性别',
+            title: formatMessage({ id: 'label.sex' }),
             key: 'sex',
             dataIndex: 'sex',
             sorter: true,
             sortOrder: sortedInfo.columnKey === 'sex' && sortedInfo.order,
-            width: 100,
-            // filters: [
-            //     { text: '男', value: 1 },
-            //     { text: '女', value: 2 },
-            // ],
-            // filteredValue: filteredInfo.sex || null,
-            // filterMultiple:false,
+            width: 120,
             render: (text) => (<span>{text == 1 ? <FontAwesomeIcon icon="male" size="lg" color="#0082f3" /> : <FontAwesomeIcon icon="female" size="lg" color="#f98c3d" />}</span>)
         }, {
-            title: '状态',
-            key: 'state',
-            dataIndex: 'state',
-            sorter: true,
-            sortOrder: sortedInfo.columnKey === 'state' && sortedInfo.order,
-            width: 120,
-            render: (text) => (<span>{text == 0 ? <Tag color="green">正常</Tag> : text == 1 ? <Tag color="red">已禁用</Tag> : <Tag color="grey">已删除</Tag>}</span>)
+            title: formatMessage({ id: 'label.email' }),
+            key: 'mail',
+            dataIndex: 'mail',
+            width: 200,
         }, {
-            title: '创建时间',
+            title: formatMessage({ id: 'label.create-time' }),
             key: 'create_time',
             dataIndex: 'create_time',
             sorter: true,
@@ -241,58 +325,48 @@ class User extends PureComponent {
             width: 200,
             render: (text) => (<span>{formatTime(text)}</span>)
         }, {
-            title: '操作',
+            title: formatMessage({ id: 'label.operation' }),
             key: 'operation',
             fixed: 'right',
             width: 200,
             render: (text, record) => (
                 <div>
                     {
-                        record.state !== 2 && !record.is_system ?
+                        record.status !== 2 && !record.is_system ?
                             <span>
-                                <a href="javascript:;"><FontAwesomeIcon icon="edit" /> 编辑</a>
+                                <a href="javascript:;" onClick={() => this.handleUpdate(record)}><FontAwesomeIcon icon="edit" /> <FormattedMessage id="label.edit" /></a>
                                 <Divider type="vertical" />
                                 {
-                                    record.state == 1 ?
-                                        <a href="javascript:;" onClick={() => this.handleChangeState(record.user_id, record.state)} ><FontAwesomeIcon icon="unlock" /> 启用</a> :
-                                        <a href="javascript:;" onClick={() => this.handleChangeState(record.user_id, record.state)} ><FontAwesomeIcon icon="lock" /> 禁用</a>
+                                    record.status == 1 ?
+                                        <a href="javascript:;" onClick={() => this.handleChangeState(record.user_id, record.status)} ><FontAwesomeIcon icon="unlock" /> <FormattedMessage id="label.enable" /></a> :
+                                        <a href="javascript:;" onClick={() => this.handleChangeState(record.user_id, record.status)} ><FontAwesomeIcon icon="lock" /> <FormattedMessage id="label.disable" /></a>
                                 }
                                 <Divider type="vertical" />
                                 <Popconfirm placement="topRight"
                                     icon={<FontAwesomeIcon icon="question-circle" className="danger" />}
                                     okText={formatMessage({ id: 'button.yes' })}
                                     cancelText={formatMessage({ id: 'button.no' })}
-                                    title="确定删除此用户吗？"
+                                    title={formatMessage({ id: 'system.user.delete.prompt' })}
                                     onConfirm={() => this.handleDelete(record.user_id)}>
-                                    <a href="javascript:;"><FontAwesomeIcon icon="times" /> 删除</a>
+                                    <a href="javascript:;"><FontAwesomeIcon icon="times" /> <FormattedMessage id="label.delete" /></a>
                                 </Popconfirm>
                             </span> : null
                     }
                 </div>
             )
         }];
-        // const menu = (
-        //     <Menu >
-        //         <Menu.Item key="1">操作按钮</Menu.Item>
-        //         <Menu.Item key="2">操作按钮</Menu.Item>
-        //         <Menu.Item key="3">操作按钮</Menu.Item>
-        //     </Menu>
-        // );
         const buttons = (
             <React.Fragment>
-                <Button type="primary" onClick={this.handleModalVisible} ><FontAwesomeIcon icon="user-plus" style={{ marginRight: '6px' }} /><FormattedMessage id="button.add" /></Button>
-                {/** <Button style={{ marginLeft: 8 }} icon="download">导出</Button>
-                <Dropdown overlay={menu}>
-                    <Button style={{ marginLeft: 8 }}>
-                        更多 <Icon type="down" />
-                    </Button>
-                </Dropdown> */}
+                <Button type="primary" onClick={() => this.handleModalOpen(true)} ><FontAwesomeIcon icon="user-plus" style={{ marginRight: '6px' }} /><FormattedMessage id="button.add" /></Button>
             </React.Fragment>
         )
-        const createProps = {
-            modalVisible:this.state.modalVisible,
-            handleModalVisible:this.handleModalVisible,
-            handleCreate:this.handleCreate
+        const userFormProps = {
+            mode: this.state.modalMode,
+            editInfo: this.state.editInfo,
+            roleList: roleList,
+            modalVisible: this.state.modalVisible,
+            handleModalVisible: this.handleModalVisible,
+            handleSave: this.handleSave,
         }
         return (
             <Fragment>
@@ -300,18 +374,18 @@ class User extends PureComponent {
                     data={data} columns={columns} buttons={buttons} rowKey="user_id"
                     onChange={this.handleChange}
                 >
-                    <TablePage.QueryItem label="用户" name="user_name">
-                        <Input placeholder="请输入" />
+                    <TablePage.QueryItem label={formatMessage({ id: 'system.user' })} name="user_name">
+                        <Input placeholder={formatMessage({ id: "system.user.placeholder.user" })} />
                     </TablePage.QueryItem>
-                    <TablePage.QueryItem label="状态" name="state">
-                        <Select placeholder="请选择" allowClear>
-                            <Select.Option value="0">正常</Select.Option>
-                            <Select.Option value="1">已禁用</Select.Option>
-                            <Select.Option value="2">已删除</Select.Option>
+                    <TablePage.QueryItem label={<FormattedMessage id="label.status" />} name="status">
+                        <Select placeholder={<FormattedMessage id="placeholder.select" />} allowClear>
+                            <Select.Option value="0"><FormattedMessage id="label.status.normal"></FormattedMessage></Select.Option>
+                            <Select.Option value="1"><FormattedMessage id="label.status.disabled"></FormattedMessage></Select.Option>
+                            <Select.Option value="2"><FormattedMessage id="label.status.deleted"></FormattedMessage></Select.Option>
                         </Select>
                     </TablePage.QueryItem>
                 </TablePage>
-                <CreateForm {...createProps} ></CreateForm>
+                <UserForm {...userFormProps} ></UserForm>
             </Fragment>
         )
     }

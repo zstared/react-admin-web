@@ -3,6 +3,8 @@ import menu from './en-US/menu'
 import component from './en-US/component'
 import common from './en-US/common'
 import setting from './en-US/setting'
+import message from './en-US/message'
+import system from './en-US/system'
 export default{
     "app.lang":'Languages',
     "app.no-data":'No Data',
@@ -31,8 +33,10 @@ export default{
     'home.theme.themecolor.geekblue': 'Geek Glue',
     'home.theme.themecolor.purple': 'Golden Purple',
     ...common,
+    ...message,
     ...login,
     ...menu,
     ...component,
-    ...setting
+    ...setting,
+    ...system
 }

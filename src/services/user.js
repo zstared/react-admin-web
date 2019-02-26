@@ -49,3 +49,13 @@ export async function updateState(params) {
 export async function deleteUser(params) {
     return await request.post('/core/user/delete', params)
 }
+
+/**判断账号是否存在 */
+export async function existAccount(params) {
+    return await request.post('/core/user/existAccount', params)
+}
+
+/**判断手机号是否存在 */
+export async function existMobile(params) {
+    return await request.post('/core/user/existMobile', params)
+}
