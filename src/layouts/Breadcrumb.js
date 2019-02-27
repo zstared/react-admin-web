@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react'
 import { Breadcrumb, Icon } from 'antd'
 import Link from 'umi/link'
-import {FormattedMessage} from 'umi/locale'
-
-
+import { FormattedMessage } from 'umi/locale'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class BreadcrumbWrapper extends PureComponent {
 
@@ -25,7 +24,7 @@ class BreadcrumbWrapper extends PureComponent {
         return (
             navActiveKey === '/home' ? null : <Breadcrumb style={{ padding: "9px 15px", background: '#fff' }}>
                 <Breadcrumb.Item key='home'>
-                    <Link to="/home"><Icon type="home"></Icon> <FormattedMessage id="menu.home" /></Link>
+                    <Link to="/home"><FontAwesomeIcon icon="home" /> <FormattedMessage id="menu.home" /></Link>
                 </Breadcrumb.Item>
                 {this.getBreadcrumbItem()}
             </Breadcrumb>

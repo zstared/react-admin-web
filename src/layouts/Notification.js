@@ -2,7 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styles from './Notification.less'
 import { formatMessage, FormattedMessage } from 'umi/locale'
-import { Badge, Icon, Popover, Tabs, List, Avatar, Spin } from 'antd';
+import { Badge, Popover, Tabs, List, Avatar, Spin } from 'antd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import avatar from '../assets/avatar.svg'
 const TabPane = Tabs.TabPane;
@@ -173,7 +174,7 @@ class Notification extends PureComponent {
                 popupAlign={{ offset: [0, -15] }}
             >
                 <span>
-                    <Badge count={18} overflowCount={99} > <Icon type="bell" style={{ fontSize: 18 }} /></Badge>
+                    <Badge count={8} overflowCount={99} ><FontAwesomeIcon icon="bell" size="lg" /></Badge>
                 </span>
             </Popover>
         )

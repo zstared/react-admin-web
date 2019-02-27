@@ -3,6 +3,7 @@ import { Menu, Icon } from 'antd';
 import {FormattedMessage} from 'umi/locale'
 import Link from 'umi/link'
 import { isUrl } from '@/utils/utils';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;
 
@@ -12,7 +13,7 @@ const getIcon = icon => {
         return <img src={icon} alt="icon" style={{ width: '14px', marginRight: '10px' }} />;
     }
     if (typeof icon === 'string') {
-        return <Icon type={icon} />;
+        return <i className="anticon" > <FontAwesomeIcon  icon={icon} style={{marginBottom:'2px'}} /> </i>;
     }
     return icon;
 };
