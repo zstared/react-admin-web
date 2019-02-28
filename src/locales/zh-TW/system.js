@@ -5,8 +5,11 @@ export default{
     'system.user.modal.add':'新增用戶',
     'system.user.modal.edit':'編輯用戶',
 
+     
     'system.role':'角色',
-
+    'system.role.delete.prompt':'確定刪除此角色嗎？',
+    'system.role.modal.add':'新增角色',
+    'system.role.modal.edit':'編輯角色',
 
     'system.resource':'資源',
 

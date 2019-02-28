@@ -3,7 +3,7 @@ import { connect } from 'dva'
 import { Form, Input, Radio, Button,message} from 'antd'
 import { formatMessage, FormattedMessage } from 'umi/locale'
 import UploadImage from '../../../components/UploadImage'
-import { regPhone, regName, regNameEn } from '../../../utils/validate'
+import { regPhone, regNameCn, regNameEn } from '../../../utils/validate'
 
 const FormItem = Form.Item
 
@@ -68,12 +68,12 @@ class Base extends PureComponent {
                             }} />
                         )}
                     </FormItem>
-                    <FormItem {...formItemLayout} label={formatMessage({ id: 'label.name' })}>
+                    <FormItem {...formItemLayout} label={formatMessage({ id: 'label.name-cn' })}>
                         {getFieldDecorator('name_cn', {
                             initialValue: currentUser.name_cn,
                             rules: [
-                                { required: true, whitespace: false, message: formatMessage({ id: 'validation.name.required' }) },
-                                { max: 50, min: 1, pattern: regName, message: formatMessage({ id: 'validation.name' }) }
+                                { required: true, whitespace: false, message: formatMessage({ id: 'validation.name-cn.required' }) },
+                                { max: 50, min: 1, pattern: regNameCn, message: formatMessage({ id: 'validation.name-cn' }) }
                             ]
                         })(
                             <Input ></Input>

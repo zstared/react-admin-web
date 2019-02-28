@@ -25,3 +25,8 @@ export async function getRoleDropList(params) {
 export async function getRoleList(params) {
     return await request.get('/core/role/pageList', params)
 }
+
+/**判断角色是否存在 */
+export async function existRole(params) {
+    return await request.post('/core/role/existRole', params)
+}

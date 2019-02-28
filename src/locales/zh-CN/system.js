@@ -7,7 +7,9 @@ export default{
 
 
     'system.role':'角色',
-
+    'system.role.delete.prompt':'确定删除此角色吗？',
+    'system.role.modal.add':'新增角色',
+    'system.role.modal.edit':'编辑角色',
 
     'system.resource':'资源',
 

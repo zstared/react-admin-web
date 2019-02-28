@@ -8,7 +8,10 @@ export default {
     'validation.email':'邮箱格式有误',
     'validation.email.required':'请输入邮箱',
     'validation.name':'请输入长度不超过50的有效字符',
-    'validation.name.required':'请输入姓名',
+    'validation.name.required':'请输入名称',
+    'validation.name.existed': '名称已存在',
+    'validation.name-cn':'请输入长度不超过50的有效字符',
+    'validation.name-cn.required':'请输入姓名',
     'validation.name-en':'请输入长度不超过50的有效字符',
     'validation.name-en.required':'请输入英文名',
     'validation.sex.required':'请选择性别',
@@ -19,7 +22,8 @@ export default {
 
     'label.avatar': '头像',
     'label.account': '账号',
-    'label.name': '姓名',
+    'label.name':'名称',
+    'label.name-cn': '姓名',
     'label.name-en': '英文名',
     'label.sex': '性别',
     'label.sex.male':'男',
@@ -34,6 +38,9 @@ export default {
     'label.create-time':'创建时间',
     'label.update-time':'修改时间',
     'label.operation':'操作',
+    'label.desc':'描述',
+    'label.sort':'排序',
+    
 
     'label.save': '保存',
     'label.submit': '提交',

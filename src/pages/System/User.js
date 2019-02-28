@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { formatMessage, FormattedMessage } from 'umi/locale'
 import { connect } from 'dva'
 import { formatTime } from '../../utils/utils'
-import { regName, regNameEn, regPhone, regAccount } from '../../utils/validate'
+import { regNameCn, regNameEn, regPhone, regAccount } from '../../utils/validate'
 import { existAccount, existMobile } from '../../services/user'
 
 @Form.create()
@@ -79,12 +79,12 @@ class UserForm extends PureComponent {
                             <Input disabled={!mode}></Input>
                         )}
                     </Form.Item>
-                    <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.name' })}>
+                    <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.name-cn' })}>
                         {getFieldDecorator('name_cn', {
                             initialValue: !mode ? editInfo.name_cn : '',
                             rules: [
-                                { required: true, whitespace: false, message: formatMessage({ id: 'validation.name.required' }) },
-                                { max: 50, min: 1, pattern: regName, message: formatMessage({ id: 'validation.name' }) }
+                                { required: true, whitespace: false, message: formatMessage({ id: 'validation.name-cn.required' }) },
+                                { max: 50, min: 1, pattern: regNameCn, message: formatMessage({ id: 'validation.name-cn' }) }
                             ]
                         })(
                             <Input></Input>
@@ -269,7 +269,7 @@ class User extends PureComponent {
             fixed: true,
             width: 200,
         }, {
-            title: formatMessage({ id: 'label.name' }),
+            title: formatMessage({ id: 'label.name-cn' }),
             key: 'name_cn',
             dataIndex: 'name_cn',
             fixed: true,

@@ -7,6 +7,9 @@ export default{
 
 
     'system.role':'Role',
+    'system.role.delete.prompt':'Are you sure you want to delete this role?',
+    'system.role.modal.add':'Add Role',
+    'system.role.modal.edit':'Edit Role',
 
 
     'system.resource':'Resource',
