@@ -9,11 +9,234 @@ import { regName, regCode } from '../../utils/validate'
 import { existResource, existResourceCode } from '../../services/resource'
 
 @Form.create()
-class ResourceForm extends PureComponent {
+class ResourceCreateForm extends PureComponent {
 
     state = {
         parent_type: '',//上级资源类型
         type: '',//资源类型
+        permission_type: '',//权限类型,
+    }
+
+    //保存
+    handleOk = () => {
+        const { form, handleSave } = this.props;
+        form.validateFieldsAndScroll((err, fieldsValue) => {
+            if (err) return;
+            fieldsValue.parent_id = fieldsValue.parent_id ? fieldsValue.parent_id : 0;
+            handleSave(fieldsValue);
+        })
+    }
+    //验证资源名称是否已存在 
+    handleExistResource = async (rule, value, callback) => {
+        const { editInfo, form } = this.props;
+        let parent_id = form.getFieldValue('parent_id')
+        const params = { resource_name: value, parent_id: parent_id ? parent_id : 0 };
+        if (editInfo) params.resource_id = editInfo.resource_id;
+        let { code, data } = await existResource(params);
+        if (!code && data.exist) {
+            callback(formatMessage({ id: 'validation.resource.existed' }))
+        }
+        callback()
+    }
+
+    //验证资源编码是否已存在 
+    handleExistResourceCode = async (rule, value, callback) => {
+        const { editInfo, form } = this.props;
+        let parent_id = form.getFieldValue('parent_id')
+        const params = { resource_code: value, parent_id: parent_id ? parent_id : 0 };
+        if (editInfo) params.resource_id = editInfo.resource_id;
+        let { code, data } = await existResourceCode(params);
+        if (!code && data.exist) {
+            callback(formatMessage({ id: 'validation.code.existed' }))
+        }
+        callback()
+    }
+
+    //资源类型切换
+    handleChangeType = (value) => {
+        this.setState({
+            type: value,
+            permission_type: '',
+        })
+    }
+
+    //权限类型切换
+    handleChangePermissionType = (value) => {
+        this.setState({
+            permission_type: value
+        })
+    }
+
+    //上级资源切换
+    handleTreeChange = (value, label, extra) => {
+        const { triggerNode } = extra
+        this.setState({
+            parent_type: triggerNode ? triggerNode.props.resource_type : '',
+            type: '',
+            permission_type: '',
+        })
+        this.props.form.setFieldsValue({
+            resource_type: ''
+        })
+    }
+
+    initTree = (type) => {
+        console.log(type)
+        this.setState({
+            parent_type: type ? type : '',
+            type: '',
+            permission_type: '',
+        })
+    }
+    componentDidMount() {
+        this.props.triggerRef(this)
+    }
+
+    render() {
+        const { form: { getFieldDecorator }, handleModalVisible, modalCreateVisible, dropList, parent_id } = this.props;
+        const { type, parent_type, permission_type } = this.state;
+        const formItemLayout = {
+            labelCol: {
+                xs: { span: 24 },
+                sm: { span: 7 },
+            },
+            wrapperCol: {
+                xs: { span: 24 },
+                sm: { span: 14 },
+            },
+        };
+        return (
+            <Modal
+                destroyOnClose
+                title={<span><FontAwesomeIcon icon="plus"></FontAwesomeIcon> <FormattedMessage id="system.resource.modal.add" /></span>}
+                visible={modalCreateVisible}
+                onOk={this.handleOk}
+                onCancel={() => handleModalVisible('add')}
+            >
+                <Form>
+                    <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.upper' })}>
+                        {getFieldDecorator('parent_id', {
+                            initialValue: parent_id
+                        })(
+                            <TreeSelect
+                                allowClear
+                                treeDefaultExpandAll
+                                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                                treeData={dropList}
+                                onChange={this.handleTreeChange}>
+                            </TreeSelect>
+                        )}
+                    </Form.Item>
+                    <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.name' })}>
+                        {getFieldDecorator('resource_name', {
+                            validateFirst: true,
+                            rules: [
+                                { required: true, whitespace: false, message: formatMessage({ id: 'validation.name.required' }) },
+                                { pattern: regName, message: formatMessage({ id: 'validation.name' }) },
+                                { validator: this.handleExistResource }
+                            ]
+                        })(
+                            <Input ></Input>
+                        )}
+                    </Form.Item>
+                    <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.type' })}>
+                        {getFieldDecorator('resource_type', {
+                            rules: [
+                                { required: true, message: formatMessage({ id: 'validation.type.required' }) },
+                            ]
+                        })(
+                            <Select onChange={this.handleChangeType}>
+                                {parent_type == 1 || parent_type == '' ? <Select.Option value={1}><FormattedMessage id="system.resource.type.module" /></Select.Option> : null}
+                                {parent_type == 1 || parent_type == '' ? <Select.Option value={2}><FormattedMessage id="system.resource.type.menu" /></Select.Option> : null}
+                                {parent_type == 2 ? <Select.Option value={3}><FormattedMessage id="system.resource.type.api" /></Select.Option> : null}
+                            </Select>
+                        )}
+                    </Form.Item>
+                    {
+                        type == 1 || type == 2 ?
+                            <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.code' })}>
+                                {getFieldDecorator('resource_code', {
+                                    rules: [
+                                        { required: true, whitespace: false, message: formatMessage({ id: 'validation.code.required' }) },
+                                        { max: 50, min: 1, pattern: regCode, message: formatMessage({ id: 'validation.code' }) },
+                                        { validator: this.handleExistResourceCode }
+                                    ]
+                                })(
+                                    <Input></Input>
+                                )}
+                            </Form.Item> : null
+                    }
+                    {
+                        type == 3 ?
+                            <Form.Item {...formItemLayout} label={formatMessage({ id: 'system.resource.permission' })}>
+                                {getFieldDecorator('permission_type', {
+                                    rules: [
+                                        { required: true, message: formatMessage({ id: 'validation.type.required' }) },
+                                    ]
+                                })(
+                                    <Select onChange={this.handleChangePermissionType}>
+                                        <Select.Option value={1}><FormattedMessage id="system.resource.permission.query" /></Select.Option>
+                                        <Select.Option value={2}><FormattedMessage id="system.resource.permission.add" /></Select.Option>
+                                        <Select.Option value={3}><FormattedMessage id="system.resource.permission.edit" /></Select.Option>
+                                        <Select.Option value={4}><FormattedMessage id="system.resource.permission.delete" /></Select.Option>
+                                        <Select.Option value={5}><FormattedMessage id="system.resource.permission.export" /></Select.Option>
+                                        <Select.Option value={6}><FormattedMessage id="system.resource.permission.import" /></Select.Option>
+                                        <Select.Option value={99}><FormattedMessage id="system.resource.permission.custom" /></Select.Option>
+                                    </Select>
+                                )}
+                            </Form.Item>
+                            : null
+                    }
+                    {
+                        permission_type == 99 ?
+                            <Form.Item {...formItemLayout} label={formatMessage({ id: 'system.resource.permission-name' })}>
+                                {getFieldDecorator('permission_custom')(
+                                    <Input></Input>
+                                )}
+                            </Form.Item>
+                            : null
+                    }
+                    {
+                        type == 2 || type == 3 ?
+                            <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.path' })}>
+                                {getFieldDecorator('path', {
+                                    rules: [
+                                        { required: true, message: formatMessage({ id: 'validation.path.required' }) },
+                                    ]
+                                })(
+                                    <Input></Input>
+                                )}
+                            </Form.Item> : null
+                    }
+                    {
+                        type == 1 || type == 2 ?
+                            <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.icon' })}>
+                                {getFieldDecorator('icon')(
+                                    <Input></Input>
+                                )}
+                            </Form.Item> : null
+                    }
+                    {
+                        type == 1 || type == 2 ?
+                            <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.sort' })}>
+                                {getFieldDecorator('sort_no')(
+                                    <InputNumber min={0} step={1} style={{ width: '100%' }}></InputNumber>
+                                )}
+                            </Form.Item> : null
+                    }
+                </Form>
+            </Modal>
+        )
+    }
+}
+
+@Form.create()
+class ResourceEditForm extends PureComponent {
+
+    state = {
+        parent_type: '',//上级资源类型
+        type: '',//资源类型
+        permission_type: '',//权限类型
     }
 
     //保存
@@ -55,6 +278,14 @@ class ResourceForm extends PureComponent {
     handleChangeType = (value) => {
         this.setState({
             type: value,
+            permission_type: '',
+        })
+    }
+
+    //权限类型切换
+    handleChangePermissionType = (value) => {
+        this.setState({
+            permission_type: value
         })
     }
 
@@ -62,28 +293,30 @@ class ResourceForm extends PureComponent {
     handleTreeChange = (value, label, extra) => {
         const { triggerNode } = extra
         this.setState({
-            parent_type: triggerNode ? triggerNode.props.resource_type : '',
+            parent_type: triggerNode ? riggerNode.props.resource_type : '',
             type: '',
+            permission_type: '',
         })
         this.props.form.setFieldsValue({
             resource_type: ''
         })
     }
-    
-    //初始
+
     initTree = (type) => {
         this.setState({
             parent_type: type ? type : '',
         })
-        this.handleChangeType(this.props.form.getFieldValue('resource_type'))
     }
-
     componentDidMount() {
         this.props.triggerRef(this)
     }
+    componentDidUpdate() {
+        this.handleChangeType(this.props.form.getFieldValue('resource_type'))
+        this.handleChangePermissionType(this.props.form.getFieldValue('permission_type'))
+    }
 
     render() {
-        const { form: { getFieldDecorator }, handleModalVisible, modalVisible, editInfo, dropList, mode, parent_id } = this.props;
+        const { form: { getFieldDecorator }, handleModalVisible, modalEditVisible, editInfo, dropList } = this.props;
         const { type, parent_type, permission_type } = this.state;
         const formItemLayout = {
             labelCol: {
@@ -98,21 +331,19 @@ class ResourceForm extends PureComponent {
         return (
             <Modal
                 destroyOnClose
-                title={
-                    <span>{mode ? <span><FontAwesomeIcon icon="plus"></FontAwesomeIcon> <FormattedMessage id="system.resource.modal.add" /></span> :
-                        <span><FontAwesomeIcon icon="edit"></FontAwesomeIcon> <FormattedMessage id="system.resource.modal.edit" /></span>}</span>}
-                visible={modalVisible}
+                title={<span><FontAwesomeIcon icon="edit"></FontAwesomeIcon> <FormattedMessage id="system.resource.modal.edit" /></span>}
+                visible={modalEditVisible}
                 onOk={this.handleOk}
-                onCancel={() => handleModalVisible()}
+                onCancel={() => handleModalVisible('edit')}
             >
                 <Form>
                     <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.upper' })}>
                         {getFieldDecorator('parent_id', {
-                            initialValue: mode ? parent_id : editInfo.parent_id,
+                            initialValue: editInfo.parent_id,
                             validateFirst: true,
                             rules: []
                         })(
-                            <TreeSelect disabled={!mode}
+                            <TreeSelect disabled={true}
                                 treeDefaultExpandAll
                                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                                 treeData={dropList}
@@ -122,7 +353,7 @@ class ResourceForm extends PureComponent {
                     </Form.Item>
                     <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.name' })}>
                         {getFieldDecorator('resource_name', {
-                            initialValue: mode ? '' : editInfo.resource_name,
+                            initialValue: editInfo.resource_name,
                             validateFirst: true,
                             rules: [
                                 { required: true, whitespace: false, message: formatMessage({ id: 'validation.name.required' }) },
@@ -135,12 +366,12 @@ class ResourceForm extends PureComponent {
                     </Form.Item>
                     <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.type' })}>
                         {getFieldDecorator('resource_type', {
-                            initialValue: mode ? '' : editInfo.resource_type,
+                            initialValue: editInfo.resource_type,
                             rules: [
                                 { required: true, message: formatMessage({ id: 'validation.type.required' }) },
                             ]
                         })(
-                            <Select disabled={!mode} onChange={this.handleChangeType} >
+                            <Select disabled={true} onChange={this.handleChangeType} >
                                 {parent_type == 1 || parent_type == '' ? <Select.Option value={1}><FormattedMessage id="system.resource.type.module" /></Select.Option> : null}
                                 {parent_type == 1 || parent_type == '' ? <Select.Option value={2}><FormattedMessage id="system.resource.type.menu" /></Select.Option> : null}
                                 {parent_type == 2 ? <Select.Option value={3}><FormattedMessage id="system.resource.type.api" /></Select.Option> : null}
@@ -151,7 +382,7 @@ class ResourceForm extends PureComponent {
                         type == 1 || type == 2 ?
                             <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.code' })}>
                                 {getFieldDecorator('resource_code', {
-                                    initialValue: mode ? '' : editInfo.resource_code,
+                                    initialValue: editInfo.resource_code,
                                     rules: [
                                         { required: true, whitespace: false, message: formatMessage({ id: 'validation.code.required' }) },
                                         { max: 50, min: 1, pattern: regCode, message: formatMessage({ id: 'validation.code' }) },
@@ -166,7 +397,7 @@ class ResourceForm extends PureComponent {
                         type == 3 ?
                             <Form.Item {...formItemLayout} label={formatMessage({ id: 'system.resource.permission' })}>
                                 {getFieldDecorator('permission_type', {
-                                    initialValue: mode ? '' : editInfo.permission_type,
+                                    initialValue: editInfo.permission_type,
                                     rules: [
                                         { required: true, message: formatMessage({ id: 'validation.type.required' }) },
                                     ]
@@ -178,7 +409,19 @@ class ResourceForm extends PureComponent {
                                         <Select.Option value={4}><FormattedMessage id="system.resource.permission.delete" /></Select.Option>
                                         <Select.Option value={5}><FormattedMessage id="system.resource.permission.export" /></Select.Option>
                                         <Select.Option value={6}><FormattedMessage id="system.resource.permission.import" /></Select.Option>
+                                        <Select.Option value={99}><FormattedMessage id="system.resource.permission.custom" /></Select.Option>
                                     </Select>
+                                )}
+                            </Form.Item>
+                            : null
+                    }
+                    {
+                        permission_type == 99 ?
+                            <Form.Item {...formItemLayout} label={formatMessage({ id: 'system.resource.permission-name' })}>
+                                {getFieldDecorator('permission_custom', {
+                                    initialValue: editInfo.permission_custom,
+                                })(
+                                    <Input></Input>
                                 )}
                             </Form.Item>
                             : null
@@ -187,7 +430,7 @@ class ResourceForm extends PureComponent {
                         type == 2 || type == 3 ?
                             <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.path' })}>
                                 {getFieldDecorator('path', {
-                                    initialValue: mode ? '' : editInfo.path,
+                                    initialValue: editInfo.path,
                                     rules: [
                                         { required: true, message: formatMessage({ id: 'validation.path.required' }) },
                                     ]
@@ -200,7 +443,7 @@ class ResourceForm extends PureComponent {
                         type == 1 || type == 2 ?
                             <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.icon' })}>
                                 {getFieldDecorator('icon', {
-                                    initialValue: mode ? '' : editInfo.icon,
+                                    initialValue: editInfo.icon,
                                     rules: []
                                 })(
                                     <Input></Input>
@@ -211,7 +454,7 @@ class ResourceForm extends PureComponent {
                         type == 1 || type == 2 ?
                             <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.sort' })}>
                                 {getFieldDecorator('sort_no', {
-                                    initialValue: mode ? '' : editInfo.sort_no,
+                                    initialValue: editInfo.sort_no,
                                 })(
                                     <InputNumber min={0} step={1} style={{ width: '100%' }}></InputNumber>
                                 )}
@@ -234,8 +477,8 @@ class Resource extends PureComponent {
     state = {
         sortedInfo: {},//排序信息
         filteredInfo: {},//筛选信息
-        modalVisible: false,
-        modalVisible: false,
+        modalCreateVisible: false,
+        modalEditVisible: false,
         modalMode: true,//弹框模式 true-新增；false-编辑
         editInfo: {},
         parent_id: '',
@@ -274,18 +517,24 @@ class Resource extends PureComponent {
 
     /**弹框状态 modal add-新增；edit-编辑*/
     handleModalVisible = (modal) => {
-        this.setState({
-            modalVisible: !this.state.modalVisible,
-        })
-
+        if (modal == 'add') {
+            this.setState({
+                modalCreateVisible: !this.state.modalCreateVisible,
+            })
+        } else {
+            this.setState({
+                modalEditVisible: !this.state.modalEditVisible,
+            })
+        }
     }
 
     /**新增资源*/
     handleCreate = (parent_id, parent_type) => {
         this.setState({
             parent_id: parent_id ? parent_id : '',
-            modalMode: true,
-            modalVisible: !this.state.modalVisible
+            parent_type: parent_type ? parent_type : '',
+            modalMode: 'add',
+            modalCreateVisible: !this.state.modalCreateVisible
         }, () => {
             this.child.initTree(parent_type)
         })
@@ -294,9 +543,9 @@ class Resource extends PureComponent {
     /**编辑资源 */
     handleEdit = (fieldsValue) => {
         this.setState({
-            modalMode: false,
+            modalMode: 'edit',
             editInfo: fieldsValue,
-            modalVisible: !this.state.modalVisible
+            modalEditVisible: !this.state.modalEditVisible
         }, () => {
             let type = fieldsValue.resource_type;
             this.child.initTree(type == 3 ? 2 : 1)
@@ -309,14 +558,14 @@ class Resource extends PureComponent {
         const { modalMode, editInfo } = this.state;
 
         dispatch({
-            type: modalMode ? 'resource/create' : 'resource/update',
-            payload: modalMode ? fieldsValue : Object.assign(fieldsValue, { resource_id: editInfo.resource_id }),
+            type: modalMode == 'add' ? 'resource/create' : 'resource/update',
+            payload: modalMode == 'add' ? fieldsValue : Object.assign(fieldsValue, { resource_id: editInfo.resource_id }),
             callback: () => {
                 this.setState({
-                    modalVisible: false,
-                    modalVisible: false
+                    modalCreateVisible: false,
+                    modalEditVisible: false
                 })
-                message.success(modalMode ? formatMessage({ id: 'msg.created' }) : formatMessage({ id: 'msg.updated' }))
+                message.success(modalMode == 'add' ? formatMessage({ id: 'msg.created' }) : formatMessage({ id: 'msg.updated' }))
                 this.initDropList();
             }
         })
@@ -422,11 +671,18 @@ class Resource extends PureComponent {
                 <Button type="primary" onClick={() => this.handleCreate('', '')} ><FontAwesomeIcon icon="plus" style={{ marginRight: '6px' }} /><FormattedMessage id="button.add" /></Button>
             </React.Fragment>
         )
-        const formProps = {
-            mode: this.state.modalMode,
+        const createProps = {
             parent_id: this.state.parent_id,
+            parent_type: this.state.parent_type,
+            modalCreateVisible: this.state.modalCreateVisible,
+            handleModalVisible: this.handleModalVisible,
+            handleSave: this.handleSave,
+            dropList: dropList,
+            triggerRef: this.bindRef
+        }
+        const editProps = {
             editInfo: this.state.editInfo,
-            modalVisible: this.state.modalVisible,
+            modalEditVisible: this.state.modalEditVisible,
             handleModalVisible: this.handleModalVisible,
             handleSave: this.handleSave,
             dropList: dropList,
@@ -439,7 +695,8 @@ class Resource extends PureComponent {
                     onChange={this.handleChange}
                 >
                 </TablePage>
-                <ResourceForm {...formProps} ></ResourceForm>
+                <ResourceCreateForm {...createProps} ></ResourceCreateForm>
+                <ResourceEditForm {...editProps} ></ResourceEditForm>
             </Fragment>
         )
     }

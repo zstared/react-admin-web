@@ -1,6 +1,7 @@
 import * as React from "react";
 import QueryItem from './QueryItem'
 export interface ITablePageProps {
+    isTree:boolean,
     url:string,
     data: Object,
     columns: any[],

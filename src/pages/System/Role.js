@@ -152,7 +152,7 @@ class Role extends PureComponent {
     }
 
     /**修改角色 */
-    handleUpdate = (fieldsValue) => {
+    handleEdit = (fieldsValue) => {
         this.setState({
             editInfo: fieldsValue
         }, () => {
@@ -216,7 +216,7 @@ class Role extends PureComponent {
                     {
                         !record.is_system ?
                             <span>
-                                <a href="javascript:;" onClick={() => this.handleUpdate(record)}><FontAwesomeIcon icon="edit" /> <FormattedMessage id="label.edit" /></a>
+                                <a href="javascript:;" onClick={() => this.handleEdit(record)}><FontAwesomeIcon icon="edit" /> <FormattedMessage id="label.edit" /></a>
                                 <Divider type="vertical" />
                                 <Popconfirm placement="topRight"
                                     icon={<FontAwesomeIcon icon="question-circle" className="danger" />}

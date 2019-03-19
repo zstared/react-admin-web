@@ -13,7 +13,9 @@ export default{
 
 
     'system.resource':'Resource',
-
+    'system.resource.delete.prompt':'Are you sure you want to delete this resource?',
+    'system.resource.modal.add':'Add Resource',
+    'system.resource.modal.edit':'Edit Resource',
 
     'system.menu':'Menu'
 

@@ -39,7 +39,7 @@ class SiderBaseMenu extends PureComponent {
         if (item.children&&item.children.length > 0) {
             const { name, icon, path, children,locale } = item
             return (
-                <SubMenu title={icon ? (<span>{getIcon(icon)}<span>{this.getLocaleName(locale)}</span></span>) : (name)} key={path}>
+                <SubMenu title={icon ? (<span>{getIcon(icon)}<span>{this.getLocaleName(locale)}</span></span>) : (name)} key={locale}>
                     {this.getNavMenuItems(children)}
                 </SubMenu>
             )

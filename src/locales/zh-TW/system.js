@@ -12,7 +12,9 @@ export default{
     'system.role.modal.edit':'編輯角色',
 
     'system.resource':'資源',
-
+    'system.resource.delete.prompt':'確定刪除此資源嗎？',
+    'system.resource.modal.add':'新增資源',
+    'system.resource.modal.edit':'編輯資源',
 
     'system.menu':'菜單'
 

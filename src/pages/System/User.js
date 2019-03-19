@@ -234,7 +234,7 @@ class User extends PureComponent {
     }
 
     /**修改用户 */
-    handleUpdate = (fieldsValue) => {
+    handleEdit = (fieldsValue) => {
         this.setState({
             editInfo: fieldsValue
         }, () => {
@@ -334,7 +334,7 @@ class User extends PureComponent {
                     {
                         record.status !== 2 && !record.is_system ?
                             <span>
-                                <a href="javascript:;" onClick={() => this.handleUpdate(record)}><FontAwesomeIcon icon="edit" /> <FormattedMessage id="label.edit" /></a>
+                                <a href="javascript:;" onClick={() => this.handleEdit(record)}><FontAwesomeIcon icon="edit" /> <FormattedMessage id="label.edit" /></a>
                                 <Divider type="vertical" />
                                 {
                                     record.status == 1 ?

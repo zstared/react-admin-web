@@ -17,6 +17,11 @@ class TablePage extends PureComponent {
         filteredInfo: {},
     }
 
+    /**默认参数 */
+    static defaultProps = {
+        isTree: false,
+    }
+
     /**触发是否展开更多查询项 */
     handleExpand = () => {
         this.setState({
@@ -113,14 +118,14 @@ class TablePage extends PureComponent {
             lg: 16,
             md: 8,
         }
-        const { data, columns, buttons, rowKey, loading } = this.props;
+        const { data, columns, buttons, rowKey, loading, isTree } = this.props;
         const queryItem = this.getQueryItem();
         return (
             <div className={styles.pageWrapper}>
                 <Form className={styles.formWrapper} onSubmit={this.handleSubmit}>
                     <Row gutter={{ ...rowGutterLayout }}>
                         {queryItem.base}
-                        <Col span={6}>
+                        {queryItem.base.length>0?<Col span={6}>
                             <FormItem>
                                 <Button type="primary" htmlType="submit"><FontAwesomeIcon icon="search" style={{ marginRight: '6px' }} /><FormattedMessage id="button.search" /></Button>
                                 <Button onClick={this.handleReset} style={{ marginLeft: 8 }}><FormattedMessage id="button.reset" /></Button>
@@ -128,7 +133,7 @@ class TablePage extends PureComponent {
                                     {this.state.expand ? (<span><FormattedMessage id="label.collapse" /> <Icon type="up" /></span>) : (<span><FormattedMessage id="label.expand" /> <Icon type="down" /></span>)}
                                 </a> : null}
                             </FormItem>
-                        </Col>
+                        </Col>:null}
                         <Col offset={18} style={{ textAlign: "right" }}>
                             <FormItem>
                                 {buttons}
@@ -141,11 +146,11 @@ class TablePage extends PureComponent {
                             {queryItem.more}
                         </Row>) : null}
                 </Form>
-                <Table dataSource={data.rows} columns={columns} rowKey={rowKey}
+                 <Table dataSource={isTree ? data : data.rows} columns={columns} rowKey={rowKey}
                     onChange={this.handleTableChange}
                     loading={loading}
-                    scroll={{x: 'max-content'}}
-                    pagination={{
+                    scroll={{ x: 'max-content' }}
+                    pagination={isTree ? false : {
                         showSizeChanger: true,
                         showQuickJumper: true,
                         showTotal: total => `${formatMessage({ id: 'pagination.total' })} ${total} ${formatMessage({ id: 'pagination.records' })}`,
