@@ -12,7 +12,7 @@ const getIcon = icon => {
     if (typeof icon === 'string' && isUrl(icon)) {
         return <img src={icon} alt="icon" style={{ width: '14px', marginRight: '10px' }} />;
     }
-    if (typeof icon === 'string') {
+    if (typeof icon === 'string'&&icon) {
         return <i className="anticon" > <FontAwesomeIcon  icon={icon} style={{marginBottom:'2px'}} /> </i>;
     }
     return icon;

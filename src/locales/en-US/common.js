@@ -76,6 +76,7 @@ export default{
     'label.remove': 'Remove',
     'label.reset': 'Reset',
     'label.more': 'More',
+    'label.permissions': 'Permissions',
 
     'button.save': 'Save',
     'button.submit': 'Submit',

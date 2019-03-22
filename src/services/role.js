@@ -30,3 +30,13 @@ export async function getRoleList(params) {
 export async function existRole(params) {
     return await request.post('/core/role/existRole', params)
 }
+
+/**获取角色权限 */
+export async function getRolePermission(params) {
+    return await request.get('/core/role/permission', params)
+}
+
+/**角色赋权限 */
+export async function savePermission(params) {
+    return await request.post('/core/role/relateResource', params)
+}

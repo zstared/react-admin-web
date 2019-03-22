@@ -56,10 +56,10 @@ export default {
         *getMenus(_, { call, put, select }) {
             try {
                 const response = yield call(getMenus);
-                const { data: { menuData } } = response;
+                const { data } = response;
                 yield put({
                     type: 'setMenus',
-                    payload: menuData ? menuData : []
+                    payload: data ? data : []
                 })
                 const {navStyle} = yield select(state => state.app)
                 if (navStyle === "breadcrumb") {

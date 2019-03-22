@@ -59,3 +59,13 @@ export async function existAccount(params) {
 export async function existMobile(params) {
     return await request.post('/core/user/existMobile', params)
 }
+
+/**获取用户权限 */
+export async function getUserPermission(params) {
+    return await request.get('/core/user/permission', params)
+}
+
+/**用户赋权限 */
+export async function savePermission(params) {
+    return await request.post('/core/user/relateResource', params)
+}

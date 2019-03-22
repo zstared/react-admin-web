@@ -10,6 +10,12 @@ export async function getResourceDropList(params) {
     return await request.get('/core/resource/treeDropList', params)
 }
 
+/**获取权限资源列表 */
+export async function getPermissionList() {
+    return await request.get('/core/resource/treePermissionList')
+}
+
+
 /**新增资源 */
 export async function create(params) {
     return await request.post('/core/resource/create', params)

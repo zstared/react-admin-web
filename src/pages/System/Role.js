@@ -6,7 +6,8 @@ import { formatMessage, FormattedMessage } from 'umi/locale'
 import { connect } from 'dva'
 import { formatTime } from '../../utils/utils'
 import { regName } from '../../utils/validate'
-import { existRole} from '../../services/role'
+import { existRole } from '../../services/role'
+import Permission from '../../components/Permission'
 
 @Form.create()
 class RoleForm extends PureComponent {
@@ -92,6 +93,7 @@ class RoleForm extends PureComponent {
 
 @connect(({ role, loading }) => ({
     data: role.data,
+    permission: role.permission,
     loading: loading.effects['role/getList']
 }))
 class Role extends PureComponent {
@@ -102,11 +104,15 @@ class Role extends PureComponent {
         modalVisible: false,
         modalMode: true,//弹框模式 true-新增；false-编辑
         editInfo: {},
+        permissionVisible: false,
     }
 
     componentDidMount() {
         this.initRoleDropList();
     }
+
+    /**绑定子组件 */
+    bindRef = ref => { this.child = ref }
 
     initRoleDropList = () => {
         const { dispatch } = this.props;
@@ -177,6 +183,47 @@ class Role extends PureComponent {
         })
     }
 
+    handlePermissionModalVisiable = (role_id, callback) => {
+        this.setState({
+            assignRoleId: role_id ? role_id : '',
+            permissionVisible: !this.state.permissionVisible
+        }, () => {
+            if (callback) callback();
+        })
+    }
+
+    /**
+     * 分配权限
+     */
+    handleAssignPermissions = (role_id) => {
+        const { dispatch } = this.props;
+        dispatch({
+            type: 'role/getPermission',
+            payload: { role_id: role_id },
+            callback: () => {
+                this.handlePermissionModalVisiable(role_id, () => {
+                    this.child.setCheckedKeys(this.props.permission, [])
+                });
+            }
+        })
+    }
+
+    /**保存权限 */
+    handleSavePermission = (resource_ids) => {
+        const { dispatch } = this.props;
+        dispatch({
+            type: 'role/savePermission',
+            payload: {
+                role_id: this.state.assignRoleId,
+                resource_list: resource_ids
+            },
+            callback: () => {
+                message.success(formatMessage({ id: 'msg.saved' }))
+                this.handlePermissionModalVisiable()
+            }
+        })
+    }
+
     render() {
         const { data, loading } = this.props;
         const { sortedInfo } = this.state;
@@ -216,6 +263,8 @@ class Role extends PureComponent {
                     {
                         !record.is_system ?
                             <span>
+                                <a href="javascript:;" onClick={() => this.handleAssignPermissions(record.role_id)}><FontAwesomeIcon icon="user-shield" /> <FormattedMessage id="label.permissions" /></a>
+                                <Divider type="vertical" />
                                 <a href="javascript:;" onClick={() => this.handleEdit(record)}><FontAwesomeIcon icon="edit" /> <FormattedMessage id="label.edit" /></a>
                                 <Divider type="vertical" />
                                 <Popconfirm placement="topRight"
@@ -254,6 +303,13 @@ class Role extends PureComponent {
                     </TablePage.QueryItem>
                 </TablePage>
                 <RoleForm {...userFormProps} ></RoleForm>
+                <Permission
+                    modalVisible={this.state.permissionVisible}
+                    handleModalVisible={this.handlePermissionModalVisiable}
+                    triggerRef={this.bindRef}
+                    handleSave={this.handleSavePermission}
+                >
+                </Permission>
             </Fragment>
         )
     }

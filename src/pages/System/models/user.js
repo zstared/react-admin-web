@@ -1,11 +1,12 @@
-import { getUserList, create, update, updateState, deleteUser } from '@/services/user'
+import { getUserList, create, update, updateState, deleteUser, getUserPermission, savePermission } from '@/services/user'
 import { getRoleDropList } from '@/services/role'
 export default {
     namespace: 'user',
     state: {
         data: [],
         params: {},
-        roleList: []
+        roleList: [],
+        permission: {}
     },
     effects: {
         /**获取用户列表 */
@@ -111,7 +112,34 @@ export default {
             } catch (e) {
                 console.log(e)
             }
-        }
+        },
+
+        /**获取用户权限 */
+        *getPermission({ payload, callback }, { call, put }) {
+            try {
+                const { code, data } = yield call(getUserPermission, payload);
+                if (!code) {
+                    yield put({
+                        type: 'setPermission',
+                        payload: data
+                    })
+                    if (callback) callback()
+                }
+            } catch (e) {
+                console.log(e)
+            }
+        },
+        /**保存权限 */
+        *savePermission({ payload, callback }, { call }) {
+            try {
+                const { code } = yield call(savePermission, payload);
+                if (!code) {
+                    if (callback) callback()
+                }
+            } catch (e) {
+                console.log(e)
+            }
+        },
     },
     reducers: {
         /**设置列表数据 */
@@ -127,6 +155,13 @@ export default {
             return {
                 ...state,
                 roleList: payload
+            }
+        },
+        /**设置用户权限 */
+        setPermission(state, { payload }) {
+            return {
+                ...state,
+                permission: payload,
             }
         }
     }

@@ -14,8 +14,19 @@ export default{
 
     'system.resource':'Resource',
     'system.resource.delete.prompt':'Are you sure you want to delete this resource?',
+    'system.resource.button.add':'Add Child',
     'system.resource.modal.add':'Add Resource',
     'system.resource.modal.edit':'Edit Resource',
+    'system.resource.type.module':'Module',
+    'system.resource.type.menu':'Menu',
+    'system.resource.type.api':'API',
+    'system.resource.permission':'Permission Type',
+    'system.resource.permission.query':'Query',
+    'system.resource.permission.add':'Add',
+    'system.resource.permission.edit':'Edit',
+    'system.resource.permission.delete':'Delete',
+    'system.resource.permission.export':'Export',
+    'system.resource.permission.import':'Import',
 
     'system.menu':'Menu'
 

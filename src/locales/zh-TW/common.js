@@ -76,6 +76,7 @@ export default {
     'label.remove': '移除',
     'label.reset': '重置',
     'label.more': '更多',
+    'label.permissions': '權限',
 
     'button.save': '保 存',
     'button.submit': '提 交',
