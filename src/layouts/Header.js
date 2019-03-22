@@ -59,7 +59,7 @@ class HeaderContent extends PureComponent {
                         <Notification className={styles.action}></Notification>
                         <Dropdown overlay={userMenu} className={`${styles.action} ${styles.account}`} >
                             <span>
-                                <Avatar className={styles.avatar} src={currentUser.avatar ? currentUser.avatar_file.thumbUrl : avatar} ></Avatar>
+                                <Avatar className={styles.avatar} src={currentUser.avatar_file ? currentUser.avatar_file.thumbUrl : avatar} ></Avatar>
                                 <span className={styles.name}>{currentUser.name_cn}</span>
                             </span>
                         </Dropdown>
