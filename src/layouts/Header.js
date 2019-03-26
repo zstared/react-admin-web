@@ -20,10 +20,21 @@ class HeaderContent extends PureComponent {
         onCollapse(!collapsed)
     }
 
+    handleClick = (item) => {
+        console.log(item)
+        if (item.key === "logout") {
+            const { dispatch } = this.props;
+            console.log(dispatch)
+            dispatch({
+                type: 'oauth/logout'
+            })
+        }
+    }
+
     render() {
         const { collapsed, currentUser } = this.props;
         const userMenu = (
-            <Menu onClick={this.changLang}>
+            <Menu onClick={this.handleClick}>
                 <MenuItem key="setting">
                     <Link to="/user/setting">
                         <FontAwesomeIcon icon="user-cog" /> <FormattedMessage id='home.account.setting' />
@@ -31,9 +42,7 @@ class HeaderContent extends PureComponent {
                 </MenuItem>
                 <Menu.Divider />
                 <MenuItem key="logout">
-                    <Link to="/login">
-                        <FontAwesomeIcon icon="sign-out-alt" /> <FormattedMessage id='home.account.logout' />
-                    </Link>
+                    <FontAwesomeIcon icon="sign-out-alt" /> <FormattedMessage id='home.account.logout' />
                 </MenuItem>
             </Menu>
         )
@@ -47,14 +56,14 @@ class HeaderContent extends PureComponent {
                         </span>
                     }
                     {
-                    // <span className={styles.nav}> <FontAwesomeIcon icon="home" size="lg" /></span>
-                    // <span className={styles.nav}> <FontAwesomeIcon icon="cogs" size="lg" /> <span>后台管理</span></span>
-                    // <span className={styles.nav}> <FontAwesomeIcon icon="sitemap" size="lg" /> <span>人力资源</span></span>
-                    // <span className={styles.nav}> <FontAwesomeIcon icon="handshake" size="lg" /> <span>客户关系</span></span>
-                    // <span className={styles.nav}> <FontAwesomeIcon icon="truck" size="lg" /> <span>进销存</span></span>
+                        // <span className={styles.nav}> <FontAwesomeIcon icon="home" size="lg" /></span>
+                        // <span className={styles.nav}> <FontAwesomeIcon icon="cogs" size="lg" /> <span>后台管理</span></span>
+                        // <span className={styles.nav}> <FontAwesomeIcon icon="sitemap" size="lg" /> <span>人力资源</span></span>
+                        // <span className={styles.nav}> <FontAwesomeIcon icon="handshake" size="lg" /> <span>客户关系</span></span>
+                        // <span className={styles.nav}> <FontAwesomeIcon icon="truck" size="lg" /> <span>进销存</span></span>
                     }
                     <div className={styles.right}>
-                        <a className={styles.action} href="https://github.com/zstared/react-admin-web" target="_blank" ><FontAwesomeIcon icon={["fab","github"]} size="lg" /></a>
+                        <a className={styles.action} href="https://github.com/zstared/react-admin-web" target="_blank" ><FontAwesomeIcon icon={["fab", "github"]} size="lg" /></a>
                         <SelectLang className={styles.action} type="icon" />
                         <Notification className={styles.action}></Notification>
                         <Dropdown overlay={userMenu} className={`${styles.action} ${styles.account}`} >

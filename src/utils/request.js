@@ -52,6 +52,7 @@ class Request {
                 }
             })
         }, error => {
+            message.error(error.message)
             return Promise.reject(error);
         })
     }

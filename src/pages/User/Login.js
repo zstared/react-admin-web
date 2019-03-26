@@ -13,7 +13,7 @@ const FormItem=Form.Item;
 
 
 @connect(({loading})=>({
-    submitting:loading.effects['auth/login']
+    submitting:loading.effects['oauth/login']
 }))
 class Login extends PureComponent {
 
@@ -30,7 +30,7 @@ class Login extends PureComponent {
         validateFields((err,values)=>{
             if(!err){
                 dispatch({
-                    type:'auth/login',
+                    type:'oauth/login',
                     payload:values
                 })
             }

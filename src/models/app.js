@@ -52,42 +52,36 @@ export default {
         currentUser: {}
     },
     effects: {
-        /**获取菜单 */
-        *getMenus(_, { call, put, select }) {
-            try {
-                const response = yield call(getMenus);
-                const { data } = response;
-                yield put({
-                    type: 'setMenus',
-                    payload: data ? data : []
-                })
-                const {navStyle} = yield select(state => state.app)
-                if (navStyle === "breadcrumb") {
-                    yield put({
-                        type: 'setBreadcrumb',
-                        payload: null,
-                    })
-                } else {
-                    yield put({
-                        type: 'addNav',
-                        payload: null,
-                    })
-                }
-
-            } catch (e) {
-                console.log(e)
-            }
-        },
+      
         //获取当前用户信息
         *getCurrentUser(_, { call, put }) {
             try {
                 const response = yield call(getCurrentUser);
-                const { code, data } = response;
+                const { code, data: { base, menus } } = response;
                 if (!code) {
+                    //基本信息
                     yield put({
                         type: 'setCurrentUser',
-                        payload: data
+                        payload: base
                     })
+                    
+                    //菜单
+                    yield put({
+                        type: 'setMenus',
+                        payload: menus ? menus : []
+                    })
+                    const { navStyle } = yield select(state => state.app)
+                    if (navStyle === "breadcrumb") {
+                        yield put({
+                            type: 'setBreadcrumb',
+                            payload: null,
+                        })
+                    } else {
+                        yield put({
+                            type: 'addNav',
+                            payload: null,
+                        })
+                    }
                 }
             } catch (e) {
                 console.log(e)
@@ -95,7 +89,7 @@ export default {
         },
 
         //修改当前用户信息
-        *updateCurrentUser({ payload,callback }, { call, put }) {
+        *updateCurrentUser({ payload, callback }, { call, put }) {
             try {
                 const response = yield call(updateCurrentUser, payload);
                 const { code, message } = response;
@@ -104,7 +98,7 @@ export default {
                         type: 'setCurrentUser',
                         payload: payload
                     })
-                    if(callback) callback();
+                    if (callback) callback();
                 }
             } catch (e) {
                 console.log(e)
@@ -112,7 +106,7 @@ export default {
         },
 
         /**修改用户密码 */
-        *updatePassword({ payload,callback}, { call, put }) {
+        *updatePassword({ payload, callback }, { call, put }) {
             try {
                 const response = yield call(updatePassword, payload);
                 const { code, message, data } = response;
@@ -121,7 +115,7 @@ export default {
                         type: 'setCurrentUserPwd',
                         payload: data
                     })
-                    if(callback) callback();
+                    if (callback) callback();
                 }
             } catch (e) {
 
@@ -131,7 +125,7 @@ export default {
         /**添加菜单导航标签或面包屑 */
         *setNavBar({ payload }, { put, select }) {
             try {
-                const {navStyle} = yield select(state => state.app)
+                const { navStyle } = yield select(state => state.app)
                 if (navStyle === "breadcrumb") {
                     yield put({
                         type: 'setBreadcrumb',
@@ -168,7 +162,7 @@ export default {
         addNav(state, { payload }) {
             let { navs, navActiveKey } = state;
             let activeNav = payload ? payload : getNavItem(navActiveKey);
-            if (activeNav&&navs.some(item => item.path === activeNav.path)) {
+            if (activeNav && navs.some(item => item.path === activeNav.path)) {
                 return {
                     ...state,
                 }

@@ -6,10 +6,10 @@ import { connect } from 'dva'
 const TreeNode = Tree.TreeNode
 import styles from './index.less'
 
-@connect(({ auth, loading }) => ({
-    resourceTreeData: auth.resourceTreeData,
-    defaultExpandedKeys: auth.defaultExpandedKeys,
-    loading: loading.effects['auth/treePermissionList']
+@connect(({ oauth, loading }) => ({
+    resourceTreeData: oauth.resourceTreeData,
+    defaultExpandedKeys: oauth.defaultExpandedKeys,
+    loading: loading.effects['oauth/treePermissionList']
 }))
 class Permission extends PureComponent {
 
@@ -24,7 +24,7 @@ class Permission extends PureComponent {
         const { dispatch, triggerRef } = this.props;
         triggerRef(this)
         dispatch({
-            type: 'auth/treePermissionList',
+            type: 'oauth/treePermissionList',
             callback: () => {
                 const { defaultExpandedKeys } = this.props;
                 this.setState({
