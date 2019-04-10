@@ -12,7 +12,7 @@ class Request {
     constructor() {
         this.instance = axios.create({
             baseURL: config.api_url,
-            timeout: 5000,
+            timeout: 60000,
             headers: {
                 'content-type': 'application/json'
             }

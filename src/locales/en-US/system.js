@@ -19,6 +19,7 @@ export default{
     'system.resource.modal.edit':'Edit Resource',
     'system.resource.type.module':'Module',
     'system.resource.type.menu':'Menu',
+    'system.resource.type.permission':'Permission',
     'system.resource.type.api':'API',
     'system.resource.permission':'Permission Type',
     'system.resource.permission.query':'Query',

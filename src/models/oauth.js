@@ -47,7 +47,8 @@ export default {
                 const { code } = response;
                 if (!code) {
                     localStorage.removeItem('token')
-                    router.push('/login');
+                    // router.push('/login');
+                    window.location.pathname = '/login';
                 }
             } catch (e) {
                 console.log(e)

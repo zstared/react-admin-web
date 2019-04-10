@@ -18,6 +18,7 @@ export default{
     'system.resource.modal.edit':'编辑资源',
     'system.resource.type.module':'模块',
     'system.resource.type.menu':'菜单',
+    'system.resource.type.permission':'权限',
     'system.resource.type.api':'接口',
     'system.resource.permission':'权限类型',
     'system.resource.permission.query':'查询',

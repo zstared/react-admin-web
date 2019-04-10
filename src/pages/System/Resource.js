@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { formatMessage, FormattedMessage } from 'umi/locale'
 import { connect } from 'dva'
 import { formatTime } from '../../utils/utils'
-import { regName, regCode } from '../../utils/validate'
+import { regTitle, regCode } from '../../utils/validate'
 import { existResource, existResourceCode } from '../../services/resource'
 
 @Form.create()
@@ -22,6 +22,7 @@ class ResourceForm extends PureComponent {
         form.validateFieldsAndScroll((err, fieldsValue) => {
             if (err) return;
             fieldsValue.parent_id = fieldsValue.parent_id ? fieldsValue.parent_id : 0;
+            fieldsValue.sort_no = fieldsValue.sort_no ? fieldsValue.sort_no : 1;
             handleSave(fieldsValue);
         })
     }
@@ -30,7 +31,7 @@ class ResourceForm extends PureComponent {
         const { editInfo, form } = this.props;
         let parent_id = form.getFieldValue('parent_id')
         const params = { resource_name: value, parent_id: parent_id ? parent_id : 0 };
-        if (editInfo) params.resource_id = editInfo.resource_id;
+        if (editInfo) params.id = editInfo.id;
         let { code, data } = await existResource(params);
         if (!code && data.exist) {
             callback(formatMessage({ id: 'validation.name.existed' }))
@@ -43,7 +44,7 @@ class ResourceForm extends PureComponent {
         const { editInfo, form } = this.props;
         let parent_id = form.getFieldValue('parent_id')
         const params = { resource_code: value, parent_id: parent_id ? parent_id : 0 };
-        if (editInfo) params.resource_id = editInfo.resource_id;
+        if (editInfo) params.id = editInfo.id;
         let { code, data } = await existResourceCode(params);
         if (!code && data.exist) {
             callback(formatMessage({ id: 'validation.code.existed' }))
@@ -84,7 +85,7 @@ class ResourceForm extends PureComponent {
 
     render() {
         const { form: { getFieldDecorator }, handleModalVisible, modalVisible, editInfo, dropList, mode, parent_id } = this.props;
-        const { type, parent_type, permission_type } = this.state;
+        const { type, parent_type } = this.state;
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
@@ -126,7 +127,7 @@ class ResourceForm extends PureComponent {
                             validateFirst: true,
                             rules: [
                                 { required: true, whitespace: false, message: formatMessage({ id: 'validation.name.required' }) },
-                                { pattern: regName, message: formatMessage({ id: 'validation.name' }) },
+                                { pattern: regTitle, message: formatMessage({ id: 'validation.name' }) },
                                 { validator: this.handleExistResource }
                             ]
                         })(
@@ -143,12 +144,13 @@ class ResourceForm extends PureComponent {
                             <Select disabled={!mode} onChange={this.handleChangeType} >
                                 {parent_type == 1 || parent_type == '' ? <Select.Option value={1}><FormattedMessage id="system.resource.type.module" /></Select.Option> : null}
                                 {parent_type == 1 || parent_type == '' ? <Select.Option value={2}><FormattedMessage id="system.resource.type.menu" /></Select.Option> : null}
-                                {parent_type == 2 ? <Select.Option value={3}><FormattedMessage id="system.resource.type.api" /></Select.Option> : null}
+                                {parent_type == 2 ? <Select.Option value={3}><FormattedMessage id="system.resource.type.permission" /></Select.Option> : null}
+                                {parent_type == 3 ? <Select.Option value={4}><FormattedMessage id="system.resource.type.api" /></Select.Option> : null}
                             </Select>
                         )}
                     </Form.Item>
                     {
-                        type == 1 || type == 2 ?
+                        type == 1 || type == 2 || type == 3  ?
                             <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.code' })}>
                                 {getFieldDecorator('resource_code', {
                                     initialValue: mode ? '' : editInfo.resource_code,
@@ -163,28 +165,7 @@ class ResourceForm extends PureComponent {
                             </Form.Item> : null
                     }
                     {
-                        type == 3 ?
-                            <Form.Item {...formItemLayout} label={formatMessage({ id: 'system.resource.permission' })}>
-                                {getFieldDecorator('permission_type', {
-                                    initialValue: mode ? '' : editInfo.permission_type,
-                                    rules: [
-                                        { required: true, message: formatMessage({ id: 'validation.type.required' }) },
-                                    ]
-                                })(
-                                    <Select onChange={this.handleChangePermissionType}>
-                                        <Select.Option value={1}><FormattedMessage id="system.resource.permission.query" /></Select.Option>
-                                        <Select.Option value={2}><FormattedMessage id="system.resource.permission.add" /></Select.Option>
-                                        <Select.Option value={3}><FormattedMessage id="system.resource.permission.edit" /></Select.Option>
-                                        <Select.Option value={4}><FormattedMessage id="system.resource.permission.delete" /></Select.Option>
-                                        <Select.Option value={5}><FormattedMessage id="system.resource.permission.export" /></Select.Option>
-                                        <Select.Option value={6}><FormattedMessage id="system.resource.permission.import" /></Select.Option>
-                                    </Select>
-                                )}
-                            </Form.Item>
-                            : null
-                    }
-                    {
-                        type == 2 || type == 3 ?
+                        type == 2 || type == 4 ?
                             <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.path' })}>
                                 {getFieldDecorator('path', {
                                     initialValue: mode ? '' : editInfo.path,
@@ -208,7 +189,7 @@ class ResourceForm extends PureComponent {
                             </Form.Item> : null
                     }
                     {
-                        type == 1 || type == 2 ?
+                        type == 1 || type == 2 || type == 3 ?
                             <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.sort' })}>
                                 {getFieldDecorator('sort_no', {
                                     initialValue: mode ? '' : editInfo.sort_no,
@@ -261,11 +242,11 @@ class Resource extends PureComponent {
     }
 
     /**删除弹框 */
-    handleDelete = (resource_id) => {
+    handleDelete = (id) => {
         const { dispatch } = this.props;
         dispatch({
             type: 'resource/delete',
-            payload: { resource_id },
+            payload: { id },
             callback: () => {
                 message.success(formatMessage({ id: 'msg.deleted' }))
             }
@@ -310,7 +291,7 @@ class Resource extends PureComponent {
 
         dispatch({
             type: modalMode ? 'resource/create' : 'resource/update',
-            payload: modalMode ? fieldsValue : Object.assign(fieldsValue, { resource_id: editInfo.resource_id }),
+            payload: modalMode ? fieldsValue : Object.assign(fieldsValue, { id: editInfo.id }),
             callback: () => {
                 this.setState({
                     modalVisible: false,
@@ -340,8 +321,9 @@ class Resource extends PureComponent {
             width: 140,
             render: (text) => (<span>{text == 1 ?
                 <Tag color="orange"><FormattedMessage id="system.resource.type.module" /></Tag> : text == 2 ?
-                    <Tag color="green"><FormattedMessage id="system.resource.type.menu" /></Tag> :
-                    <Tag color="blue"><FormattedMessage id="system.resource.type.api" /></Tag>}</span>)
+                    <Tag color="green"><FormattedMessage id="system.resource.type.menu" /></Tag> :text == 3 ?
+                    <Tag color="blue"><FormattedMessage id="system.resource.type.permission" /></Tag> :
+                    <Tag color="grey"><FormattedMessage id="system.resource.type.api" /></Tag>}</span>)
         }, {
             title: formatMessage({ id: 'label.code' }),
             key: 'resource_code',
@@ -352,29 +334,6 @@ class Resource extends PureComponent {
             key: 'path',
             dataIndex: 'path',
             width: 280,
-        }, {
-            title: formatMessage({ id: 'system.resource.permission' }),
-            key: 'permission_type',
-            dataIndex: 'permission_type',
-            width: 140,
-            render: (text, record) => {
-                switch (text) {
-                    case 1:
-                        return <Tag ><FormattedMessage id="system.resource.permission.query" /></Tag>
-                    case 2:
-                        return <Tag ><FormattedMessage id="system.resource.permission.add" /></Tag>
-                    case 3:
-                        return <Tag ><FormattedMessage id="system.resource.permission.edit" /></Tag>
-                    case 4:
-                        return <Tag ><FormattedMessage id="system.resource.permission.delete" /></Tag>
-                    case 5:
-                        return <Tag ><FormattedMessage id="system.resource.permission.export" /></Tag>
-                    case 6:
-                        return <Tag ><FormattedMessage id="system.resource.permission.import" /></Tag>
-                    case 99:
-                        return record.permission_custom
-                }
-            }
         }, {
             title: formatMessage({ id: 'label.icon' }),
             key: 'icon',
@@ -397,9 +356,9 @@ class Resource extends PureComponent {
                 <div>
                     {
                         <span>
-                            {record.resource_type != 3 ?
+                            {record.resource_type != 4 ?
                                 <span>
-                                    <a href="javascript:;" onClick={() => this.handleCreate(record.resource_id, record.resource_type)}><FontAwesomeIcon icon="plus" /> <FormattedMessage id="system.resource.button.add" /></a>
+                                    <a href="javascript:;" onClick={() => this.handleCreate(record.id, record.resource_type)}><FontAwesomeIcon icon="plus" /> <FormattedMessage id="system.resource.button.add" /></a>
                                     <Divider type="vertical" /></span> : null
                             }
                             <a href="javascript:;" onClick={() => this.handleEdit(record)}><FontAwesomeIcon icon="edit" /> <FormattedMessage id="label.edit" /></a>
@@ -409,7 +368,7 @@ class Resource extends PureComponent {
                                 okText={formatMessage({ id: 'button.yes' })}
                                 cancelText={formatMessage({ id: 'button.no' })}
                                 title={formatMessage({ id: 'system.resource.delete.prompt' })}
-                                onConfirm={() => this.handleDelete(record.resource_id)}>
+                                onConfirm={() => this.handleDelete(record.id)}>
                                 <a href="javascript:;"><FontAwesomeIcon icon="times" /> <FormattedMessage id="label.delete" /></a>
                             </Popconfirm>
                         </span>
@@ -435,7 +394,7 @@ class Resource extends PureComponent {
         return (
             <Fragment>
                 <TablePage loading={loading} url="resource/getList" isTree={true}
-                    data={data} columns={columns} buttons={buttons} rowKey="resource_id"
+                    data={data} columns={columns} buttons={buttons} rowKey="id"
                     onChange={this.handleChange}
                 >
                 </TablePage>

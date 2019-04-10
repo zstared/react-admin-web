@@ -18,6 +18,7 @@ export default{
     'system.resource.modal.edit':'編輯資源',
     'system.resource.type.module':'模塊',
     'system.resource.type.menu':'菜單',
+    'system.resource.type.permission':'權限',
     'system.resource.type.api':'接口',
     'system.resource.permission':'權限類型',
     'system.resource.permission.query':'查詢',

@@ -9,15 +9,17 @@ const navData = {};
 /**生成菜单导航标签数据 */
 const generateNavData = function (data) {
     data.map(item => {
-        if (item.children && item.children.length > 0) {
-            generateNavData(item.children)
+        if (item.resource_type != 3) {
+            if (item.children && item.children.length > 0) {
+                generateNavData(item.children)
+            }
+            navData[item.path] = {
+                ...item,
+                name: formatMessage({
+                    id: 'menu.' + item.locale
+                })
+            };
         }
-        navData[item.path] = {
-            ...item,
-            name: formatMessage({
-                id: 'menu.' + item.locale
-            })
-        };
     })
 }
 
@@ -52,9 +54,9 @@ export default {
         currentUser: {}
     },
     effects: {
-      
+
         //获取当前用户信息
-        *getCurrentUser(_, { call, put }) {
+        *getCurrentUser(_, { call, put, select }) {
             try {
                 const response = yield call(getCurrentUser);
                 const { code, data: { base, menus } } = response;
@@ -64,7 +66,7 @@ export default {
                         type: 'setCurrentUser',
                         payload: base
                     })
-                    
+
                     //菜单
                     yield put({
                         type: 'setMenus',

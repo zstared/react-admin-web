@@ -25,7 +25,7 @@ class RoleForm extends PureComponent {
     handleExistRole = async (rule, value, callback) => {
         const { editInfo, mode } = this.props;
         const params = { role_name: value };
-        if (!mode) params.role_id = editInfo.role_id;
+        if (!mode) params.id = editInfo.id;
         let { code, data } = await existRole(params);
         if (!code && data.exist) {
             callback(formatMessage({ id: 'validation.name.existed' }))
@@ -130,11 +130,11 @@ class Role extends PureComponent {
     }
 
     /**删除角色 */
-    handleDelete = (role_id) => {
+    handleDelete = (id) => {
         const { dispatch } = this.props;
         dispatch({
             type: 'role/delete',
-            payload: { role_id },
+            payload: { id },
             callback: () => {
                 message.success(formatMessage({ id: 'msg.deleted' }))
             }
@@ -173,7 +173,7 @@ class Role extends PureComponent {
 
         dispatch({
             type: modalMode ? 'role/create' : 'role/update',
-            payload: modalMode ? fieldsValue : Object.assign(fieldsValue, { role_id: editInfo.role_id }),
+            payload: modalMode ? fieldsValue : Object.assign(fieldsValue, { id: editInfo.id }),
             callback: () => {
                 this.setState({
                     modalVisible: false
@@ -183,9 +183,9 @@ class Role extends PureComponent {
         })
     }
 
-    handlePermissionModalVisiable = (role_id, callback) => {
+    handlePermissionModalVisiable = (id, callback) => {
         this.setState({
-            assignRoleId: role_id ? role_id : '',
+            assignRoleId: id ? id : '',
             permissionVisible: !this.state.permissionVisible
         }, () => {
             if (callback) callback();
@@ -195,13 +195,13 @@ class Role extends PureComponent {
     /**
      * 分配权限
      */
-    handleAssignPermissions = (role_id) => {
+    handleAssignPermissions = (id) => {
         const { dispatch } = this.props;
         dispatch({
             type: 'role/getPermission',
-            payload: { role_id: role_id },
+            payload: { id: id },
             callback: () => {
-                this.handlePermissionModalVisiable(role_id, () => {
+                this.handlePermissionModalVisiable(id, () => {
                     this.child.setCheckedKeys(this.props.permission, [])
                 });
             }
@@ -214,7 +214,7 @@ class Role extends PureComponent {
         dispatch({
             type: 'role/savePermission',
             payload: {
-                role_id: this.state.assignRoleId,
+                id: this.state.assignRoleId,
                 resource_list: resource_ids
             },
             callback: () => {
@@ -263,7 +263,7 @@ class Role extends PureComponent {
                     {
                         !record.is_system ?
                             <span>
-                                <a href="javascript:;" onClick={() => this.handleAssignPermissions(record.role_id)}><FontAwesomeIcon icon="user-shield" /> <FormattedMessage id="label.permissions" /></a>
+                                <a href="javascript:;" onClick={() => this.handleAssignPermissions(record.id)}><FontAwesomeIcon icon="user-shield" /> <FormattedMessage id="label.permissions" /></a>
                                 <Divider type="vertical" />
                                 <a href="javascript:;" onClick={() => this.handleEdit(record)}><FontAwesomeIcon icon="edit" /> <FormattedMessage id="label.edit" /></a>
                                 <Divider type="vertical" />
@@ -272,7 +272,7 @@ class Role extends PureComponent {
                                     okText={formatMessage({ id: 'button.yes' })}
                                     cancelText={formatMessage({ id: 'button.no' })}
                                     title={formatMessage({ id: 'system.role.delete.prompt' })}
-                                    onConfirm={() => this.handleDelete(record.role_id)}>
+                                    onConfirm={() => this.handleDelete(record.id)}>
                                     <a href="javascript:;"><FontAwesomeIcon icon="times" /> <FormattedMessage id="label.delete" /></a>
                                 </Popconfirm>
                             </span> : null
@@ -295,7 +295,7 @@ class Role extends PureComponent {
         return (
             <Fragment>
                 <TablePage loading={loading} url="role/getList"
-                    data={data} columns={columns} buttons={buttons} rowKey="role_id"
+                    data={data} columns={columns} buttons={buttons} rowKey="id"
                     onChange={this.handleChange}
                 >
                     <TablePage.QueryItem label={formatMessage({ id: 'system.role' })} name="role_name">

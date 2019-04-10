@@ -18,3 +18,6 @@ export const  regName=/^[\u4e00-\u9fa5a-zA-Z0-9. ]{1,50}$/
 
 /**编码 */
 export const  regCode=/^[a-zA-Z_0-9]{1,50}$/
+
+/**标题 */
+export const  regTitle=/^[\u4e00-\u9fa5\S]{1,50}$/

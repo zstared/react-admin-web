@@ -83,9 +83,6 @@ class Permission extends PureComponent {
                     </TreeNode>
                 );
             }
-            if (item.resource_type == 3) {
-                list.push(item.key)
-            }
             return <TreeNode className={item.resource_type == 2 ? styles.horizontalTreeNode : null} {...item} />;
         })
     }

@@ -36,7 +36,7 @@ class UserForm extends PureComponent {
     handleExistMobile = async (rule, value, callback) => {
         const { editInfo, mode } = this.props;
         const params = { mobile: value };
-        if (!mode) params.user_id = editInfo.user_id;
+        if (!mode) params.id = editInfo.id;
         let { code, data } = await existMobile(params);
         if (!code && data.exist) {
             callback(formatMessage({ id: 'validation.mobile.existed' }))
@@ -117,7 +117,7 @@ class UserForm extends PureComponent {
                     </Form.Item>
                     <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.role' })}>
                         {getFieldDecorator('role', {
-                            initialValue: !mode ? editInfo.role.map(item => (item.role_id)) : [],
+                            initialValue: !mode ? editInfo.role.map(item => (item.id)) : [],
                             rules: [
                                 { required: true, message: formatMessage({ id: 'validation.role.required' }) },
                             ]
@@ -125,7 +125,7 @@ class UserForm extends PureComponent {
                             <Select mode="multiple">
                                 {
                                     roleList.map(item => (
-                                        <Select.Option key={item.role_id} value={item.role_id}>{item.role_name}</Select.Option>
+                                        <Select.Option key={item.id} value={item.id}>{item.role_name}</Select.Option>
                                     ))
                                 }
                             </Select>
@@ -201,11 +201,11 @@ class User extends PureComponent {
     }
 
     /**删除用户 */
-    handleDelete = (user_id) => {
+    handleDelete = (id) => {
         const { dispatch } = this.props;
         dispatch({
             type: 'user/delete',
-            payload: { user_id },
+            payload: { id },
             callback: () => {
                 message.success(formatMessage({ id: 'msg.deleted' }))
             }
@@ -213,11 +213,11 @@ class User extends PureComponent {
     }
 
     /**禁用或启用用户 */
-    handleChangeState = (user_id, status) => {
+    handleChangeState = (id, status) => {
         const { dispatch } = this.props;
         dispatch({
             type: 'user/updateState',
-            payload: { user_id, status: status ? 0 : 1 },
+            payload: { id, status: status ? 0 : 1 },
             callback: () => {
                 message.success(status ? formatMessage({ id: 'msg.enabled' }) : formatMessage({ id: 'msg.disabled' }))
             }
@@ -255,7 +255,7 @@ class User extends PureComponent {
 
         dispatch({
             type: modalMode ? 'user/create' : 'user/update',
-            payload: modalMode ? fieldsValue : Object.assign(fieldsValue, { user_id: editInfo.user_id }),
+            payload: modalMode ? fieldsValue : Object.assign(fieldsValue, { id: editInfo.id }),
             callback: () => {
                 this.setState({
                     modalVisible: false
@@ -265,9 +265,9 @@ class User extends PureComponent {
         })
     }
 
-    handlePermissionModalVisiable = (user_id,callback) => {
+    handlePermissionModalVisiable = (id,callback) => {
         this.setState({
-            assignUserId: user_id ? user_id : '',
+            assignUserId: id ? id : '',
             permissionVisible: !this.state.permissionVisible
         },()=>{
             if(callback) callback();
@@ -277,13 +277,13 @@ class User extends PureComponent {
     /**
      * 分配权限
      */
-    handleAssignPermissions = (user_id) => {
+    handleAssignPermissions = (id) => {
         const { dispatch} = this.props;
         dispatch({
             type: 'user/getPermission',
-            payload: { user_id: user_id },
+            payload: { id: id },
             callback: () => {
-               this.handlePermissionModalVisiable(user_id,()=>{
+               this.handlePermissionModalVisiable(id,()=>{
                 const {permission}=this.props;
                 this.child.setCheckedKeys(permission.user.concat(permission.role),permission.role)
                });
@@ -297,7 +297,7 @@ class User extends PureComponent {
         dispatch({
             type:'user/savePermission',
             payload:{
-                user_id:this.state.assignUserId,
+                id:this.state.assignUserId,
                 resource_list:resource_ids
             },
             callback:()=>{
@@ -349,7 +349,7 @@ class User extends PureComponent {
             dataIndex: 'role',
             width: 200,
             render: (text) => (
-                <span>{text.map(item => (<Tag key={item.role_id} >{item.role_name}</Tag>))}</span>
+                <span>{text.map(item => (<Tag key={item.id} >{item.role_name}</Tag>))}</span>
             )
         }, {
             title: formatMessage({ id: 'label.sex' }),
@@ -382,14 +382,14 @@ class User extends PureComponent {
                     {
                         record.status !== 2 && !record.is_system ?
                             <span>
-                                <a href="javascript:;" onClick={() => this.handleAssignPermissions(record.user_id)}><FontAwesomeIcon icon="user-shield" /> <FormattedMessage id="label.permissions" /></a>
+                                <a href="javascript:;" onClick={() => this.handleAssignPermissions(record.id)}><FontAwesomeIcon icon="user-shield" /> <FormattedMessage id="label.permissions" /></a>
                                 <Divider type="vertical" />
                                 <a href="javascript:;" onClick={() => this.handleEdit(record)}><FontAwesomeIcon icon="edit" /> <FormattedMessage id="label.edit" /></a>
                                 <Divider type="vertical" />
                                 {
                                     record.status == 1 ?
-                                        <a href="javascript:;" onClick={() => this.handleChangeState(record.user_id, record.status)} ><FontAwesomeIcon icon="unlock" /> <FormattedMessage id="label.enable" /></a> :
-                                        <a href="javascript:;" onClick={() => this.handleChangeState(record.user_id, record.status)} ><FontAwesomeIcon icon="lock" /> <FormattedMessage id="label.disable" /></a>
+                                        <a href="javascript:;" onClick={() => this.handleChangeState(record.id, record.status)} ><FontAwesomeIcon icon="unlock" /> <FormattedMessage id="label.enable" /></a> :
+                                        <a href="javascript:;" onClick={() => this.handleChangeState(record.id, record.status)} ><FontAwesomeIcon icon="lock" /> <FormattedMessage id="label.disable" /></a>
                                 }
                                 <Divider type="vertical" />
                                 <Popconfirm placement="topRight"
@@ -397,7 +397,7 @@ class User extends PureComponent {
                                     okText={formatMessage({ id: 'button.yes' })}
                                     cancelText={formatMessage({ id: 'button.no' })}
                                     title={formatMessage({ id: 'system.user.delete.prompt' })}
-                                    onConfirm={() => this.handleDelete(record.user_id)}>
+                                    onConfirm={() => this.handleDelete(record.id)}>
                                     <a href="javascript:;"><FontAwesomeIcon icon="times" /> <FormattedMessage id="label.delete" /></a>
                                 </Popconfirm>
                             </span> : null
@@ -421,7 +421,7 @@ class User extends PureComponent {
         return (
             <Fragment>
                 <TablePage loading={loading} url="user/getList"
-                    data={data} columns={columns} buttons={buttons} rowKey="user_id"
+                    data={data} columns={columns} buttons={buttons} rowKey="id"
                     onChange={this.handleChange}
                 >
                     <TablePage.QueryItem label={formatMessage({ id: 'system.user' })} name="user_name">

@@ -21,10 +21,8 @@ class HeaderContent extends PureComponent {
     }
 
     handleClick = (item) => {
-        console.log(item)
         if (item.key === "logout") {
             const { dispatch } = this.props;
-            console.log(dispatch)
             dispatch({
                 type: 'oauth/logout'
             })

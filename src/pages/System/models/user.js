@@ -64,7 +64,7 @@ export default {
                 if (!code) {
                     let { data, params } = yield select(state => state.user)
                     let index = data.rows.findIndex((item) => {
-                        return item.user_id == payload.user_id
+                        return item.id == payload.id
                     });
                     data.rows[index].status = payload.status;
                     yield put({
@@ -85,7 +85,7 @@ export default {
                 if (!code) {
                     let { data, params } = yield select(state => state.user)
                     let index = data.rows.findIndex((item) => {
-                        return item.user_id == payload.user_id
+                        return item.id == payload.id
                     });
                     data.rows[index].status = 2;
                     yield put({
