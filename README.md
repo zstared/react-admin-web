@@ -29,7 +29,7 @@ react-admin system solution
 - ...
 
 ### 代码目录
-```js
+```bash
 +-- dist/                                   ---打包的文件目录
 +-- config/                                 ---配置文件目录
 +-- node_modules/                           ---npm下载文件目录
@@ -62,10 +62,12 @@ react-admin system solution
 
 ### 使用
 #### 下载或克隆项目源码
+```bash
 $ git clone https://github.com/zstared/react-admin-web.git
 $ cd react-admin-web
 $ npm install
 $ npm run dev          # 访问 http://localhost:8000
+```
 
 ### 结尾
 该项目会不定时更新，后续时间会添加更多的模块
