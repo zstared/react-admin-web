@@ -65,7 +65,7 @@ react-admin system solution
 $ git clone https://github.com/zstared/react-admin-web.git
 $ cd react-admin-web
 $ npm install
-$ npm start         # 访问 http://localhost:8000
+$ npm run dev          # 访问 http://localhost:8000
 
 ### 结尾
 该项目会不定时更新，后续时间会添加更多的模块
