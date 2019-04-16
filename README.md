@@ -2,7 +2,7 @@
 react-admin system solution
 
 ### 前言
-> 最近在学习React,基于UmiJS框架与Ant Design UI框架开发了一套简单的后台管理系统(框架)，实现用户、角色、资源权限等基本功能。
+> 最近在学习React,基于实际业务,使用UmiJS框架与Ant Design UI框架开发了一套简单的后台管理系统(框架)，实现用户、角色、资源权限等基本功能。
 
 - [GitHub地址](https://github.com/zstared/react-admin-web)
 - [预览地址](http://47.112.194.62:9091)
@@ -20,12 +20,12 @@ react-admin system solution
 
 - 首页
     - 工作台
-    - 多语言
+    - 国际化
     - 个性化设置
 - 系统管理
-    - 用户
-    - 角色
-	- 资源
+    - 用户（增、删、查、改、权限）
+    - 角色（增、删、查、改、权限）
+	- 资源（增、删、查、改）
 - 
 
 ### 代码目录
@@ -40,13 +40,13 @@ react-admin system solution
 |   |    --- logo.svg
 |   |    |    --- ...   
 |   +-- components                          ---各式各样的组件存放目录
-|   |    +-- TablePage                      ---表格页面能用组件
+|   |    +-- TablePage                      ---表格页面通用组件
 |   |    |    --- ...   
 |   |    +-- UploadFile                     ---文件上传组件
 |   |    |    --- ...   
 |   |    +-- UploadImage                    ---图片上传组件
 |   |    |    --- ...   
-|   |    +-- Permission                     ---权限组件
+|   |    +-- Permission                     ---权限树形组件
 |   |    |    --- ...   
 |   |    +--  --- ... 
 |   +-- layouts                             ---布局
