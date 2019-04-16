@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { formatMessage, FormattedMessage } from 'umi/locale'
 import { connect } from 'dva'
 import { formatTime } from '../../utils/utils'
-import { regName } from '../../utils/validate'
+import { regTitle } from '../../utils/validate'
 import { existRole } from '../../services/role'
 import Permission from '../../components/Permission'
 
@@ -62,7 +62,7 @@ class RoleForm extends PureComponent {
                             validateFirst: true,
                             rules: [
                                 { required: true, whitespace: false, message: formatMessage({ id: 'validation.name.required' }) },
-                                { pattern: regName, message: formatMessage({ id: 'validation.name' }) },
+                                { pattern: regTitle, message: formatMessage({ id: 'validation.name' }) },
                                 { validator: this.handleExistRole }
                             ]
                         })(
@@ -232,20 +232,18 @@ class Role extends PureComponent {
             key: 'role_name',
             dataIndex: 'role_name',
             fixed: true,
-            width: 200,
+            width: 260,
         }, {
             title: formatMessage({ id: 'label.desc' }),
             key: 'role_desc',
             dataIndex: 'role_desc',
             fixed: true,
-            width: 120,
         }, {
             title: formatMessage({ id: 'label.sort' }),
             key: 'sort_no',
             dataIndex: 'sort_no',
             sorter: true,
             sortOrder: sortedInfo.columnKey === 'sort_no' && sortedInfo.order,
-            width: 180,
         }, {
             title: formatMessage({ id: 'label.create-time' }),
             key: 'create_time',
