@@ -4,8 +4,8 @@ react-admin system solution
 ### 前言
 > 最近在学习React,基于UmiJS框架与Ant Design UI框架开发了一套简单的后台管理系统(框架)，实现用户、角色、资源权限等基本功能。
 
-- [GitHub地址](https://github.com/yezihaohao/react-admin)
-- [预览地址](https://admiring-dijkstra-34cb29.netlify.com)
+- [GitHub地址](https://github.com/zstared/react-admin-web)
+- [预览地址](http://47.112.194.62:9091)
 
 ### 依赖模块
 
