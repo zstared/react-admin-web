@@ -2,7 +2,8 @@ import React from 'react';
 import { Router as DefaultRouter, Route, Switch } from 'react-router-dom';
 import dynamic from 'umi/dynamic';
 import renderRoutes from 'umi/_renderRoutes';
-import RendererWrapper0 from '/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/.umi/LocaleWrapper.jsx'
+import RendererWrapper0 from 'F:/Project-xinhong/react-admin-web/src/pages/.umi/LocaleWrapper.jsx'
+import _dvaDynamic from 'dva/dynamic'
 
 let Router = require('dva/router').routerRedux.ConnectedRouter;
 
@@ -19,39 +20,67 @@ let routes = [
   },
   {
     "path": "/login",
-    "component": dynamic({ loader: () => import('../User/Login'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+    "component": _dvaDynamic({
+  
+  component: () => import('../User/Login'),
+  LoadingComponent: require('F:/Project-xinhong/react-admin-web/src/components/PageLoading/index').default,
+}),
     "exact": true
   },
   {
     "path": "/",
-    "component": dynamic({ loader: () => import('../../layouts/BasicLayout'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+    "component": _dvaDynamic({
+  
+  component: () => import('../../layouts/BasicLayout'),
+  LoadingComponent: require('F:/Project-xinhong/react-admin-web/src/components/PageLoading/index').default,
+}),
     "routes": [
       {
         "path": "/home",
-        "component": dynamic({ loader: () => import('../Home'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+        "component": _dvaDynamic({
+  
+  component: () => import('../Home'),
+  LoadingComponent: require('F:/Project-xinhong/react-admin-web/src/components/PageLoading/index').default,
+}),
         "exact": true
       },
       {
         "path": "/user/setting",
-        "component": dynamic({ loader: () => import('../User/Setting/Index'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+        "component": _dvaDynamic({
+  
+  component: () => import('../User/Setting/Index'),
+  LoadingComponent: require('F:/Project-xinhong/react-admin-web/src/components/PageLoading/index').default,
+}),
         "routes": [
           {
             "path": "/user/setting/base",
-            "component": dynamic({ loader: () => import('../User/Setting/Base'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+            "component": _dvaDynamic({
+  
+  component: () => import('../User/Setting/Base'),
+  LoadingComponent: require('F:/Project-xinhong/react-admin-web/src/components/PageLoading/index').default,
+}),
             "exact": true
           },
           {
             "path": "/user/setting/security",
-            "component": dynamic({ loader: () => import('../User/Setting/Security'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+            "component": _dvaDynamic({
+  
+  component: () => import('../User/Setting/Security'),
+  LoadingComponent: require('F:/Project-xinhong/react-admin-web/src/components/PageLoading/index').default,
+}),
             "exact": true
           },
           {
             "path": "/user/setting/personalization",
-            "component": dynamic({ loader: () => import('../User/Setting/Personalization'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+            "component": _dvaDynamic({
+  
+  component: () => import('../User/Setting/Personalization'),
+  LoadingComponent: require('F:/Project-xinhong/react-admin-web/src/components/PageLoading/index').default,
+}),
             "exact": true
           },
           {
-            "component": () => React.createElement(require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'src/pages', hasRoutesInConfig: true })
+            "component": () => React.createElement(require('F:/Project-xinhong/react-admin-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'src/pages', hasRoutesInConfig: true })
           }
         ]
       },
@@ -62,36 +91,72 @@ let routes = [
           {
             "path": "/system/user",
             "name": "user",
-            "component": dynamic({ loader: () => import('../System/User'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+            "component": _dvaDynamic({
+  app: window.g_app,
+models: () => [
+  import('F:/Project-xinhong/react-admin-web/src/pages/System/models/resource.js').then(m => { return { namespace: 'resource',...m.default}}),
+  import('F:/Project-xinhong/react-admin-web/src/pages/System/models/role.js').then(m => { return { namespace: 'role',...m.default}}),
+  import('F:/Project-xinhong/react-admin-web/src/pages/System/models/user.js').then(m => { return { namespace: 'user',...m.default}})
+],
+  component: () => import('../System/User'),
+  LoadingComponent: require('F:/Project-xinhong/react-admin-web/src/components/PageLoading/index').default,
+}),
             "exact": true
           },
           {
             "path": "/system/role",
-            "component": dynamic({ loader: () => import('../System/Role'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+            "component": _dvaDynamic({
+  app: window.g_app,
+models: () => [
+  import('F:/Project-xinhong/react-admin-web/src/pages/System/models/resource.js').then(m => { return { namespace: 'resource',...m.default}}),
+  import('F:/Project-xinhong/react-admin-web/src/pages/System/models/role.js').then(m => { return { namespace: 'role',...m.default}}),
+  import('F:/Project-xinhong/react-admin-web/src/pages/System/models/user.js').then(m => { return { namespace: 'user',...m.default}})
+],
+  component: () => import('../System/Role'),
+  LoadingComponent: require('F:/Project-xinhong/react-admin-web/src/components/PageLoading/index').default,
+}),
             "exact": true
           },
           {
             "path": "/system/menu",
-            "component": dynamic({ loader: () => import('../System/Menu'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+            "component": _dvaDynamic({
+  app: window.g_app,
+models: () => [
+  import('F:/Project-xinhong/react-admin-web/src/pages/System/models/resource.js').then(m => { return { namespace: 'resource',...m.default}}),
+  import('F:/Project-xinhong/react-admin-web/src/pages/System/models/role.js').then(m => { return { namespace: 'role',...m.default}}),
+  import('F:/Project-xinhong/react-admin-web/src/pages/System/models/user.js').then(m => { return { namespace: 'user',...m.default}})
+],
+  component: () => import('../System/Menu'),
+  LoadingComponent: require('F:/Project-xinhong/react-admin-web/src/components/PageLoading/index').default,
+}),
             "exact": true
           },
           {
             "path": "/system/resource",
-            "component": dynamic({ loader: () => import('../System/Resource'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+            "component": _dvaDynamic({
+  app: window.g_app,
+models: () => [
+  import('F:/Project-xinhong/react-admin-web/src/pages/System/models/resource.js').then(m => { return { namespace: 'resource',...m.default}}),
+  import('F:/Project-xinhong/react-admin-web/src/pages/System/models/role.js').then(m => { return { namespace: 'role',...m.default}}),
+  import('F:/Project-xinhong/react-admin-web/src/pages/System/models/user.js').then(m => { return { namespace: 'user',...m.default}})
+],
+  component: () => import('../System/Resource'),
+  LoadingComponent: require('F:/Project-xinhong/react-admin-web/src/components/PageLoading/index').default,
+}),
             "exact": true
           },
           {
-            "component": () => React.createElement(require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'src/pages', hasRoutesInConfig: true })
+            "component": () => React.createElement(require('F:/Project-xinhong/react-admin-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'src/pages', hasRoutesInConfig: true })
           }
         ]
       },
       {
-        "component": () => React.createElement(require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'src/pages', hasRoutesInConfig: true })
+        "component": () => React.createElement(require('F:/Project-xinhong/react-admin-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'src/pages', hasRoutesInConfig: true })
       }
     ]
   },
   {
-    "component": () => React.createElement(require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'src/pages', hasRoutesInConfig: true })
+    "component": () => React.createElement(require('F:/Project-xinhong/react-admin-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'src/pages', hasRoutesInConfig: true })
   }
 ];
 window.g_routes = routes;
