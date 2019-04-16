@@ -4,7 +4,7 @@ import {
     getLocale
 } from 'umi/locale';
 import qs from 'querystring';
-import config from '../defaultSettings'
+import config from '../../config/base'
 import {
     message
 } from 'antd';

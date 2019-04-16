@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { Upload, Icon, message, Button } from 'antd'
 import PropTypes from 'prop-types'
-import config from '../../defaultSettings'
+import config from '../../../config/base'
 import styles from './index.less';
 import Viewer from 'react-viewer';
 import 'react-viewer/dist/index.css';
