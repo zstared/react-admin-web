@@ -68,7 +68,7 @@ class Login extends PureComponent {
                                                     initialValue:this.state.user_name,
                                                     rules: [{ required: true, message: formatMessage({id:'validation.username.required'}) }],
                                                 })(
-                                                    <Input size="large" prefix={<FontAwesomeIcon icon="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={formatMessage({id:'login.placeholder.username'})+':admin'} />
+                                                    <Input size="large" prefix={<FontAwesomeIcon icon="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={formatMessage({id:'login.placeholder.username'})+':admin/testA'} />
                                                 )}
                                             </FormItem>
                                             <FormItem>
@@ -76,7 +76,7 @@ class Login extends PureComponent {
                                                     initialValue:this.state.password,
                                                     rules: [{ required: true, message: formatMessage({id:'validation.password.required'}) }],
                                                 })(
-                                                    <Input size="large" prefix={<FontAwesomeIcon  icon="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder={formatMessage({id:'login.placeholder.password'})+':admin'} 
+                                                    <Input size="large" prefix={<FontAwesomeIcon  icon="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder={formatMessage({id:'login.placeholder.password'})+':admin/abc123456'} 
                                                     onPressEnter={this.login}/>
                                                 )}
                                             </FormItem>

@@ -44,7 +44,7 @@ const getBreadcrumpList = (url) => {
 export default {
     namespace: 'app',
     state: {
-        collapsed: true, //侧边栏收缩/折叠状态
+        collapsed: false, //侧边栏收缩/折叠状态
         siderStyle: defaultSettings.siderStyle, //侧边栏样式 dark or light
         navStyle: defaultSettings.navStyle, //导航类型  breadcrumb-面包屑 nav-导航栏
         menuData: [], //菜单数据

@@ -6,7 +6,7 @@ react-admin system solution
 
 - [GitHub地址](https://github.com/zstared/react-admin-web)
 - [预览地址](http://47.112.194.62:9091)
-
+- [API接口GitHub地址](https://github.com/zstared/koa-admin-api)
 ### 依赖模块
 
 - [react](https://facebook.github.io/react/)
@@ -23,9 +23,9 @@ react-admin system solution
     - 国际化
     - 个性化设置
 - 系统管理
-    - 用户（增、删、查、改、分配权限）
-    - 角色（增、删、查、改、分配权限）
-	- 资源权限（增、删、查、改）
+    - 用户
+    - 角色
+	- 资源权限
 - 
 
 ### 代码目录
@@ -34,7 +34,7 @@ react-admin system solution
 +-- config/                                 ---配置文件目录
 +-- node_modules/                           ---npm下载文件目录
 +-- public/                                 
-|   --- favicon.png							---网站图标
+|   --- favicon.png                         ---网站图标
 +-- src/                                    ---核心代码目录
 |   +-- assets                              ---资源
 |   |    --- logo.svg
@@ -59,23 +59,13 @@ react-admin system solution
 |   --- global.js                           ---全局 JS
 --- package.json                                    
 ```
-### 安装运行
-##### 1.下载或克隆项目源码
-##### 2.yarn 或者 npm安装相关包文件(首先推荐使用yarn，国内建议增加淘宝镜像源，不然很慢，你懂的😁)
-> 有些老铁遇到运行时报错，首先确定下是不是最新稳定版的nodejs和npm或者yarn(推荐用yarn)，切记不要用cnpn
 
-```js
-// 首推荐使用yarn装包
-yarn or npm i
-```
-##### 3.启动项目
-```js
-yarn dev or npm run dev
-```
-##### 4.打包项目
-```js
-yarn build or npm run build
-```
+### 使用
+#### 下载或克隆项目源码
+$ git clone https://github.com/zstared/react-admin-web.git
+$ cd react-admin-web
+$ npm install
+$ npm start         # 访问 http://localhost:8000
 
 ### 结尾
 该项目会不定时更新，后续时间会添加更多的模块
