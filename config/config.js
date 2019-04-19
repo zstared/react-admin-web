@@ -27,6 +27,9 @@ export default {
     theme: {
         'primary-color': '#722ED1',
     },
+    externals: {
+        '@antv/data-set': 'DataSet',
+      },
     cssLoaderOptions: {
         modules: true,
         getLocalIdent: (context, localIdentName, localName) => {
