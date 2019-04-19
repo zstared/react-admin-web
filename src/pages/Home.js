@@ -61,11 +61,13 @@ class Home extends PureComponent {
                             <Bar data={mockData()} height={240}  ></Bar>
                         </Card>
                     </Col>
-                    <Col span={12}>
-                        <Card title="热门搜索">
-                            <TagCloud data={tags} height={240} ></TagCloud>
-                        </Card>
-                    </Col>
+                    {
+                    // <Col span={12}>
+                    //     <Card title="热门搜索">
+                    //         <TagCloud data={tags} height={240} ></TagCloud>
+                    //     </Card>
+                    // </Col>
+                    }
 
                 </Row>
                 <Row gutter={15}>
