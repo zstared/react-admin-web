@@ -1,16 +1,11 @@
 
-import { _setIntlObject, addLocaleData, IntlProvider, intlShape } from 'umi-plugin-locale';
+import { addLocaleData, IntlProvider, injectIntl } from 'react-intl';
+import { _setIntlObject } from 'umi/locale';
 
-const InjectedWrapper = (() => {
-  let sfc = (props, context) => {
-    _setIntlObject(context.intl);
-    return props.children;
-  };
-  sfc.contextTypes = {
-    intl: intlShape,
-  };
-  return sfc;
-})();
+const InjectedWrapper = injectIntl(function(props) {
+  _setIntlObject(props.intl);
+  return props.children;
+})
 
 import 'moment/locale/zh-cn';
 import 'moment/locale/zh-tw';
@@ -21,32 +16,25 @@ const useLocalStorage = true;
 import { LocaleProvider } from 'antd';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
-let defaultAntd = require('antd/lib/locale-provider/zh_CN');
-defaultAntd = defaultAntd.default || defaultAntd;
+const defaultAntd = require('antd/lib/locale-provider/zh_CN');
 
 const localeInfo = {
   'en-US': {
-    messages: {
-      ...require('F:/Project-xinhong/react-admin-web/src/locales/en-US.js').default,
-    },
+    messages: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/locales/en-US.js').default,
     locale: 'en-US',
     antd: require('antd/lib/locale-provider/en_US'),
     data: require('react-intl/locale-data/en'),
     momentLocale: '',
   },
   'zh-CN': {
-    messages: {
-      ...require('F:/Project-xinhong/react-admin-web/src/locales/zh-CN.js').default,
-    },
+    messages: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/locales/zh-CN.js').default,
     locale: 'zh-CN',
     antd: require('antd/lib/locale-provider/zh_CN'),
     data: require('react-intl/locale-data/zh'),
     momentLocale: 'zh-cn',
   },
   'zh-TW': {
-    messages: {
-      ...require('F:/Project-xinhong/react-admin-web/src/locales/zh-TW.js').default,
-    },
+    messages: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/locales/zh-TW.js').default,
     locale: 'zh-TW',
     antd: require('antd/lib/locale-provider/zh_TW'),
     data: require('react-intl/locale-data/zh'),
@@ -70,12 +58,12 @@ if (useLocalStorage && localStorage.getItem('umi_locale') && localeInfo[localSto
 window.g_lang = appLocale.locale;
 appLocale.data && addLocaleData(appLocale.data);
 
-export default function LocaleWrapper(props) {
+export default (props) => {
   let ret = props.children;
   ret = (<IntlProvider locale={appLocale.locale} messages={appLocale.messages}>
     <InjectedWrapper>{ret}</InjectedWrapper>
   </IntlProvider>)
-  ret = (<LocaleProvider locale={appLocale.antd ? (appLocale.antd.default || appLocale.antd) : defaultAntd}>
+  ret = (<LocaleProvider locale={appLocale.antd || defaultAntd}>
     {ret}
   </LocaleProvider>);
   return ret;
