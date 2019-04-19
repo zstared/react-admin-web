@@ -88,23 +88,25 @@ class Home extends PureComponent {
                             </Pie>
                         </Card>
                     </Col>
-                    <Col span={12}>
-                        <Card title="资源剩余">
-                        <div style={{display:'flex',justifyContent:'space-around'}}>
-                        <WaterWave
-                                height={200}
-                                title="电量剩余"
-                                percent={45}
-                            />
-                            <WaterWave
-                                height={200}
-                                title="能量剩余"
-                                percent={55}
-                            />
-                        </div>
+                    {
+                    // <Col span={12}>
+                    //     <Card title="资源剩余">
+                    //     <div style={{display:'flex',justifyContent:'space-around'}}>
+                    //     <WaterWave
+                    //             height={200}
+                    //             title="电量剩余"
+                    //             percent={45}
+                    //         />
+                    //         <WaterWave
+                    //             height={200}
+                    //             title="能量剩余"
+                    //             percent={55}
+                    //         />
+                    //     </div>
                 
-                        </Card>
-                    </Col>
+                    //     </Card>
+                    // </Col>
+                    }
                 </Row>
             </div>
         )
