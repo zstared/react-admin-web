@@ -14,7 +14,7 @@ react-admin system solution
 - [dva](https://dvajs.com/)((<span style="color: rgb(243,121,52);">dva 首先是一个基于 redux 和 redux-saga 的数据流方案，然后为了简化开发体验，dva 还额外内置了 react-router 和 fetch，所以也可以理解为一个轻量级的应用框架</span>)
 - [UmiJS](https://umijs.org/zh/guide/)(<span style="color: rgb(243,121,52);">umi，中文可发音为乌米，是一个可插拔的企业级 react 应用框架</span>)
 - [antd](https://ant.design/docs/react/getting-started-cn/)((<span style="color: rgb(243,121,52);">antd 是基于 Ant Design 设计体系的 React UI 组件库，主要用于研发企业级中后台产品。</span>)
-- [axios](https://github.com/mzabriskie/axios)(<span style="color: rgb(243,121,52);">基于 promise 的 HTTP库，可以用在浏览器和 node.js 中</span>)
+- [axios](https://github.com/mzabriskie/axios)(<span style="color: rgb(243,121,52);">基于 promise,简洁且高效的http库</span>)
 - [react-fontawesome](https://fontawesome.com)(<span style="color: rgb(243,121,52);">基于react SVG图标，图标量大,实用！</span>)
 - [bizcharts](https://github.com/alibaba/BizCharts)(<span style="color: rgb(243,121,52);">是基于 G2(类似echarts) 封装的 React 图表库，具有 G2、React 的全部优点，可以让用户以组件的形式组合出无数种图表</span>)
 ## 功能模块
