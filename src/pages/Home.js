@@ -72,25 +72,25 @@ class Home extends PureComponent {
                 </Row>
                 <Row gutter={15}>
                 {
-                    // <Col span={12}>
-                    //     <Card title="销售额">
-                    //         <Pie
-                    //             tooltip
-                    //             data={salesPieData}
-                    //             title="销售额"
-                    //             height={240}
-                    //             subTitle="销售额"
-                    //             total={() => (
-                    //                 <span
-                    //                     dangerouslySetInnerHTML={{
-                    //                         __html: yuan(salesPieData.reduce((pre, now) => now.y + pre, 0))
-                    //                     }}
-                    //                 />
-                    //             )}
-                    //             valueFormat={val => <span dangerouslySetInnerHTML={{ __html: yuan(val) }} />}>
-                    //         </Pie>
-                    //     </Card>
-                    // </Col>
+                    <Col span={12}>
+                        <Card title="销售额">
+                            <Pie
+                                tooltip
+                                data={salesPieData}
+                                title="销售额"
+                                height={240}
+                                subTitle="销售额"
+                                total={() => (
+                                    <span
+                                        dangerouslySetInnerHTML={{
+                                            __html: yuan(salesPieData.reduce((pre, now) => now.y + pre, 0))
+                                        }}
+                                    />
+                                )}
+                                valueFormat={val => <span dangerouslySetInnerHTML={{ __html: yuan(val) }} />}>
+                            </Pie>
+                        </Card>
+                    </Col>
                  
                     // <Col span={12}>
                     //     <Card title="资源剩余">
