@@ -252,7 +252,8 @@ class Role extends PureComponent {
             dataIndex: 'create_time',
             sorter: true,
             sortOrder: sortedInfo.columnKey === 'create_time' && sortedInfo.order,
-            render: (text) => (<span>{formatTime(text)}</span>)
+            render: (text) => (<span>{formatTime(text)}</span>),
+            width:200,
         }, {
             title: formatMessage({ id: 'label.operation' }),
             key: 'operation',
