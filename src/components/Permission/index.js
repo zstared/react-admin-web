@@ -92,7 +92,7 @@ class Permission extends PureComponent {
         const { handleModalVisible, modalVisible, resourceTreeData } = this.props;
         return (
             <Modal
-                width="80%"
+                width="50%"
                 destroyOnClose
                 title={<span><FontAwesomeIcon icon="user-shield"></FontAwesomeIcon> <FormattedMessage id="label.permissions" /></span>}
                 visible={modalVisible}

@@ -28,6 +28,11 @@ react-admin system solution
 	- 资源权限
 - ...
 
+## 项目截图
+ ![首页](https://github.com/zstared/react-admin-web/blob/master/public/home.jpg)
+ ![用户](https://github.com/zstared/react-admin-web/blob/master/public/user.jpg)
+ ![角色](https://github.com/zstared/react-admin-web/blob/master/public/role.jpg)
+ ![资源](https://github.com/zstared/react-admin-web/blob/master/public/resource.jpg)
 ## 代码目录
 ```bash
 +-- dist/                                   ---打包的文件目录
@@ -82,6 +87,6 @@ react-admin system solution
 欢迎和感谢大家PR~~👏👏
 
 若有问题，可加QQ:459326437或微信入群与我交流
-![二维码](https://github.com/zstared/react-admin-web/blob/master/wechat.jpg)
+![二维码](https://github.com/zstared/react-admin-web/blob/master/public/wechat.jpg)
 
 如果对你有帮助，给个star哟~~❤️❤️❤️❤️
