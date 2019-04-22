@@ -238,13 +238,16 @@ class Role extends PureComponent {
             key: 'role_desc',
             dataIndex: 'role_desc',
             fixed: true,
+            width: 300,
         }, {
             title: formatMessage({ id: 'label.sort' }),
             key: 'sort_no',
             dataIndex: 'sort_no',
             sorter: true,
             sortOrder: sortedInfo.columnKey === 'sort_no' && sortedInfo.order,
+            width: 100,
         }, {
+            align:'center',
             title: formatMessage({ id: 'label.create-time' }),
             key: 'create_time',
             dataIndex: 'create_time',
