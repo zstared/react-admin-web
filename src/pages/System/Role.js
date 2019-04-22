@@ -237,7 +237,6 @@ class Role extends PureComponent {
             title: formatMessage({ id: 'label.desc' }),
             key: 'role_desc',
             dataIndex: 'role_desc',
-            fixed: true,
             width: 300,
         }, {
             title: formatMessage({ id: 'label.sort' }),
