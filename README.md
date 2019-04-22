@@ -29,9 +29,13 @@ react-admin system solution
 - ...
 
 ## 项目截图
+### 首页
  ![首页](https://github.com/zstared/react-admin-web/blob/master/public/home.jpg)
+### 用户
  ![用户](https://github.com/zstared/react-admin-web/blob/master/public/user.jpg)
+### 角色
  ![角色](https://github.com/zstared/react-admin-web/blob/master/public/role.jpg)
+### 资源
  ![资源](https://github.com/zstared/react-admin-web/blob/master/public/resource.jpg)
 ## 代码目录
 ```bash
