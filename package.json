@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "umi dev",
-    "build": "umi build"
+    "build": "cross-env BUILD_TYPE=build umi build",
+    "build:docs": "cross-env BUILD_TYPE=docs umi build"
   },
   "author": "zhengxinhong",
   "license": "ISC",
@@ -28,6 +29,7 @@
     "react-viewer": "^2.8.0"
   },
   "devDependencies": {
+    "cross-env": "^5.2.0",
     "koa": "^2.6.2",
     "koa-static": "^5.0.0",
     "umi": "^2.2.7",
