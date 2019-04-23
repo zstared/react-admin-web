@@ -31,6 +31,7 @@ export default {
   //     '@antv/data-set': 'DataSet',
   //   },
   outputPath: process.env.BUILD_TYPE == 'docs' ? './docs' : './dist',
+  publicPath: process.env.BUILD_TYPE == 'docs' ? './' : '/',
   cssLoaderOptions: {
     modules: true,
     getLocalIdent: (context, localIdentName, localName) => {
