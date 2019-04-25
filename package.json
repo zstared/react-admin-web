@@ -13,7 +13,6 @@
     "@antv/data-set": "^0.10.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.15",
     "@fortawesome/free-brands-svg-icons": "^5.7.2",
-    "@fortawesome/free-regular-svg-icons": "^5.7.2",
     "@fortawesome/free-solid-svg-icons": "^5.7.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "axios": "^0.18.0",
@@ -33,7 +32,8 @@
     "koa": "^2.6.2",
     "koa-static": "^5.0.0",
     "umi": "^2.2.7",
-    "umi-plugin-react": "^1.2.3"
+    "umi-plugin-react": "^1.2.3",
+    "webpack-ant-icon-loader": "^1.0.5"
   },
   "description": ""
 }

@@ -19,8 +19,9 @@ export default {
       },
       dll: {
         include: ['dva', 'dva/router', 'dva/saga'],
-        //exclude: ['@babel/runtime'],
+        exclude: ['@babel/runtime'],
       },
+      hardSource: true,
     }]
   ],
   routes: routes,
@@ -32,6 +33,7 @@ export default {
   //   },
   outputPath: process.env.BUILD_TYPE == 'docs' ? './docs' : './dist',
   publicPath: process.env.BUILD_TYPE == 'docs' ? './' : '/',
+  base: process.env.BUILD_TYPE == 'docs' ? './' : '/',
   cssLoaderOptions: {
     modules: true,
     getLocalIdent: (context, localIdentName, localName) => {
@@ -53,6 +55,15 @@ export default {
       return localName;
     },
   },
+  chainWebpack(config, { webpack }) {
+    
+    // code split @ant-design/icons
+    config.module
+    .rule('@ant-design/icons')
+    .include.add(require.resolve('@ant-design/icons/lib/dist')).end()
+    .use('ant-icon')
+    .loader('webpack-ant-icon-loader');
+   },
   manifest: {
     basePath: '/',
   },
