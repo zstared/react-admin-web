@@ -17,10 +17,10 @@ export default {
       dynamicImport: {
         loadingComponent: './components/PageLoading/index',
       },
-      dll: {
-        include: ['dva', 'dva/router', 'dva/saga'],
-        exclude: ['@babel/runtime'],
-      },
+    //   dll: {
+    //     include: ['dva', 'dva/router', 'dva/saga'],
+    //     exclude: ['@babel/runtime'],
+    //   },
      // hardSource: true,
     }]
   ],
