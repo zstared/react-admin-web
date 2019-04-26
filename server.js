@@ -5,10 +5,10 @@ const static = require('koa-static')
 const app = new Koa();
 
 
-app.use(static(path.join(__dirname, './dist')));
+app.use(static(path.join(__dirname, './docs')));
 app.use(async(ctx,next)=>{
     ctx.response.type = 'html';
-    ctx.response.body = fs.createReadStream('./dist/index.html');
+    ctx.response.body = fs.createReadStream('./docs/index.html');
 })
 
 app.listen(8989, function () {
