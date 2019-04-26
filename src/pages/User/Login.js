@@ -4,10 +4,9 @@ import { formatMessage,FormattedMessage } from 'umi/locale';
 import {connect} from 'dva';
 import logo from '../../assets/logo.svg'
 import banner from '../../assets/banner.svg'
-import { Row, Col, Button, Tabs, Form, Input,Checkbox } from 'antd'
+import { Row, Col, Button, Tabs, Form, Input,Checkbox,Icon } from 'antd'
 import SelectLang from '@/components/SelectLang';
 import {decryptData} from '../../utils/utils'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const TabPane = Tabs.TabPane;
 const FormItem=Form.Item;
 
@@ -68,7 +67,7 @@ class Login extends PureComponent {
                                                     initialValue:this.state.user_name,
                                                     rules: [{ required: true, message: formatMessage({id:'validation.username.required'}) }],
                                                 })(
-                                                    <Input size="large" prefix={<FontAwesomeIcon icon="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={formatMessage({id:'login.placeholder.username'})+':admin/testA'} />
+                                                    <Input size="large" prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={formatMessage({id:'login.placeholder.username'})+':admin/testA'} />
                                                 )}
                                             </FormItem>
                                             <FormItem>
@@ -76,7 +75,7 @@ class Login extends PureComponent {
                                                     initialValue:this.state.password,
                                                     rules: [{ required: true, message: formatMessage({id:'validation.password.required'}) }],
                                                 })(
-                                                    <Input size="large" prefix={<FontAwesomeIcon  icon="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder={formatMessage({id:'login.placeholder.password'})+':admin/abc123456'} 
+                                                    <Input size="large" prefix={<Icon  type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder={formatMessage({id:'login.placeholder.password'})+':admin/abc123456'} 
                                                     onPressEnter={this.login}/>
                                                 )}
                                             </FormItem>

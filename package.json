@@ -11,10 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "@antv/data-set": "^0.10.2",
-    "@fortawesome/fontawesome-svg-core": "^1.2.15",
-    "@fortawesome/free-brands-svg-icons": "^5.7.2",
-    "@fortawesome/free-solid-svg-icons": "^5.7.2",
-    "@fortawesome/react-fontawesome": "^0.1.4",
     "axios": "^0.18.0",
     "bizcharts": "^3.5.2",
     "bizcharts-plugin-slider": "^2.1.1-beta.1",

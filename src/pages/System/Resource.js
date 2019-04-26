@@ -1,7 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import TablePage from '../../components/TablePage'
-import { Button, Input, Select, Tag, Divider, Popconfirm, Form, Modal, TreeSelect, InputNumber, message } from 'antd';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Button, Input, Select, Tag, Divider, Popconfirm, Form, Modal, TreeSelect, InputNumber,Icon, message } from 'antd';
 import { formatMessage, FormattedMessage } from 'umi/locale'
 import { connect } from 'dva'
 import { formatTime } from '../../utils/utils'
@@ -100,8 +99,8 @@ class ResourceForm extends PureComponent {
             <Modal
                 destroyOnClose
                 title={
-                    <span>{mode ? <span><FontAwesomeIcon icon="plus"></FontAwesomeIcon> <FormattedMessage id="system.resource.modal.add" /></span> :
-                        <span><FontAwesomeIcon icon="edit"></FontAwesomeIcon> <FormattedMessage id="system.resource.modal.edit" /></span>}</span>}
+                    <span>{mode ? <span><Icon type="plus"></Icon> <FormattedMessage id="system.resource.modal.add" /></span> :
+                        <span><Icon type="edit"></Icon> <FormattedMessage id="system.resource.modal.edit" /></span>}</span>}
                 visible={modalVisible}
                 onOk={this.handleOk}
                 onCancel={() => handleModalVisible()}
@@ -340,7 +339,7 @@ class Resource extends PureComponent {
             dataIndex: 'icon',
             width: 160,
             render: (text) => (
-                <span>{text ? <FontAwesomeIcon icon={text} /> : null}</span>
+                <span>{text ? <Icon type={text} /> : null}</span>
             )
         }, {
             title: formatMessage({ id: 'label.create-time' }),
@@ -358,18 +357,18 @@ class Resource extends PureComponent {
                         <span>
                             {record.resource_type != 4 ?
                                 <span>
-                                    <a href="javascript:;" onClick={() => this.handleCreate(record.id, record.resource_type)}><FontAwesomeIcon icon="plus" /> <FormattedMessage id="system.resource.button.add" /></a>
+                                    <a href="javascript:;" onClick={() => this.handleCreate(record.id, record.resource_type)}><Icon type="plus" /> <FormattedMessage id="system.resource.button.add" /></a>
                                     <Divider type="vertical" /></span> : null
                             }
-                            <a href="javascript:;" onClick={() => this.handleEdit(record)}><FontAwesomeIcon icon="edit" /> <FormattedMessage id="label.edit" /></a>
+                            <a href="javascript:;" onClick={() => this.handleEdit(record)}><Icon type="edit" /> <FormattedMessage id="label.edit" /></a>
                             <Divider type="vertical" />
                             <Popconfirm placement="topRight"
-                                icon={<FontAwesomeIcon icon="question-circle" className="danger" />}
+                                icon={<Icon type="question-circle" className="danger" />}
                                 okText={formatMessage({ id: 'button.yes' })}
                                 cancelText={formatMessage({ id: 'button.no' })}
                                 title={formatMessage({ id: 'system.resource.delete.prompt' })}
                                 onConfirm={() => this.handleDelete(record.id)}>
-                                <a href="javascript:;"><FontAwesomeIcon icon="times" /> <FormattedMessage id="label.delete" /></a>
+                                <a href="javascript:;"><Icon type="delete" /> <FormattedMessage id="label.delete" /></a>
                             </Popconfirm>
                         </span>
                     }
@@ -378,7 +377,7 @@ class Resource extends PureComponent {
         }];
         const buttons = (
             <React.Fragment>
-                <Button type="primary" onClick={() => this.handleCreate('', '')} ><FontAwesomeIcon icon="plus" style={{ marginRight: '6px' }} /><FormattedMessage id="button.add" /></Button>
+                <Button type="primary" icon="plus" onClick={() => this.handleCreate('', '')} ><FormattedMessage id="button.add" /></Button>
             </React.Fragment>
         )
         const formProps = {

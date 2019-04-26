@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { formatMessage, FormattedMessage } from 'umi/locale'
-import { Tree, Modal } from 'antd'
+import {  FormattedMessage } from 'umi/locale'
+import { Tree, Modal,Icon } from 'antd'
 import { connect } from 'dva'
 const TreeNode = Tree.TreeNode
 import styles from './index.less'
@@ -94,7 +93,7 @@ class Permission extends PureComponent {
             <Modal
                 width="50%"
                 destroyOnClose
-                title={<span><FontAwesomeIcon icon="user-shield"></FontAwesomeIcon> <FormattedMessage id="label.permissions" /></span>}
+                title={<span><Icon type="safety-certificate" /> <FormattedMessage id="label.permissions" /></span>}
                 visible={modalVisible}
                 onOk={this.handleOk}
                 onCancel={handleModalVisible}

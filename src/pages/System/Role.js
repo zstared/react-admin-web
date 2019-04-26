@@ -1,7 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import TablePage from '../../components/TablePage'
-import { Button, Input, Divider, InputNumber, Popconfirm, Form, Modal, message } from 'antd';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Button, Input, Divider, InputNumber, Popconfirm, Form, Modal,Icon, message } from 'antd';
 import { formatMessage, FormattedMessage } from 'umi/locale'
 import { connect } from 'dva'
 import { formatTime } from '../../utils/utils'
@@ -49,8 +48,8 @@ class RoleForm extends PureComponent {
             <Modal
                 destroyOnClose
                 title={
-                    mode ? <span><FontAwesomeIcon icon="plus"></FontAwesomeIcon> <FormattedMessage id="system.role.modal.add" /></span> :
-                        <span><FontAwesomeIcon icon="edit"></FontAwesomeIcon> <FormattedMessage id="system.role.modal.edit" /></span>}
+                    mode ? <span><Icon type="plus"></Icon> <FormattedMessage id="system.role.modal.add" /></span> :
+                        <span><Icon type="edit"></Icon> <FormattedMessage id="system.role.modal.edit" /></span>}
                 visible={modalVisible}
                 onOk={this.handleOk}
                 onCancel={handleModalVisible}
@@ -264,17 +263,17 @@ class Role extends PureComponent {
                     {
                         !record.is_system ?
                             <span>
-                                <a href="javascript:;" onClick={() => this.handleAssignPermissions(record.id)}><FontAwesomeIcon icon="user-shield" /> <FormattedMessage id="label.permissions" /></a>
+                                <a href="javascript:;" onClick={() => this.handleAssignPermissions(record.id)}><Icon type="safety" /> <FormattedMessage id="label.permissions" /></a>
                                 <Divider type="vertical" />
-                                <a href="javascript:;" onClick={() => this.handleEdit(record)}><FontAwesomeIcon icon="edit" /> <FormattedMessage id="label.edit" /></a>
+                                <a href="javascript:;" onClick={() => this.handleEdit(record)}><Icon type="edit" /> <FormattedMessage id="label.edit" /></a>
                                 <Divider type="vertical" />
                                 <Popconfirm placement="topRight"
-                                    icon={<FontAwesomeIcon icon="question-circle" className="danger" />}
+                                    icon={<Icon type="question-circle" className="danger" />}
                                     okText={formatMessage({ id: 'button.yes' })}
                                     cancelText={formatMessage({ id: 'button.no' })}
                                     title={formatMessage({ id: 'system.role.delete.prompt' })}
                                     onConfirm={() => this.handleDelete(record.id)}>
-                                    <a href="javascript:;"><FontAwesomeIcon icon="times" /> <FormattedMessage id="label.delete" /></a>
+                                    <a href="javascript:;"><Icon type="delete" /> <FormattedMessage id="label.delete" /></a>
                                 </Popconfirm>
                             </span> : null
                     }
@@ -283,7 +282,7 @@ class Role extends PureComponent {
         }];
         const buttons = (
             <React.Fragment>
-                <Button type="primary" onClick={() => this.handleModalOpen(true)} ><FontAwesomeIcon icon="plus" style={{ marginRight: '6px' }} /><FormattedMessage id="button.add" /></Button>
+                <Button type="primary" icon="plus" onClick={() => this.handleModalOpen(true)} ><FormattedMessage id="button.add" /></Button>
             </React.Fragment>
         )
         const userFormProps = {

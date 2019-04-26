@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react'
-import { Dropdown, Menu } from 'antd'
+import { Dropdown, Menu,Icon } from 'antd'
 import classNames from 'classnames'
 import { setLocale, getLocale, formatMessage, FormattedMessage } from 'umi/locale';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const MenuItem = Menu.Item;
 
 
@@ -26,11 +25,11 @@ class SelectLang extends PureComponent {
         return (
             <Dropdown overlay={langMenu}>
                 {type == "icon" ? (<span className={classNames(className)}>
-                     <FontAwesomeIcon  icon="globe"  size="lg" />
+                     <Icon  type="global" style={{fontSize:'20px'}}  />
                 </span>) :
                     (<a href="#">
                         <FormattedMessage id="app.lang" />
-                        <FontAwesomeIcon icon="caret-down" />
+                        <Icon type="caret-down" />
                     </a>)
                 }
             </Dropdown>

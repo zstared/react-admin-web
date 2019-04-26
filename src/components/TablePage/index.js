@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react'
 import { Table, Form, Col, Row, Button, Icon } from 'antd'
 import { connect } from 'dva';
 import { formatMessage, FormattedMessage } from 'umi/locale'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from './index.less'
 const FormItem = Form.Item;
 
@@ -127,7 +126,7 @@ class TablePage extends PureComponent {
                         {queryItem.base}
                         {queryItem.base.length>0?<Col span={6}>
                             <FormItem>
-                                <Button type="primary" htmlType="submit"><FontAwesomeIcon icon="search" style={{ marginRight: '6px' }} /><FormattedMessage id="button.search" /></Button>
+                                <Button type="primary" htmlType="submit" icon="search"><FormattedMessage id="button.search" /></Button>
                                 <Button onClick={this.handleReset} style={{ marginLeft: 8 }}><FormattedMessage id="button.reset" /></Button>
                                 {queryItem.more.length > 0 ? <a style={{ marginLeft: 8 }} onClick={this.handleExpand}>
                                     {this.state.expand ? (<span><FormattedMessage id="label.collapse" /> <Icon type="up" /></span>) : (<span><FormattedMessage id="label.expand" /> <Icon type="down" /></span>)}

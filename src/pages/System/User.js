@@ -1,7 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import TablePage from '../../components/TablePage'
-import { Button, Input, Select, Tag, Divider, Popconfirm, Form, Modal, Radio, message } from 'antd';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Button, Input, Select, Tag, Divider, Popconfirm, Form, Modal, Radio,Icon, message } from 'antd';
 import { formatMessage, FormattedMessage } from 'umi/locale'
 import { connect } from 'dva'
 import { formatTime } from '../../utils/utils'
@@ -60,8 +59,8 @@ class UserForm extends PureComponent {
             <Modal
                 destroyOnClose
                 title={
-                    mode ? <span><FontAwesomeIcon icon="user-plus"></FontAwesomeIcon> <FormattedMessage id="system.user.modal.add" /></span> :
-                        <span><FontAwesomeIcon icon="user-edit"></FontAwesomeIcon> <FormattedMessage id="system.user.modal.edit" /></span>}
+                    mode ? <span><Icon type="user-plus"></Icon> <FormattedMessage id="system.user.modal.add" /></span> :
+                        <span><Icon type="user-edit"></Icon> <FormattedMessage id="system.user.modal.edit" /></span>}
                 visible={modalVisible}
                 onOk={this.handleOk}
                 onCancel={handleModalVisible}
@@ -358,7 +357,7 @@ class User extends PureComponent {
             sorter: true,
             sortOrder: sortedInfo.columnKey === 'sex' && sortedInfo.order,
             width: 120,
-            render: (text) => (<span>{text == 1 ? <FontAwesomeIcon icon="male" size="lg" color="#0082f3" /> : <FontAwesomeIcon icon="female" size="lg" color="#f98c3d" />}</span>)
+            render: (text) => (<span>{text == 1 ? <Icon type="male" size="lg" color="#0082f3" /> : <Icon type="female" size="lg" color="#f98c3d" />}</span>)
         }, {
             title: formatMessage({ id: 'label.email' }),
             key: 'mail',
@@ -382,23 +381,23 @@ class User extends PureComponent {
                     {
                         record.status !== 2 && !record.is_system ?
                             <span>
-                                <a href="javascript:;" onClick={() => this.handleAssignPermissions(record.id)}><FontAwesomeIcon icon="user-shield" /> <FormattedMessage id="label.permissions" /></a>
+                                <a href="javascript:;" onClick={() => this.handleAssignPermissions(record.id)}><Icon type="safety" /> <FormattedMessage id="label.permissions" /></a>
                                 <Divider type="vertical" />
-                                <a href="javascript:;" onClick={() => this.handleEdit(record)}><FontAwesomeIcon icon="edit" /> <FormattedMessage id="label.edit" /></a>
+                                <a href="javascript:;" onClick={() => this.handleEdit(record)}><Icon type="edit" /> <FormattedMessage id="label.edit" /></a>
                                 <Divider type="vertical" />
                                 {
                                     record.status == 1 ?
-                                        <a href="javascript:;" onClick={() => this.handleChangeState(record.id, record.status)} ><FontAwesomeIcon icon="unlock" /> <FormattedMessage id="label.enable" /></a> :
-                                        <a href="javascript:;" onClick={() => this.handleChangeState(record.id, record.status)} ><FontAwesomeIcon icon="lock" /> <FormattedMessage id="label.disable" /></a>
+                                        <a href="javascript:;" onClick={() => this.handleChangeState(record.id, record.status)} ><Icon type="unlock" /> <FormattedMessage id="label.enable" /></a> :
+                                        <a href="javascript:;" onClick={() => this.handleChangeState(record.id, record.status)} ><Icon type="lock" /> <FormattedMessage id="label.disable" /></a>
                                 }
                                 <Divider type="vertical" />
                                 <Popconfirm placement="topRight"
-                                    icon={<FontAwesomeIcon icon="question-circle" className="danger" />}
+                                    icon={<Icon type="question-circle" className="danger" />}
                                     okText={formatMessage({ id: 'button.yes' })}
                                     cancelText={formatMessage({ id: 'button.no' })}
                                     title={formatMessage({ id: 'system.user.delete.prompt' })}
                                     onConfirm={() => this.handleDelete(record.id)}>
-                                    <a href="javascript:;"><FontAwesomeIcon icon="times" /> <FormattedMessage id="label.delete" /></a>
+                                    <a href="javascript:;"><Icon type="delete" /> <FormattedMessage id="label.delete" /></a>
                                 </Popconfirm>
                             </span> : null
                     }
@@ -407,7 +406,7 @@ class User extends PureComponent {
         }];
         const buttons = (
             <React.Fragment>
-                <Button type="primary" onClick={() => this.handleModalOpen(true)} ><FontAwesomeIcon icon="user-plus" style={{ marginRight: '6px' }} /><FormattedMessage id="button.add" /></Button>
+                <Button type="primary" onClick={() => this.handleModalOpen(true)} ><Icon type="plus" style={{ marginRight: '6px' }} /><FormattedMessage id="button.add" /></Button>
             </React.Fragment>
         )
         const userFormProps = {
