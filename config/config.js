@@ -26,7 +26,7 @@ export default {
   ],
   routes: routes,
   theme: {
-    'primary-color': '#722ED1',
+    'primary-color': '#1890FF',
   },
   // externals: {
   //     '@antv/data-set': 'DataSet',
