@@ -6,7 +6,7 @@ react-admin system solution
 ><span style="color:rgb(243,121,52">PS:功能陆续增加中。。。</span>
 
 - [GitHub地址](https://github.com/zstared/react-admin-web)
-- [预览地址](http://47.112.194.62:9091)
+- [预览地址](http://47.112.194.62)
 - [API接口GitHub地址](https://github.com/zstared/koa-admin-api)
 ## 依赖模块
 
