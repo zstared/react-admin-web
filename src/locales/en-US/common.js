@@ -28,6 +28,7 @@ export default{
     'label.avatar':'Avatar',
     'label.account':'Account',
     'label.name':'Name',
+    'label.name-short':'Short Name',
     'label.name-cn':'Name',
     'label.name-en':'English Name',
     'label.sex':'Sex',

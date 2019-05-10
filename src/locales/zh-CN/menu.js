@@ -5,6 +5,7 @@ export default {
     "menu.system.role":'角色管理',
     "menu.system.menu":'菜单管理',
     "menu.system.resource":'资源管理',
+    "menu.system.organization":'组织架构',
 
     "menu.setting.base":"基本设置",
     "menu.setting.security":"安全设置",

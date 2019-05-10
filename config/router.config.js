@@ -17,6 +17,7 @@ export default [
                     { path: '/system/user', name: 'user', component: './System/User' },
                     { path: '/system/role', component: './System/Role' },
                     { path: '/system/menu', component: './System/Menu' },
+                    { path: '/system/organization', component: './System/Organization' },
                     { path: '/system/resource', component: './System/Resource' },
                 ]
             }

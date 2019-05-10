@@ -28,6 +28,17 @@ export default{
     'system.resource.permission.export':'导出',
     'system.resource.permission.import':'导入',
 
-    'system.menu':'菜单'
+    'system.menu':'菜单',
+
+    'system.organization':'组织架构',
+    'system.organization.delete.prompt':'确定删除此组织吗？',
+    'system.organization.button.add':'添加子组织',
+    'system.organization.modal.add':'新增组织',
+    'system.organization.modal.edit':'编辑组织',
+    'system.organization.type.company':'集团/公司',
+    'system.organization.type.area':'大区',
+    'system.organization.type.subcompany':'子/分公司',
+    'system.organization.type.department':'部门',
+    'system.organization.type.team':'组/团队',
 
 }

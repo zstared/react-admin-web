@@ -28,6 +28,7 @@ export default {
     'label.avatar': '头像',
     'label.account': '账号',
     'label.name':'名称',
+    'label.name-short':'简称',
     'label.name-cn': '姓名',
     'label.name-en': '英文名',
     'label.sex': '性别',
