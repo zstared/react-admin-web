@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/maucash-h5/static/css/main.0c2fa677.chunk.css",
+    "main.js": "/maucash-h5/static/js/main.fc846da1.chunk.js",
+    "main.js.map": "/maucash-h5/static/js/main.fc846da1.chunk.js.map",
+    "runtime~main.js": "/maucash-h5/static/js/runtime~main.473ffae0.js",
+    "runtime~main.js.map": "/maucash-h5/static/js/runtime~main.473ffae0.js.map",
+    "static/css/2.de22fa2f.chunk.css": "/maucash-h5/static/css/2.de22fa2f.chunk.css",
+    "static/js/2.f41a1a21.chunk.js": "/maucash-h5/static/js/2.f41a1a21.chunk.js",
+    "static/js/2.f41a1a21.chunk.js.map": "/maucash-h5/static/js/2.f41a1a21.chunk.js.map",
+    "index.html": "/maucash-h5/index.html",
+    "precache-manifest.0dda454098ae68f1e98feddcd4ef3e7f.js": "/maucash-h5/precache-manifest.0dda454098ae68f1e98feddcd4ef3e7f.js",
+    "service-worker.js": "/maucash-h5/service-worker.js",
+    "static/css/2.de22fa2f.chunk.css.map": "/maucash-h5/static/css/2.de22fa2f.chunk.css.map",
+    "static/css/main.0c2fa677.chunk.css.map": "/maucash-h5/static/css/main.0c2fa677.chunk.css.map",
+    "static/media/pic_faq.png": "/maucash-h5/static/media/pic_faq.55b5e1a9.png",
+    "static/media/slick-theme.css": "/maucash-h5/static/media/slick.f97e3bbf.svg"
+  }
+}
