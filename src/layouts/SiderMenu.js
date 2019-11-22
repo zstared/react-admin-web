@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Layout } from 'antd'
+import { Layout,Icon} from 'antd'
 import className from 'classnames'
 import Link from 'umi/link'
 import styles from './SiderMenu.less'

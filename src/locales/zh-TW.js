@@ -5,6 +5,7 @@ import common from './zh-TW/common'
 import setting from './zh-TW/setting'
 import message from './zh-TW/message'
 import system from './zh-TW/system'
+import face_recognition from './zh-TW/face_recognition'
 export default{
     "app.lang":'選擇語言',
     "app.no-data":'暫無數據',
@@ -39,4 +40,5 @@ export default{
     ...component,
     ...setting,
     ...system,
+    ...face_recognition
 }

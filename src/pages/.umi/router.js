@@ -91,6 +91,33 @@ let routes = [
         ]
       },
       {
+        "path": "/face_recognition",
+        "name": "face_recognition",
+        "routes": [
+          {
+            "path": "/face_recognition/face",
+            "name": "face",
+            "component": dynamic({ loader: () => import('../FaceRecognition/Face'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+            "exact": true
+          },
+          {
+            "path": "/face_recognition/recognize",
+            "name": "recognize",
+            "component": dynamic({ loader: () => import('../FaceRecognition/Recognize'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+            "exact": true
+          },
+          {
+            "path": "/face_recognition/album",
+            "name": "album",
+            "component": dynamic({ loader: () => import('../FaceRecognition/Album'), loading: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index').default }),
+            "exact": true
+          },
+          {
+            "component": () => React.createElement(require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'src/pages', hasRoutesInConfig: true })
+          }
+        ]
+      },
+      {
         "component": () => React.createElement(require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'src/pages', hasRoutesInConfig: true })
       }
     ]

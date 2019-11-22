@@ -10,4 +10,9 @@ export default {
     "menu.setting.base":"基本设置",
     "menu.setting.security":"安全设置",
     "menu.setting.personalization":"个性化设置",
+
+    "menu.face_recognition":"人脸识别",
+    "menu.face_recognition.face":"人脸库",
+    "menu.face_recognition.recognize":"人脸识别",
+    "menu.face_recognition.album":"相册",
 }

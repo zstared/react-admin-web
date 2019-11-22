@@ -20,3 +20,4 @@ app.model({ namespace: 'organization', ...(require('/Users/bruce.zheng/Desktop/t
 app.model({ namespace: 'resource', ...(require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/resource.js').default) });
 app.model({ namespace: 'role', ...(require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/role.js').default) });
 app.model({ namespace: 'user', ...(require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/user.js').default) });
+app.model({ namespace: 'face', ...(require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/FaceRecognition/models/face.js').default) });

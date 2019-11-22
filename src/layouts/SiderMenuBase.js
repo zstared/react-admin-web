@@ -3,6 +3,7 @@ import { Menu, Icon } from 'antd';
 import { FormattedMessage } from 'umi/locale'
 import Link from 'umi/link'
 import { isUrl } from '@/utils/utils';
+import CustomSvgIcon from '@/components/CustomSvgIcon';
 const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;
 
@@ -10,6 +11,9 @@ const SubMenu = Menu.SubMenu;
 const getIcon = icon => {
     if (typeof icon === 'string' && isUrl(icon)) {
         return <img src={icon} alt="icon" style={{ width: '14px', marginRight: '10px' }} />;
+    }
+    if (typeof icon==='string' && icon.startsWith('cs_')){
+        return <CustomSvgIcon name={icon}  style={{marginRight: '10px' }} />
     }
     if (typeof icon === 'string' && icon) {
         return <Icon className="anticon"  type={icon} /> ;

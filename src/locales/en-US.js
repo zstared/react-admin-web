@@ -5,6 +5,7 @@ import common from './en-US/common'
 import setting from './en-US/setting'
 import message from './en-US/message'
 import system from './en-US/system'
+import face_recognition from './en-US/face_recognition'
 export default{
     "app.lang":'Languages',
     "app.no-data":'No Data',
@@ -38,5 +39,6 @@ export default{
     ...menu,
     ...component,
     ...setting,
-    ...system
+    ...system,
+    ...face_recognition
 }

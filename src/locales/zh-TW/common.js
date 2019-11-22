@@ -105,4 +105,9 @@ export default {
 
     'pagination.total':'共',
     'pagination.records':'條記錄',
+
+    'reminder.delete':`確定刪除此{name}嗎?`,
+
+    'modal.title.add':`新增{name}`,
+    'modal.title.edit':`編輯{name}`
 }

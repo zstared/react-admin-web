@@ -6,6 +6,7 @@ import { connect } from 'dva'
 import { formatTime } from '../../utils/utils'
 import { regTitle, regCode } from '../../utils/validate'
 import { existResource, existResourceCode } from '../../services/resource'
+import CustomSvgIcon from '@/components/CustomSvgIcon';
 
 @Form.create()
 class ResourceForm extends PureComponent {
@@ -40,6 +41,7 @@ class ResourceForm extends PureComponent {
 
     //验证资源编码是否已存在 
     handleExistResourceCode = async (rule, value, callback) => {
+        if(value){
         const { editInfo, form } = this.props;
         let parent_id = form.getFieldValue('parent_id')
         const params = { resource_code: value, parent_id: parent_id ? parent_id : 0 };
@@ -48,6 +50,7 @@ class ResourceForm extends PureComponent {
         if (!code && data.exist) {
             callback(formatMessage({ id: 'validation.code.existed' }))
         }
+    }
         callback()
     }
 
@@ -339,7 +342,7 @@ class Resource extends PureComponent {
             dataIndex: 'icon',
             width: 160,
             render: (text) => (
-                <span>{text ? <Icon type={text} /> : null}</span>
+                <span>{text ? text.startsWith('cs_')?<CustomSvgIcon name={text} />:<Icon type={text} /> : null}</span>
             )
         }, {
             title: formatMessage({ id: 'label.create-time' }),

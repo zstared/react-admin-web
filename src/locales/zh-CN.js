@@ -5,6 +5,7 @@ import common from './zh-CN/common'
 import setting from './zh-CN/setting'
 import message from './zh-CN/message'
 import system from './zh-CN/system'
+import face_recognition from './zh-CN/face_recognition'
 export default{
     "app.lang":'选择语言',
     "app.no-data":'暂无数据',
@@ -39,4 +40,5 @@ export default{
     ...component,
     ...setting,
     ...system,
+    ...face_recognition
 }

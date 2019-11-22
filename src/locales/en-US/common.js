@@ -105,4 +105,9 @@ export default{
 
     'pagination.total':'Total',
     'pagination.records':'Records',
+
+    'reminder.delete':'Are you sure you want to delete this {name}?',
+
+    'modal.title.add':`Add {name}`,
+    'modal.title.edit':`Edit {name}`
 }
