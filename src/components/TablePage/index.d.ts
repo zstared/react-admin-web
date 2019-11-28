@@ -9,7 +9,10 @@ export interface ITablePageProps {
     loading?: any,
     onChange:(filters:object,sorter:object)=>void
     onSearch: (params: object) => void,
-    buttons?: React.ReactNode
+    buttons?: React.ReactNode,
+    isView:boolean,
+    viewName:string,
+    triggerRef:()=>void
 }
 export default class TablePage extends React.Component<ITablePageProps, any>{
     public static QueryItem: typeof QueryItem

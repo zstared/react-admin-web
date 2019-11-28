@@ -21,6 +21,9 @@ export default {
     'validation.role.required':'请选择角色',
     'validation.type.required':'请选择类型',
     'validation.path.required':'请输入路径',
+    'validation.avatar.required':'请上传头像',
+    'validation.image.required':'请上传照片',
+    'validation.file.required':'请上传文件',
 
     'placeholder.input':'请输入',
     'placeholder.select':'请选择',

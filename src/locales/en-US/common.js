@@ -21,6 +21,9 @@ export default{
     'validation.role.required':'Please select role',
     'validation.type.required':'Please select type',
     'validation.path.required':'Please input path',
+    'validation.avatar.required':'Please upload your avatar',
+    'validation.image.required':'Please upload pictures',
+    'validation.file.required':'Please upload the file',
 
     'placeholder.input':'Please input',
     'placeholder.select':'Please select',

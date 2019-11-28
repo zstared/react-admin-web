@@ -5,6 +5,7 @@ import { formatMessage, FormattedMessage } from 'umi/locale'
 import { connect } from 'dva'
 import { formatTime } from '../../utils/utils'
 import { regTitle } from '../../utils/validate'
+import UploadImage from '../../components/UploadImage'
 
 @Form.create()
 class FaceForm extends PureComponent {
@@ -13,13 +14,15 @@ class FaceForm extends PureComponent {
     handleOk = () => {
         const { form, handleSave } = this.props;
         form.validateFieldsAndScroll((err, fieldsValue) => {
-            if (err) return;
+			if (err) return;
+			const file = fieldsValue.face_file[0]
+			fieldsValue.file_code= file ? file.code : '';
             handleSave(fieldsValue);
         })
     }
 
     render() {
-        const { form: { getFieldDecorator }, handleModalVisible, modalVisible, mode, editInfo } = this.props;
+        const { form: { getFieldDecorator }, handleModalVisible, modalVisible, mode, editInfo,loading_create,loading_update } = this.props;
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
@@ -38,7 +41,10 @@ class FaceForm extends PureComponent {
                     mode ? <span><Icon type="plus"></Icon> <FormattedMessage id="modal.title.add" values={{name:formatMessage({id:'face_recognition.face'})}} /></span> :
                         <span><Icon type="edit"></Icon> <FormattedMessage id="modal.title.edit" values={{name:formatMessage({id:'face_recognition.face'})}}  /></span>}
                 visible={modalVisible}
-                onOk={this.handleOk}
+				onOk={this.handleOk}
+				okButtonProps={{
+                   loading:mode?loading_create:loading_update
+				}}
                 onCancel={handleModalVisible}
             >
                 <Form>
@@ -53,7 +59,22 @@ class FaceForm extends PureComponent {
                         })(
                             <Input></Input>
                         )}
-                    </Form.Item>
+					</Form.Item>
+					<Form.Item {...formItemLayout} label={formatMessage({ id: 'label.avatar' })}>
+					{getFieldDecorator('face_file', {
+						valuePropName: 'fileList',
+						initialValue: !mode ? [editInfo.file_info] : [],
+						rules: [
+							{ required: true, message: formatMessage({ id: 'validation.avatar.required' }) },
+						]
+					})(
+						<UploadImage maxLimit={1} data={{
+							is_static: true,
+							folder_name: 'face',
+							is_thumb: false,
+						}} />
+					)}
+				</Form.Item>
 
                 </Form>
             </Modal>
@@ -64,7 +85,9 @@ class FaceForm extends PureComponent {
 
 @connect(({ face, loading }) => ({
     data: face.data,
-    loading: loading.effects['face/getList']
+	loading: loading.effects['face/getList'],
+	loading_create:loading.effects['face/create'],
+	loading_update:loading.effects['face/update'],
 }))
 class Face extends PureComponent {
 
@@ -73,7 +96,7 @@ class Face extends PureComponent {
         filteredInfo: {},//筛选信息
         modalVisible: false,
         modalMode: true,//弹框模式 true-新增；false-编辑
-        editInfo: {},
+		editInfo: {},
     }
 
     /**绑定子组件 */
@@ -87,7 +110,7 @@ class Face extends PureComponent {
         })
     }
 
-    /**删除角色 */
+    /**删除人脸 */
     handleDelete = (id) => {
         const { dispatch } = this.props;
         dispatch({
@@ -115,7 +138,7 @@ class Face extends PureComponent {
         })
     }
 
-    /**修改角色 */
+    /**修改人脸 */
     handleEdit = (fieldsValue) => {
         this.setState({
             editInfo: fieldsValue
@@ -124,7 +147,7 @@ class Face extends PureComponent {
         })
     }
 
-    /**保存(新增、编辑)角色 */
+    /**保存(新增、编辑)人脸 */
     handleSave = (fieldsValue) => {
         const { dispatch } = this.props;
         const { modalMode, editInfo } = this.state;
@@ -155,7 +178,11 @@ class Face extends PureComponent {
             title: formatMessage({ id: 'label.avatar' }),
             key: 'file_code',
             dataIndex: 'file_code',
-            width: 100,
+			width: 100,
+			fixed: true,
+			render:(text,record,index)=>{
+				return <img onClick={()=>this.child.handleViews(index)} src={record.file_info.src} className="thumbnail" />
+			}
         }, {
             align:'center',
             title: formatMessage({ id: 'label.create-time' }),
@@ -178,9 +205,11 @@ class Face extends PureComponent {
                                 <Divider type="vertical" />
                                 <Popconfirm placement="topRight"
                                     icon={<Icon type="question-circle" className="danger" />}
-                                    okText={formatMessage({ id: 'button.yes' })}
+									okText={formatMessage({ id: 'button.yes' })}
+									okType="danger"
                                     cancelText={formatMessage({ id: 'button.no' })}
-                                    title={formatMessage({ id: 'reminder.delete',values:formatMessage({id:'face_recognition.face'})})}
+									//title={formatMessage({ id: 'reminder.delete',values:{name:formatMessage({id:'face_recognition.face'})}})}
+									title={<FormattedMessage id="reminder.delete" values={{name:formatMessage({id:'face_recognition.face'})}}  />}
                                     onConfirm={() => this.handleDelete(record.id)}>
                                     <a href="javascript:;"><Icon type="delete" /> <FormattedMessage id="label.delete" /></a>
                                 </Popconfirm>
@@ -194,24 +223,28 @@ class Face extends PureComponent {
                 <Button type="primary" icon="plus" onClick={() => this.handleModalOpen(true)} ><FormattedMessage id="button.add" /></Button>
             </React.Fragment>
         )
-        const userFormProps = {
+        const faceFormProps = {
             mode: this.state.modalMode,
             editInfo: this.state.editInfo,
             modalVisible: this.state.modalVisible,
             handleModalVisible: this.handleModalVisible,
-            handleSave: this.handleSave,
+			handleSave: this.handleSave,
+			loading_create:this.props.loading_create,
+			loading_update:this.props.loading_update
         }
         return (
             <Fragment>
-                <TablePage loading={loading} url="face/getList"
+                <TablePage loading={loading} url="face/getList" isView={true}
                     data={data} columns={columns} buttons={buttons} rowKey="id"
-                    onChange={this.handleChange}
+					onChange={this.handleChange}
+					triggerRef={this.bindRef}
                 >
                     <TablePage.QueryItem label={formatMessage({ id: 'label.name' })} name="face_name">
                         <Input placeholder={formatMessage({ id: "placeholder.input" })} />
                     </TablePage.QueryItem>
                 </TablePage>
-                <FaceForm {...userFormProps} ></FaceForm>
+				<FaceForm {...faceFormProps} ></FaceForm>
+				
             </Fragment>
         )
     }

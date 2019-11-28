@@ -284,7 +284,7 @@ class Role extends PureComponent {
                 <Button type="primary" icon="plus" onClick={() => this.handleModalOpen(true)} ><FormattedMessage id="button.add" /></Button>
             </React.Fragment>
         )
-        const userFormProps = {
+        const roleFormProps = {
             mode: this.state.modalMode,
             editInfo: this.state.editInfo,
             modalVisible: this.state.modalVisible,
@@ -301,7 +301,7 @@ class Role extends PureComponent {
                         <Input placeholder={formatMessage({ id: "placeholder.input" })} />
                     </TablePage.QueryItem>
                 </TablePage>
-                <RoleForm {...userFormProps} ></RoleForm>
+                <RoleForm {...roleFormProps} ></RoleForm>
                 <Permission
                     modalVisible={this.state.permissionVisible}
                     handleModalVisible={this.handlePermissionModalVisiable}

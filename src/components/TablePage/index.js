@@ -3,6 +3,8 @@ import { Table, Form, Col, Row, Button, Icon } from 'antd'
 import { connect } from 'dva';
 import { formatMessage, FormattedMessage } from 'umi/locale'
 import styles from './index.less'
+import Viewer from 'react-viewer';
+import 'react-viewer/dist/index.css';
 const FormItem = Form.Item;
 
 
@@ -14,11 +16,15 @@ class TablePage extends PureComponent {
         pagination: { page_index: 1, page_size: 10 },
         sortedInfo: {},
         filteredInfo: {},
+        viewVisible:false,
+		viewIndex:0,
     }
 
     /**默认参数 */
     static defaultProps = {
         isTree: false,
+        isView:false,
+        viewName:'file_info'
     }
 
     /**触发是否展开更多查询项 */
@@ -108,7 +114,16 @@ class TablePage extends PureComponent {
     }
 
     componentDidMount() {
+        const {triggerRef}=this.props;
         this.handleSearch();
+        if(triggerRef) triggerRef(this);
+    }
+
+    handleViews(index){
+        this.setState({
+            viewVisible:true,
+            viewIndex:index
+        })
     }
 
     render() {
@@ -117,7 +132,7 @@ class TablePage extends PureComponent {
             lg: 16,
             md: 8,
         }
-        const { data, columns, buttons, rowKey, loading, isTree } = this.props;
+        const { data, columns, buttons, rowKey, loading, isTree,isView,viewName } = this.props;
         const queryItem = this.getQueryItem();
         return (
             <div className={styles.pageWrapper}>
@@ -159,6 +174,12 @@ class TablePage extends PureComponent {
                         pageSize: data.page_size
                     }} >
                 </Table>
+                {isView?<Viewer
+                    images={data.rows?data.rows.map(item=>item[viewName]):[]}
+                    onClose={() => { this.setState({ viewVisible: false }) }}
+                    activeIndex={this.state.viewIndex}
+                    visible={this.state.viewVisible}>
+                </Viewer>:null}
             </div>
         )
     }

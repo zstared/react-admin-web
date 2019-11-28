@@ -67,12 +67,12 @@ class UploadImage extends PureComponent {
         if (!isImage) {
             message.error(formatMessage({id:'upload.validation.limit-image-type'}));
         }
-        const isSizeLimit = file.size / 1024 / 1024 < 5;
+        const isSizeLimit = file.size / 1024 / 1024 < 20;
         if (!isSizeLimit) {
             message.error(formatMessage({id:'upload.validation.limit-size'}));
         }
 
-
+        console.log(file)
         return isImage && isSizeLimit && isMaxLimit;
     }
 

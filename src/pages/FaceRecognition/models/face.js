@@ -61,14 +61,10 @@ export default {
             try {
                 const { code } = yield call(deleteFace, payload);
                 if (!code) {
-                    let { data, params } = yield select(state => state.face)
-                    let index = data.rows.findIndex((item) => {
-                        return item.id == payload.id
-                    });
-                    data.rows[index].status = 2;
+					const params = yield select(state => state.face.params);
                     yield put({
-                        type: 'setData',
-                        payload: { data: data, params: params }
+                        type: 'getList',
+                        payload: params,
                     })
                     if (callback) callback()
                 }

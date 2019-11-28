@@ -21,6 +21,9 @@ export default {
     'validation.role.required':'請選擇角色',
     'validation.type.required':'請選擇類型',
     'validation.path.required':'請輸入路徑',
+    'validation.avatar.required':'請上傳頭像',
+    'validation.image.required':'請上傳照片',
+    'validation.file.required':'請上傳文件',
 
     'placeholder.input':'請輸入',
     'placeholder.select':'請選擇',
