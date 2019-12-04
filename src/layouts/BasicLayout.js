@@ -24,12 +24,12 @@ class BasicLayout extends PureComponent {
         super(props)
     }
 
-    componentDidMount() {
+     componentDidMount() {
         const { dispatch } = this.props;
-        dispatch({
+         dispatch({
             type: 'app/getMenus'
         })
-        dispatch({
+         dispatch({
             type: 'app/getCurrentUser'
         })
     }

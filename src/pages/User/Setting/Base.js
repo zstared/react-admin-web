@@ -36,9 +36,17 @@ class Base extends PureComponent {
         })
     }
 
+    async componentDidMount(){
+        if(Object.keys(this.props.currentUser).length==0){
+            await this.props.dispatch({
+                 type:'app/getCurrentUser'
+             })
+         }
+    }
 
 
-    render() {
+
+     render() {
         const { getFieldDecorator } = this.props.form;
         const { currentUser } = this.props;
 
@@ -64,7 +72,7 @@ class Base extends PureComponent {
                             <UploadImage maxLimit={1} data={{
                                 is_static: true,
                                 folder_name: 'avatar',
-                                is_thumb: true,
+                                is_thumb: true
                             }} />
                         )}
                     </FormItem>

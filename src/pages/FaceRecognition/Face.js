@@ -69,9 +69,10 @@ class FaceForm extends PureComponent {
 						]
 					})(
 						<UploadImage maxLimit={1} data={{
-							is_static: true,
 							folder_name: 'face',
-							is_thumb: false,
+							is_static: true,
+							is_compress:true,
+							is_thumb: true,
 						}} />
 					)}
 				</Form.Item>
