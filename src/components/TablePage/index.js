@@ -17,7 +17,7 @@ class TablePage extends PureComponent {
         sortedInfo: {},
         filteredInfo: {},
         viewVisible:false,
-		viewIndex:0,
+		viewId:0,
     }
 
     /**默认参数 */
@@ -119,10 +119,10 @@ class TablePage extends PureComponent {
         if(triggerRef) triggerRef(this);
     }
 
-    handleViews(index){
+    handleViews(id){
         this.setState({
             viewVisible:true,
-            viewIndex:index
+            viewId:id
         })
     }
 
@@ -134,6 +134,14 @@ class TablePage extends PureComponent {
         }
         const { data, columns, buttons, rowKey, loading, isTree,isView,viewName } = this.props;
         const queryItem = this.getQueryItem();
+        let images=[];
+        if(data.rows){
+            images=data.rows.map(item => item[viewName]).reduce((accumulator, currentValue) => {
+                                          return accumulator.concat(
+                                              currentValue
+                                          );
+                                      }, [])
+        }
         return (
             <div className={styles.pageWrapper}>
                 <Form className={styles.formWrapper} onSubmit={this.handleSubmit}>
@@ -175,9 +183,13 @@ class TablePage extends PureComponent {
                     }} >
                 </Table>
                 {isView?<Viewer
-                    images={data.rows?data.rows.map(item=>item[viewName]):[]}
+                    images={data.rows?data.rows.map(item => item[viewName]).reduce((accumulator, currentValue) => {
+                                          return accumulator.concat(
+                                              currentValue
+                                          );
+                                      }, []):[]}
                     onClose={() => { this.setState({ viewVisible: false }) }}
-                    activeIndex={this.state.viewIndex}
+                    activeIndex={images.findIndex(item=>item.id==this.state.viewId)}
                     visible={this.state.viewVisible}>
                 </Viewer>:null}
             </div>

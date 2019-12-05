@@ -15,8 +15,8 @@ class FaceForm extends PureComponent {
         const { form, handleSave } = this.props;
         form.validateFieldsAndScroll((err, fieldsValue) => {
 			if (err) return;
-			const file = fieldsValue.face_file[0]
-			fieldsValue.file_code= file ? file.code : '';
+			const file_codes = fieldsValue.face_file.map(file=>file.code)
+			fieldsValue.file_code= file_codes ? file_codes : [];
             handleSave(fieldsValue);
         })
     }
@@ -46,6 +46,7 @@ class FaceForm extends PureComponent {
                    loading:mode?loading_create:loading_update
 				}}
                 onCancel={handleModalVisible}
+                width="50%"
             >
                 <Form>
                     <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.name' })}>
@@ -63,12 +64,12 @@ class FaceForm extends PureComponent {
 					<Form.Item {...formItemLayout} label={formatMessage({ id: 'label.avatar' })}>
 					{getFieldDecorator('face_file', {
 						valuePropName: 'fileList',
-						initialValue: !mode ? [editInfo.file_info] : [],
+						initialValue: !mode ? editInfo.file_info : [],
 						rules: [
 							{ required: true, message: formatMessage({ id: 'validation.avatar.required' }) },
 						]
 					})(
-						<UploadImage maxLimit={1} data={{
+						<UploadImage maxLimit={10} multiple={true}  data={{
 							folder_name: 'face',
 							is_static: true,
 							is_compress:true,
@@ -142,7 +143,7 @@ class Face extends PureComponent {
     /**修改人脸 */
     handleEdit = (fieldsValue) => {
         this.setState({
-            editInfo: fieldsValue
+            editInfo: {...fieldsValue}
         }, () => {
             this.handleModalOpen(false)
         })
@@ -181,8 +182,13 @@ class Face extends PureComponent {
             dataIndex: 'file_code',
 			width: 100,
 			fixed: true,
-			render:(text,record,index)=>{
-				return <img onClick={()=>this.child.handleViews(index)} src={record.file_info.src} className="thumbnail" />
+			render:(text,record)=>{
+                const file_info=record.file_info;
+                let imgs=null;
+                if(file_info&&file_info.length>0){
+                     imgs=<div>{file_info.map(file=><img key={file.id} onClick={()=>this.child.handleViews(file.id)} src={file.src} className="thumbnail" />)}</div> 
+                }
+                return imgs;
 			}
         }, {
             align:'center',

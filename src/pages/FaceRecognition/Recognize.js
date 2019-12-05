@@ -8,7 +8,7 @@ export default class Recognize extends PureComponent {
         fileCode: '',
     };
 
-    handleChange(fileList) {
+    handleChange=(fileList)=> {
         this.setState({
             fileCode: fileList.length > 0 ? fileList[0].code : '',
         });
@@ -16,9 +16,7 @@ export default class Recognize extends PureComponent {
     /**
      * 开始比对
      */
-    recognize() {
-        
-    }
+    recognize=()=> {}
 
     render() {
         const { fileCode } = this.state;
@@ -33,6 +31,7 @@ export default class Recognize extends PureComponent {
                                 is_static: true,
                                 is_compress: true,
                             }}
+                            onChange={this.handleChange}
                         />
                     </div>
                     <div className={styles.columnCenter}>

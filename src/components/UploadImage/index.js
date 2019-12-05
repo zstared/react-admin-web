@@ -66,8 +66,6 @@ class UploadImage extends PureComponent {
         if (!isSizeLimit) {
             message.error(formatMessage({ id: 'upload.validation.limit-size' }))
         }
-
-        console.log(file)
         return isImage && isSizeLimit && isMaxLimit
     }
 
@@ -75,6 +73,7 @@ class UploadImage extends PureComponent {
     handleChange = ({ file, fileList }) => {
         const { onChange } = this.props
 
+        console.log(fileList)
         //文件上传完成时
         if (file.status == 'done') {
             const res = file.response
@@ -106,13 +105,15 @@ class UploadImage extends PureComponent {
             return file
         })
         //过滤文件
-        fileList = fileList.filter(file => {
-            return file.status == 'done' || file.status == 'uploading'
-        })
+        // fileList = fileList.filter(file => {
+        //     return !file.status|| file.status == 'done' || file.status == 'uploading'
+        // })
 
         this.setState({ fileList })
 
-        if (file.status == 'done') {
+        console.log(fileList)
+
+        if (!file.status||file.status == 'done') {
             //返回成功状态的文件列表
             if (onChange) onChange(fileList)
         }
