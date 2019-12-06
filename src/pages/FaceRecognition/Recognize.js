@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import UploadImage from '../../components/UploadImage';
 import styles from './Recognize.less';
 import { Progress, Button } from 'antd';
+import {getPageList,matching} from '../../services/recognize';
 
 export default class Recognize extends PureComponent {
     state = {
@@ -16,7 +17,10 @@ export default class Recognize extends PureComponent {
     /**
      * 开始比对
      */
-    recognize=()=> {}
+    matching=async ()=> {
+         const result=await matching({file_code:this.state.fileCode});
+         console.log(result);
+    }
 
     render() {
         const { fileCode } = this.state;
@@ -58,7 +62,7 @@ export default class Recognize extends PureComponent {
                         size='large'
                         type='primary'
                         disabled={fileCode ? false : true}
-                        onClick={this.recognize}>
+                        onClick={()=>this.matching()}>
                         开始比对
                     </Button>
                 </div>
