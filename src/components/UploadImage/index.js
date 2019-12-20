@@ -73,7 +73,6 @@ class UploadImage extends PureComponent {
     handleChange = ({ file, fileList }) => {
         const { onChange } = this.props
 
-        console.log(fileList)
         //文件上传完成时
         if (file.status == 'done') {
             const res = file.response
@@ -110,8 +109,6 @@ class UploadImage extends PureComponent {
         // })
 
         this.setState({ fileList })
-
-        console.log(fileList)
 
         if (!file.status||file.status == 'done') {
             //返回成功状态的文件列表

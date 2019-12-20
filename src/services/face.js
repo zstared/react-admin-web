@@ -6,6 +6,12 @@ export async function getFaceList(params) {
     return await request.get('/face_recognition/face/pageList', params)
 }
 
+/**获取人脸类型列表 */
+export async function getTypeList(params) {
+    return await request.get('/face_recognition/face/typeList', params)
+}
+
+
 /**新增人脸 */
 export async function create(params) {
     return await request.post('/face_recognition/face/create', params)

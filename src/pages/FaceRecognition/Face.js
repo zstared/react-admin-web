@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import TablePage from '../../components/TablePage'
-import { Button, Input, Divider, Popconfirm, Form, Modal,Icon, message } from 'antd';
+import { Button, Input, Divider, Popconfirm, Form, Modal,Icon, message,Select } from 'antd';
 import { formatMessage, FormattedMessage } from 'umi/locale'
 import { connect } from 'dva'
 import { formatTime } from '../../utils/utils'
@@ -22,7 +22,7 @@ class FaceForm extends PureComponent {
     }
 
     render() {
-        const { form: { getFieldDecorator }, handleModalVisible, modalVisible, mode, editInfo,loading_create,loading_update } = this.props;
+        const { form: { getFieldDecorator }, handleModalVisible, modalVisible, mode, editInfo,loading_create,loading_update,typeData } = this.props;
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
@@ -49,6 +49,23 @@ class FaceForm extends PureComponent {
                 width="50%"
             >
                 <Form>
+                    <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.type' })}>
+                        {getFieldDecorator('type_id', {
+                            initialValue: !mode ? editInfo.type_id : '',
+                            validateFirst: true,
+                            rules: [
+                                { required: true, message: formatMessage({ id: 'validation.type.required' }) },
+                            ]
+                        })(
+                            <Select disabled={!mode} placeholder={formatMessage({ id: "placeholder.select" }) } allowClear={true}>
+                            {
+                                typeData.map((item)=>{
+                                   return <Select.Option key={item.id} value={item.id}>{item.type_name}</Select.Option>
+                                })
+                            }
+                        </Select>
+                        )}
+					</Form.Item>
                     <Form.Item {...formItemLayout} label={formatMessage({ id: 'label.name' })}>
                         {getFieldDecorator('face_name', {
                             initialValue: !mode ? editInfo.face_name : '',
@@ -87,6 +104,7 @@ class FaceForm extends PureComponent {
 
 @connect(({ face, loading }) => ({
     data: face.data,
+    typeData:face.typeData,
 	loading: loading.effects['face/getList'],
 	loading_create:loading.effects['face/create'],
 	loading_update:loading.effects['face/update'],
@@ -99,6 +117,11 @@ class Face extends PureComponent {
         modalVisible: false,
         modalMode: true,//弹框模式 true-新增；false-编辑
 		editInfo: {},
+    }
+
+    componentDidMount(){
+        const {dispatch}=this.props;
+        dispatch({type:'face/getTypeList'});
     }
 
     /**绑定子组件 */
@@ -168,7 +191,7 @@ class Face extends PureComponent {
 
 
     render() {
-        const { data, loading } = this.props;
+        const { data, loading,typeData } = this.props;
         const { sortedInfo } = this.state;
         const columns = [{
             title: formatMessage({ id: 'label.name' }),
@@ -191,6 +214,12 @@ class Face extends PureComponent {
                 return imgs;
 			}
         }, {
+            title: formatMessage({ id: 'label.type' }),
+            key: 'type_name',
+            dataIndex: 'type_name',
+            fixed: true,
+            width: 260,
+        },{
             align:'center',
             title: formatMessage({ id: 'label.create-time' }),
             key: 'create_time',
@@ -237,7 +266,8 @@ class Face extends PureComponent {
             handleModalVisible: this.handleModalVisible,
 			handleSave: this.handleSave,
 			loading_create:this.props.loading_create,
-			loading_update:this.props.loading_update
+            loading_update:this.props.loading_update,
+            typeData:typeData,
         }
         return (
             <Fragment>
@@ -248,6 +278,15 @@ class Face extends PureComponent {
                 >
                     <TablePage.QueryItem label={formatMessage({ id: 'label.name' })} name="face_name">
                         <Input placeholder={formatMessage({ id: "placeholder.input" })} />
+                    </TablePage.QueryItem>
+                    <TablePage.QueryItem label={formatMessage({ id: 'label.type' })} name="type_name">
+                        <Select placeholder={formatMessage({ id: "placeholder.select" }) } allowClear={true}>
+                            {
+                                typeData.map((item)=>{
+                                   return <Select.Option key={item.id} value={item.id}>{item.type_name}</Select.Option>
+                                })
+                            }
+                        </Select>
                     </TablePage.QueryItem>
                 </TablePage>
 				<FaceForm {...faceFormProps} ></FaceForm>

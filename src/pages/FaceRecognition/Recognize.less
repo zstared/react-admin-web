@@ -1,6 +1,7 @@
 .wrapper {
     display: flex;
     flex-direction: column;
+
     .row {
         display: flex;
         width: 100%;
@@ -20,7 +21,7 @@
         flex: 1;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        //justify-content: center;
         align-items: flex-end;
     }
 
@@ -28,16 +29,28 @@
         flex: 1;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        //justify-content: center;
         align-items: flex-start;
     }
 
     .face {
         width: 300px;
         height: 300px;
-        background: #fff;
         box-sizing: border-box;
-        background: #fafafa;
+        background: #fff;
+        object-fit: contain;
+        border: 1px #ddd solid;
+        padding: 8px;
+    }
+
+    .match {
+        width: 300px;
+        text-align: center;
+        background: #fff;
+    }
+
+    .progress {
+        width: 300px;
     }
 
     .title {
@@ -59,6 +72,11 @@
         }
     }
 
+    :global(.ant-upload-list-picture-card-container) {
+        width: 300px;
+        height: 300px;
+    }
+
     :global(.ant-upload.ant-upload-select-picture-card) {
         width: 300px;
         height: 300px;
@@ -69,15 +87,15 @@
         width: 300px;
         height: 300px;
         margin: 0;
-	}
-	
-	:global(.ant-upload-list-item-uploading  .ant-upload-list-item-info){
-		top:80px;
-		text-align:center;
-	}
+    }
 
-	:global(.ant-upload-list-item-uploading .ant-upload-list-item-progress){
-		top:140px;
-	}
+    :global(.ant-upload-list-item-uploading .ant-upload-list-item-info) {
+        top: 80px;
+        text-align: center;
+    }
+
+    :global(.ant-upload-list-item-uploading .ant-upload-list-item-progress) {
+        top: 140px;
+    }
 
 }
