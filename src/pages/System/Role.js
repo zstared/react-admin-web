@@ -262,9 +262,9 @@ class Role extends PureComponent {
                     {
                         !record.is_system ?
                             <span>
-                                <a href="javascript:;" onClick={() => this.handleAssignPermissions(record.id)}><Icon type="safety" /> <FormattedMessage id="label.permissions" /></a>
+                                <a   onClick={() => this.handleAssignPermissions(record.id)}><Icon type="safety" /> <FormattedMessage id="label.permissions" /></a>
                                 <Divider type="vertical" />
-                                <a href="javascript:;" onClick={() => this.handleEdit(record)}><Icon type="edit" /> <FormattedMessage id="label.edit" /></a>
+                                <a   onClick={() => this.handleEdit(record)}><Icon type="edit" /> <FormattedMessage id="label.edit" /></a>
                                 <Divider type="vertical" />
                                 <Popconfirm placement="topRight"
                                     icon={<Icon type="question-circle" className="danger" />}
@@ -272,7 +272,7 @@ class Role extends PureComponent {
                                     cancelText={formatMessage({ id: 'button.no' })}
                                     title={formatMessage({ id: 'system.role.delete.prompt' })}
                                     onConfirm={() => this.handleDelete(record.id)}>
-                                    <a href="javascript:;"><Icon type="delete" /> <FormattedMessage id="label.delete" /></a>
+                                    <a  ><Icon type="delete" /> <FormattedMessage id="label.delete" /></a>
                                 </Popconfirm>
                             </span> : null
                     }

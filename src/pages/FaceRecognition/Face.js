@@ -237,7 +237,7 @@ class Face extends PureComponent {
                     {
                         !record.is_system ?
                             <span>
-                                <a href="javascript:;" onClick={() => this.handleEdit(record)}><Icon type="edit" /> <FormattedMessage id="label.edit" /></a>
+                                <a  onClick={() => this.handleEdit(record)}><Icon type="edit" /> <FormattedMessage id="label.edit" /></a>
                                 <Divider type="vertical" />
                                 <Popconfirm placement="topRight"
                                     icon={<Icon type="question-circle" className="danger" />}
@@ -247,7 +247,7 @@ class Face extends PureComponent {
 									//title={formatMessage({ id: 'reminder.delete',values:{name:formatMessage({id:'face_recognition.face'})}})}
 									title={<FormattedMessage id="reminder.delete" values={{name:formatMessage({id:'face_recognition.face'})}}  />}
                                     onConfirm={() => this.handleDelete(record.id)}>
-                                    <a href="javascript:;"><Icon type="delete" /> <FormattedMessage id="label.delete" /></a>
+                                    <a ><Icon type="delete" /> <FormattedMessage id="label.delete" /></a>
                                 </Popconfirm>
                             </span> : null
                     }

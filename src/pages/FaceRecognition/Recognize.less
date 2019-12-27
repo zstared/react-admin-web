@@ -5,7 +5,7 @@
     .row {
         display: flex;
         width: 100%;
-        padding: 50px 0;
+        padding: 30px 0;
         background: #fff;
     }
 
@@ -38,15 +38,50 @@
         height: 300px;
         box-sizing: border-box;
         background: #fff;
-        object-fit: contain;
+        object-fit: cover;
         border: 1px #ddd solid;
         padding: 8px;
     }
 
-    .match {
-        width: 300px;
+    .matchsTitle {
+        padding: 6px 0;
+        text-align: center;
+    }
+
+    .matchs {
+        display: flex;
         text-align: center;
         background: #fff;
+        justify-content: space-evenly;
+        width: 100%;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 40px 0;
+
+        .match {
+            width: 320px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: 100px;
+                height: 120px;
+            }
+
+            .result {
+                width: 100px;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+
+                :global(.ant-tag) {
+                    margin: 0
+                }
+            }
+        }
     }
 
     .progress {
@@ -58,12 +93,20 @@
         margin-bottom: 10px;
         text-align: center;
         width: 300px;
+        position: relative;
+    }
+
+    .typeSelect {
+        width: 100px;
+        position: absolute;
+        right: 0;
+        bottom: 0;
     }
 
     .button {
         text-align: center;
         background: #fff;
-        padding: 40px 0;
+        padding: 20px 0;
 
         :global(.ant-btn) {
             font-size: 16px;

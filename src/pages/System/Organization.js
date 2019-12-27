@@ -299,10 +299,10 @@ class Organization extends PureComponent {
 						<span>
 							{record.type != 5 ?
 								<span>
-									<a href="javascript:;" onClick={() => this.handleCreate(record.id, record.type)}><Icon type="plus" /> <FormattedMessage id="system.organization.button.add" /></a>
+									<a   onClick={() => this.handleCreate(record.id, record.type)}><Icon type="plus" /> <FormattedMessage id="system.organization.button.add" /></a>
 									<Divider type="vertical" /></span> : null
 							}
-							<a href="javascript:;" onClick={() => this.handleEdit(record)}><Icon type="edit" /> <FormattedMessage id="label.edit" /></a>
+							<a   onClick={() => this.handleEdit(record)}><Icon type="edit" /> <FormattedMessage id="label.edit" /></a>
 							{record.type != 1 ?
 								<span>
 								<Divider type="vertical" />
@@ -312,7 +312,7 @@ class Organization extends PureComponent {
 									cancelText={formatMessage({ id: 'button.no' })}
 									title={formatMessage({ id: 'system.organization.delete.prompt' })}
 									onConfirm={() => this.handleDelete(record.id)}>
-									<a href="javascript:;"><Icon type="delete" /> <FormattedMessage id="label.delete" /></a>
+									<a  ><Icon type="delete" /> <FormattedMessage id="label.delete" /></a>
 								</Popconfirm></span>: null}
 						</span>
 					}

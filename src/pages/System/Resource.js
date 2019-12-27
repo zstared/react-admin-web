@@ -360,10 +360,10 @@ class Resource extends PureComponent {
                         <span>
                             {record.resource_type != 4 ?
                                 <span>
-                                    <a href="javascript:;" onClick={() => this.handleCreate(record.id, record.resource_type)}><Icon type="plus" /> <FormattedMessage id="system.resource.button.add" /></a>
+                                    <a   onClick={() => this.handleCreate(record.id, record.resource_type)}><Icon type="plus" /> <FormattedMessage id="system.resource.button.add" /></a>
                                     <Divider type="vertical" /></span> : null
                             }
-                            <a href="javascript:;" onClick={() => this.handleEdit(record)}><Icon type="edit" /> <FormattedMessage id="label.edit" /></a>
+                            <a   onClick={() => this.handleEdit(record)}><Icon type="edit" /> <FormattedMessage id="label.edit" /></a>
                             <Divider type="vertical" />
                             <Popconfirm placement="topRight"
                                 icon={<Icon type="question-circle" className="danger" />}
@@ -371,7 +371,7 @@ class Resource extends PureComponent {
                                 cancelText={formatMessage({ id: 'button.no' })}
                                 title={formatMessage({ id: 'system.resource.delete.prompt' })}
                                 onConfirm={() => this.handleDelete(record.id)}>
-                                <a href="javascript:;"><Icon type="delete" /> <FormattedMessage id="label.delete" /></a>
+                                <a  ><Icon type="delete" /> <FormattedMessage id="label.delete" /></a>
                             </Popconfirm>
                         </span>
                     }

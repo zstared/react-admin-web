@@ -381,14 +381,14 @@ class User extends PureComponent {
                     {
                         record.status !== 2 && !record.is_system ?
                             <span>
-                                <a href="javascript:;" onClick={() => this.handleAssignPermissions(record.id)}><Icon type="safety" /> <FormattedMessage id="label.permissions" /></a>
+                                <a   onClick={() => this.handleAssignPermissions(record.id)}><Icon type="safety" /> <FormattedMessage id="label.permissions" /></a>
                                 <Divider type="vertical" />
-                                <a href="javascript:;" onClick={() => this.handleEdit(record)}><Icon type="edit" /> <FormattedMessage id="label.edit" /></a>
+                                <a   onClick={() => this.handleEdit(record)}><Icon type="edit" /> <FormattedMessage id="label.edit" /></a>
                                 <Divider type="vertical" />
                                 {
                                     record.status == 1 ?
-                                        <a href="javascript:;" onClick={() => this.handleChangeState(record.id, record.status)} ><Icon type="unlock" /> <FormattedMessage id="label.enable" /></a> :
-                                        <a href="javascript:;" onClick={() => this.handleChangeState(record.id, record.status)} ><Icon type="lock" /> <FormattedMessage id="label.disable" /></a>
+                                        <a   onClick={() => this.handleChangeState(record.id, record.status)} ><Icon type="unlock" /> <FormattedMessage id="label.enable" /></a> :
+                                        <a   onClick={() => this.handleChangeState(record.id, record.status)} ><Icon type="lock" /> <FormattedMessage id="label.disable" /></a>
                                 }
                                 <Divider type="vertical" />
                                 <Popconfirm placement="topRight"
@@ -397,7 +397,7 @@ class User extends PureComponent {
                                     cancelText={formatMessage({ id: 'button.no' })}
                                     title={formatMessage({ id: 'system.user.delete.prompt' })}
                                     onConfirm={() => this.handleDelete(record.id)}>
-                                    <a href="javascript:;"><Icon type="delete" /> <FormattedMessage id="label.delete" /></a>
+                                    <a  ><Icon type="delete" /> <FormattedMessage id="label.delete" /></a>
                                 </Popconfirm>
                             </span> : null
                     }
