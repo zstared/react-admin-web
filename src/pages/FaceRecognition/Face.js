@@ -279,7 +279,7 @@ class Face extends PureComponent {
                     <TablePage.QueryItem label={formatMessage({ id: 'label.name' })} name="face_name">
                         <Input placeholder={formatMessage({ id: "placeholder.input" })} />
                     </TablePage.QueryItem>
-                    <TablePage.QueryItem label={formatMessage({ id: 'label.type' })} name="type_name">
+                    <TablePage.QueryItem label={formatMessage({ id: 'label.type' })} name="type_id">
                         <Select placeholder={formatMessage({ id: "placeholder.select" }) } allowClear={true}>
                             {
                                 typeData.map((item)=>{

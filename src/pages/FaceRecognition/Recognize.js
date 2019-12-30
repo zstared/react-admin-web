@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import UploadImage from '../../components/UploadImage';
 import styles from './Recognize.less';
-import { Progress, Button,Tag,Select} from 'antd';
+import { Progress, Button,Tag,Select,Checkbox,Modal} from 'antd';
 import {detect,getPageList,matching,getFaceSprite} from '../../services/recognize';
 
 const  DISTANCE_LOW=0.4;
@@ -15,7 +15,7 @@ export default class Recognize extends PureComponent {
         type_id:0,
         face_url:'',
         page_index:1,
-        page_size:10,
+        page_size:50,
         rows:[],
         is_more:true,
         next_rows:[],
@@ -24,8 +24,21 @@ export default class Recognize extends PureComponent {
         progress_per:0,
         similarity:0,
         matchs:[],
-        detect_url:''
+        detect_url:'',
+        mark_checked:true,
+        match_modal:false,
+        match_data:{},
     };
+
+
+    async componentWillMount(){
+        const {data}=await getFaceSprite();
+        this.setState({
+            face_url:data.length>0?data[0].url+"?time="+Date.now():'',
+            face_sprite_imgs:data,
+            type_id:data.length>0?data[0].id:'',
+        })
+    }
 
     handleChange=(fileList)=> {
         this.setState({
@@ -53,6 +66,7 @@ export default class Recognize extends PureComponent {
      * 开始比对
      */
     matching=async ()=> {
+        const time=Date.now();
         this.setState({is_loading:true,progress_per:1})
         //检测人脸
         const {code,data}=await detect({file_code:this.state.fileCode})
@@ -70,7 +84,7 @@ export default class Recognize extends PureComponent {
         let face_recognize_count=0;
         let matchs=[];
         while(flag){
-             const {rows,is_more,next_rows,count}=this.state;
+             const {rows,is_more,next_rows,count,mark_checked}=this.state;
              const cur_rows= rows.concat(next_rows)
              for(let i =0;i<cur_rows.length;i++){
                   if(i==0&&is_more){
@@ -88,8 +102,7 @@ export default class Recognize extends PureComponent {
                     })
                     const {data}=await matching({face_code:file.code,face_id:cur_rows[i].id});
                     if(data.label){
-                        this.setState({'similarity':Math.round((1-data.distance)*100),face_url:file.faceSrc,});
-                        console.log(data)
+                        this.setState({'similarity':Math.round((1-data.distance)*100),face_url:mark_checked?file.faceSrc:file.src,});
                         if(DISTANCE_HIG-data.distance>0){
                             data.url=file.src;
                             matchs.push(data);
@@ -105,11 +118,12 @@ export default class Recognize extends PureComponent {
         if(matchs.length>3) matchs.splice(3)
         this.setState({
             is_loading:false,
-            face_url:this.state.face_sprite_imgs.length>0?this.state.face_sprite_imgs[0].url:'',
             progress_per:0,
             similarity:0,
             matchs:matchs
         })
+        this.handleTypeChange(this.state.type_id)
+        console.log('time:'+(Date.now()-time))
     }
 
     /**
@@ -141,22 +155,51 @@ export default class Recognize extends PureComponent {
     }
 
      handleTypeChange=async(value)=>{
+        const cur_sprite= this.state.face_sprite_imgs.find(item=>item.id==value);
         this.setState({
-            type_id:value
+            type_id:value,
+            face_url:cur_sprite?cur_sprite.url:''
         })
      }
 
-    async componentWillMount(){
-        const {data}=await getFaceSprite();
-        this.setState({
-            face_url:data.length>0?data[0].url+"?time="+Date.now():'',
-            face_sprite_imgs:data,
-            type_id:data.length>0?data[0].id:'',
-        })
+     handleMarkChange=(e)=>{
+         this.setState({
+            mark_checked:e.target.checked
+         })
+     }
+
+     handleOpenMatch=(data)=>{
+         this.setState({
+            match_modal:true,
+            match_data:data
+         })
+     }
+
+     handleModalVisible=()=>{
+         this.setState({
+             match_modal:false
+         })
+     }
+
+
+
+    /**
+     * 渲染标签
+     * @param {number} distance 
+     */
+    renderTag(distance){
+        let per=(Math.round((1-distance)*100*100)/100)+'%'
+        if(DISTANCE_LOW-distance>0){
+            return <Tag color="green">{per}</Tag>
+        }else if(DISTANCE_MID-distance>0){
+            return <Tag color="orange">{per}</Tag>
+        }else{
+            return <Tag color="red">{per}</Tag>
+        }
     }
 
     render() {
-        const { fileCode,face_url,is_loading,progress_per,similarity,matchs,detect_url,face_sprite_imgs,type_id} = this.state;
+        const { fileCode,face_url,is_loading,progress_per,similarity,matchs,detect_url,face_sprite_imgs,type_id,mark_checked,match_data} = this.state;
         return (
             <div className={styles.wrapper}>
                 <div className={styles.row}>
@@ -191,8 +234,12 @@ export default class Recognize extends PureComponent {
                     </div>
                     <div className={styles.columnLeft}>
                         <div className={styles.title}>
+                            <Checkbox checked={mark_checked} onChange={this.handleMarkChange} >脸标</Checkbox>
                             <span>人脸库</span>
-                            <Select onChange={this.handleTypeChange} value={type_id} className={styles.typeSelect} size="small">
+                            <Select disabled={!is_loading? false : true} onChange={this.handleTypeChange} value={type_id} className={styles.typeSelect} size="small">
+                                   <Select.Option value='' >
+                                     所有  
+                                   </Select.Option>
                                 {
                                     face_sprite_imgs.map((item,index)=>{
                                         return (
@@ -205,7 +252,7 @@ export default class Recognize extends PureComponent {
                                 }
                             </Select>
                         </div>
-                        {face_url!=''?<img className={styles.face} src={face_url} />:null}
+                        <div className={styles.faceWrapper}>{face_url!=''?<img className={styles.face} src={face_url} />:null}</div>
                         {progress_per>0?<Progress size="small" className={styles.progress} percent={progress_per} status="active" showInfo={false} />:null}
                     </div>
                 </div>
@@ -225,12 +272,18 @@ export default class Recognize extends PureComponent {
                      <div className={styles.matchs}>
                                {
                                 matchs.map((match,index)=>{
+                                    let per=(Math.round((1-match.distance)*100*100)/100)+'%'
                                     return (
                                         <div key={index} className={styles.match}>
                                             <img src={detect_url} />
                                             <div className={styles.result}>
+                                              <div className={styles.resultInfo}>
                                               <span>{match.label}</span>
-                                              <Tag key={match.label} color="green">{(Math.round((1-match.distance)*100*100)/100)+'%'}</Tag>
+                                               {
+                                                 this.renderTag(match.distance)
+                                               }
+                                               </div>
+                                               <Button size="small" type="primary" onClick={()=>this.handleOpenMatch(match)} >查看</Button>
                                             </div>
                                             <img src={match.url} />
                                         </div>
@@ -241,7 +294,28 @@ export default class Recognize extends PureComponent {
                 </div>
                   :null
                 }
+                 <Modal
+                    width="800px"
+                    title={null}
+                    visible={this.state.match_modal}
+                    footer={null}
+                    onCancel={this.handleModalVisible}
+                    >
+                        <div className={styles.matchModal}>
+                            <img src={detect_url} />
+                            <div className={styles.result}>
+                                <div className={styles.resultInfo}>
+                                <span>{match_data.label}</span>
+                                {
+                                    this.renderTag(match_data.distance)
+                                }
+                                </div>
+                            </div>
+                            <img src={match_data.url} />
+                        </div>
+                </Modal>
             </div>
+            
         );
     }
 }

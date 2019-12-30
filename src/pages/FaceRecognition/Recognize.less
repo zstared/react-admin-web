@@ -33,14 +33,19 @@
         align-items: flex-start;
     }
 
+    .faceWrapper {
+        width: 300px;
+        height: 300px;
+    }
+
     .face {
         width: 300px;
         height: 300px;
         box-sizing: border-box;
         background: #fff;
         object-fit: cover;
-        border: 1px #ddd solid;
         padding: 8px;
+        border: 1px #ddd solid
     }
 
     .matchsTitle {
@@ -67,15 +72,27 @@
             img {
                 width: 100px;
                 height: 120px;
+                border: 1px solid #eee;
+                padding: 2px;
+                box-shadow: 1px 1px 3px #eee;
             }
 
             .result {
+
+                .resultInfo {
+                    height: 60px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-around;
+                }
+
                 width: 100px;
+                height: 120px;
                 text-align: center;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                justify-content: center;
+                justify-content: space-around;
 
                 :global(.ant-tag) {
                     margin: 0
@@ -83,6 +100,8 @@
             }
         }
     }
+
+
 
     .progress {
         width: 300px;
@@ -93,14 +112,17 @@
         margin-bottom: 10px;
         text-align: center;
         width: 300px;
-        position: relative;
+        // position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
     }
 
     .typeSelect {
         width: 100px;
-        position: absolute;
-        right: 0;
-        bottom: 0;
+        // position: absolute;
+        // right: 0;
+        // bottom: 0;
     }
 
     .button {
@@ -141,4 +163,39 @@
         top: 140px;
     }
 
+}
+
+.matchModal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+
+    img {
+        width: 300px;
+        height: 350px;
+        object-fit: contain;
+    }
+
+    .result {
+
+        .resultInfo {
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        width: 150px;
+        height: 350px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+
+        :global(.ant-tag) {
+            margin: 0
+        }
+    }
 }
