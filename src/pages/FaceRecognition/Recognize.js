@@ -15,7 +15,7 @@ export default class Recognize extends PureComponent {
         type_id:0,
         face_url:'',
         page_index:1,
-        page_size:50,
+        page_size:20,
         rows:[],
         is_more:true,
         next_rows:[],
@@ -84,6 +84,7 @@ export default class Recognize extends PureComponent {
         let face_recognize_count=0;
         let matchs=[];
         while(flag){
+             try{
              const {rows,is_more,next_rows,count,mark_checked}=this.state;
              const cur_rows= rows.concat(next_rows)
              for(let i =0;i<cur_rows.length;i++){
@@ -100,17 +101,25 @@ export default class Recognize extends PureComponent {
                     this.setState({
                         progress_per:Math.floor((face_recognize_count/count)*100),
                     })
-                    const {data}=await matching({face_code:file.code,face_id:cur_rows[i].id});
-                    if(data.label){
-                        this.setState({'similarity':Math.round((1-data.distance)*100),face_url:mark_checked?file.faceSrc:file.src,});
-                        if(DISTANCE_HIG-data.distance>0){
-                            data.url=file.src;
-                            matchs.push(data);
+                    const {data,code}=await matching({face_code:file.code,face_id:cur_rows[i].id});
+                    if(!code){
+                        if(data.label){
+                            this.setState({'similarity':Math.round((1-data.distance)*100),face_url:mark_checked?file.faceSrc:file.src,});
+                            if(DISTANCE_HIG-data.distance>0){
+                                data.url=file.src;
+                                matchs.push(data);
+                            }
                         }
+                    }else{
+                        this.setState({is_more:false})
+                        break;
                     }
                  }
              }
              flag=is_more;
+            }catch(e){
+                this.setState({is_more:false})
+            }
         }
         matchs.sort((a,b)=>{
             return a.distance-b.distance;
