@@ -23,8 +23,8 @@
         "react-document-title": "^2.0.3",
         "react-fittext": "^1.0.0",
         "react-viewer": "^2.11.1",
-        "umi": "^2.8.7",
-        "umi-plugin-react": "^1.9.5"
+        "umi": "^2.12.9",
+        "umi-plugin-react": "^1.14.12"
     },
     "devDependencies": {
         "cross-env": "^5.2.1",
