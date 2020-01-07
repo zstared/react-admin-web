@@ -4,7 +4,8 @@ import {
     getLocale
 } from 'umi/locale';
 import qs from 'querystring';
-import config from '../../config/base'
+import base from '../../config/base'
+const config = base[process.env.NODE_ENV]
 import {
     message
 } from 'antd';
@@ -84,7 +85,7 @@ class Request {
      * @param {Object} config? 
      */
     async delete(url, data, config) {
-        return await this.instance.delete(url, {data:data})
+        return await this.instance.delete(url, { data: data })
     }
 
     /**
@@ -93,12 +94,12 @@ class Request {
      * @param {string|array} code 文件唯一编号/编号集
      * @param {stirng} name 下载文件名称
      */
-    async download(path, code, name='', is_package = false) {
+    async download(path, code, name = '', is_package = false) {
         let url;
         if (!is_package) {
-            url=`${config.api_url}${path}?code=${code}&token=${localStorage.getItem('token')}&name=${name}`
+            url = `${config.api_url}${path}?code=${code}&token=${localStorage.getItem('token')}&name=${name}`
         } else {
-            url=`${config.api_url}${path}?code=${code.join(',')}&token=${localStorage.getItem('token')}&name=${name}`
+            url = `${config.api_url}${path}?code=${code.join(',')}&token=${localStorage.getItem('token')}&name=${name}`
         }
         window.open(url, 'download');
     }

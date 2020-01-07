@@ -3,9 +3,9 @@
     "version": "1.0.0",
     "main": "index.js",
     "scripts": {
-        "dev": "umi dev",
-        "build": "cross-env BUILD_TYPE=build umi build",
-        "build:docs": "cross-env BUILD_TYPE=docs umi build"
+        "dev": "cross-env NODE_ENV=development umi dev",
+        "build": "cross-env NODE_ENV=production BUILD_TYPE=build umi build",
+        "build:docs": "cross-env NODE_ENV=production BUILD_TYPE=docs umi build"
     },
     "author": "zhengxinhong",
     "license": "ISC",
