@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import { Upload, Icon, message, Button } from 'antd'
 import PropTypes from 'prop-types'
-import config from '../../../config/base'
 import styles from './index.less'
 import Viewer from 'react-viewer'
 import 'react-viewer/dist/index.css'
@@ -175,7 +174,7 @@ class UploadFile extends PureComponent {
                         style == 'card-inline' ? styles.listInline : null
                     }
                     showUploadList={true}
-                    action={config.api_url + '/core/file/upload'}
+                    action={process.env.API_URL + '/core/file/upload'}
                     beforeUpload={this.beforeUpload}
                     onChange={this.handleChange}
                     headers={{ token: localStorage.getItem('token') }}

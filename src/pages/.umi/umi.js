@@ -221,12 +221,14 @@ export default (__IS_BROWSER ? null : serverRender);
     if (isIE) return;
 
     // Umi UI Bubble
-    require('../../../node_modules/umi-plugin-ui/lib/bubble').default({
-      port: 3001,
-      path: '/Users/bruce.zheng/Desktop/test/koa/xinhong-web',
-      currentProject: '',
-      isBigfish: undefined,
-    });
+    require('../../../node_modules/umi-build-dev/node_modules/umi-plugin-ui/lib/bubble').default(
+      {
+        port: 3001,
+        path: '/Users/bruce.zheng/Desktop/test/koa/xinhong-web',
+        currentProject: '',
+        isBigfish: undefined,
+      },
+    );
   } catch (e) {
     console.warn('Umi UI render error:', e);
   }
