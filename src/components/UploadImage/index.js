@@ -110,7 +110,7 @@ class UploadImage extends PureComponent {
 
         this.setState({ fileList })
 
-        if (!file.status || file.status == 'done') {
+        if (!file.status||file.status == 'done') {
             //返回成功状态的文件列表
             if (onChange) onChange(fileList)
         }
@@ -146,33 +146,41 @@ class UploadImage extends PureComponent {
 
     render() {
         const { data, uploadText, maxLimit, multiple } = this.props
-        const uploadButton = ( <
-            div >
-            <
-            Icon type = "plus" > < /Icon> <
-            div className = "ant-upload-text" > { uploadText } < /div> <
-            /div>
+        const uploadButton = (
+            <div>
+                <Icon type="plus"></Icon>
+                <div className="ant-upload-text">{uploadText}</div>
+            </div>
         )
-        return ( <
-            div >
-            <
-            Upload name = "file"
-            multiple = { multiple } data = { data } listType = "picture-card"
-            showUploadList = { true } action = { process.env.API_URL + '/core/file/upload' } beforeUpload = { this.beforeUpload } onChange = { this.handleChange } headers = { { token: localStorage.getItem('token') } } fileList = { this.state.fileList } onRemove = { this.handleRemove } onPreview = { this.handlePreview } >
-            {
-                this.state.fileList.length >= maxLimit && maxLimit != 0 ?
-                null :
-                    uploadButton
-            } <
-            /Upload> <
-            Viewer images = { this.state.fileList } onClose = {
-                () => {
-                    this.setState({ viewVisible: false })
-                }
-            }
-            activeIndex = { this.state.viewIndex } visible = { this.state.viewVisible } >
-            < /Viewer> <
-            /div>
+        return (
+            <div>
+                <Upload
+                    name="file"
+                    multiple={multiple}
+                    data={data}
+                    listType="picture-card"
+                    showUploadList={true}
+                    action={process.env.API_URL + '/core/file/upload'}
+                    beforeUpload={this.beforeUpload}
+                    onChange={this.handleChange}
+                    headers={{ token: localStorage.getItem('token') }}
+                    fileList={this.state.fileList}
+                    onRemove={this.handleRemove}
+                    onPreview={this.handlePreview}
+                >
+                    {this.state.fileList.length >= maxLimit && maxLimit != 0
+                        ? null
+                        : uploadButton}
+                </Upload>
+                <Viewer
+                    images={this.state.fileList}
+                    onClose={() => {
+                        this.setState({ viewVisible: false })
+                    }}
+                    activeIndex={this.state.viewIndex}
+                    visible={this.state.viewVisible}
+                ></Viewer>
+            </div>
         )
     }
 }
