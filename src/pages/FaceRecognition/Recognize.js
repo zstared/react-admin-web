@@ -86,6 +86,7 @@ export default class Recognize extends PureComponent {
         while(flag){
              try{
              const {rows,is_more,next_rows,count,mark_checked}=this.state;
+             console.log(is_more)
              const cur_rows= rows.concat(next_rows)
              for(let i =0;i<cur_rows.length;i++){
                   if(i==0&&is_more){

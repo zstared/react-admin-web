@@ -16,6 +16,8 @@ export async function getPageList(params) {
     return await request.get('/face_recognition/recognize/pageList', params)
 }
 
+
+
 /**获取人脸拼图 */
 export async function getFaceSprite(params) {
     return await request.get('/face_recognition/recognize/sprite', params)
