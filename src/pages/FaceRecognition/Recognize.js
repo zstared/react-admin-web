@@ -88,11 +88,12 @@ export default class Recognize extends PureComponent {
              const {rows,is_more,next_rows,count,mark_checked}=this.state;
              console.log(is_more)
              const cur_rows= rows.concat(next_rows)
+             console.log(cur_rows.length)
              for(let i =0;i<cur_rows.length;i++){
                   if(i==0&&is_more){
                     this.state.rows.splice(0,rows.length)
                     try{
-                        this.getPageList();
+                        await this.getPageList();
                        }catch(e){
                            flag=false;
                        }
@@ -143,6 +144,7 @@ export default class Recognize extends PureComponent {
     getPageList=async (next)=>{
         const {page_index,page_size,type_id}=this.state;
         const {code,data}=await getPageList({page_index:page_index,page_size:page_size,type_id:type_id});
+        console.log(code,data)
         return new Promise((resolve,reject)=>{ 
         if(!code){
                 const {rows,is_more,page_index,count}=data;
@@ -160,6 +162,7 @@ export default class Recognize extends PureComponent {
                     resolve();
                 })
             }else{
+                console.log('reject')
                 reject();
             }
         })
