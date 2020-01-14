@@ -86,9 +86,7 @@ export default class Recognize extends PureComponent {
         while(flag){
              try{
              const {rows,is_more,next_rows,count,mark_checked}=this.state;
-             console.log(is_more)
              const cur_rows= rows.concat(next_rows)
-             console.log(cur_rows.length)
              for(let i =0;i<cur_rows.length;i++){
                   if(i==0&&is_more){
                     this.state.rows.splice(0,rows.length)
@@ -106,7 +104,6 @@ export default class Recognize extends PureComponent {
                     const {data,code}=await matching({face_code:file.code,face_id:cur_rows[i].id});
                     if(!code){
                         if(data.label){
-                            console.log(file.src)
                             this.setState({'similarity':Math.round((1-data.distance)*100),face_url:mark_checked?file.faceSrc:file.src,});
                             if(DISTANCE_HIG-data.distance>0){
                                 data.url=file.src;
@@ -144,7 +141,6 @@ export default class Recognize extends PureComponent {
     getPageList=async (next)=>{
         const {page_index,page_size,type_id}=this.state;
         const {code,data}=await getPageList({page_index:page_index,page_size:page_size,type_id:type_id});
-        console.log(code,data)
         return new Promise((resolve,reject)=>{ 
         if(!code){
                 const {rows,is_more,page_index,count}=data;
@@ -162,7 +158,6 @@ export default class Recognize extends PureComponent {
                     resolve();
                 })
             }else{
-                console.log('reject')
                 reject();
             }
         })
