@@ -8,7 +8,7 @@ import {
 import dynamic from 'umi/dynamic';
 import renderRoutes from 'umi/lib/renderRoutes';
 import history from '@@/history';
-import RendererWrapper0 from '/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/.umi/LocaleWrapper.jsx';
+import RendererWrapper0 from 'D:/zxh/react-admin-web/src/pages/.umi/LocaleWrapper.jsx';
 import { routerRedux, dynamic as _dvaDynamic } from 'dva';
 
 const Router = routerRedux.ConnectedRouter;
@@ -29,7 +29,7 @@ const routes = [
     component: __IS_BROWSER
       ? _dvaDynamic({
           component: () => import('../User/Login'),
-          LoadingComponent: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index')
+          LoadingComponent: require('D:/zxh/react-admin-web/src/components/PageLoading/index')
             .default,
         })
       : require('../User/Login').default,
@@ -40,7 +40,7 @@ const routes = [
     component: __IS_BROWSER
       ? _dvaDynamic({
           component: () => import('../../layouts/BasicLayout'),
-          LoadingComponent: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index')
+          LoadingComponent: require('D:/zxh/react-admin-web/src/components/PageLoading/index')
             .default,
         })
       : require('../../layouts/BasicLayout').default,
@@ -50,7 +50,7 @@ const routes = [
         component: __IS_BROWSER
           ? _dvaDynamic({
               component: () => import('../Home'),
-              LoadingComponent: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index')
+              LoadingComponent: require('D:/zxh/react-admin-web/src/components/PageLoading/index')
                 .default,
             })
           : require('../Home').default,
@@ -61,7 +61,7 @@ const routes = [
         component: __IS_BROWSER
           ? _dvaDynamic({
               component: () => import('../User/Setting/Index'),
-              LoadingComponent: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index')
+              LoadingComponent: require('D:/zxh/react-admin-web/src/components/PageLoading/index')
                 .default,
             })
           : require('../User/Setting/Index').default,
@@ -71,7 +71,7 @@ const routes = [
             component: __IS_BROWSER
               ? _dvaDynamic({
                   component: () => import('../User/Setting/Base'),
-                  LoadingComponent: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index')
+                  LoadingComponent: require('D:/zxh/react-admin-web/src/components/PageLoading/index')
                     .default,
                 })
               : require('../User/Setting/Base').default,
@@ -82,7 +82,7 @@ const routes = [
             component: __IS_BROWSER
               ? _dvaDynamic({
                   component: () => import('../User/Setting/Security'),
-                  LoadingComponent: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index')
+                  LoadingComponent: require('D:/zxh/react-admin-web/src/components/PageLoading/index')
                     .default,
                 })
               : require('../User/Setting/Security').default,
@@ -93,7 +93,7 @@ const routes = [
             component: __IS_BROWSER
               ? _dvaDynamic({
                   component: () => import('../User/Setting/Personalization'),
-                  LoadingComponent: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index')
+                  LoadingComponent: require('D:/zxh/react-admin-web/src/components/PageLoading/index')
                     .default,
                 })
               : require('../User/Setting/Personalization').default,
@@ -102,7 +102,7 @@ const routes = [
           {
             component: () =>
               React.createElement(
-                require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
+                require('D:/zxh/react-admin-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
                   .default,
                 { pagesPath: 'src/pages', hasRoutesInConfig: true },
               ),
@@ -120,29 +120,29 @@ const routes = [
               ? _dvaDynamic({
                   app: require('@tmp/dva').getApp(),
                   models: () => [
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/organization.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/System/models/organization.js').then(
                       m => {
                         return { namespace: 'organization', ...m.default };
                       },
                     ),
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/resource.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/System/models/resource.js').then(
                       m => {
                         return { namespace: 'resource', ...m.default };
                       },
                     ),
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/role.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/System/models/role.js').then(
                       m => {
                         return { namespace: 'role', ...m.default };
                       },
                     ),
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/user.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/System/models/user.js').then(
                       m => {
                         return { namespace: 'user', ...m.default };
                       },
                     ),
                   ],
                   component: () => import('../System/User'),
-                  LoadingComponent: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index')
+                  LoadingComponent: require('D:/zxh/react-admin-web/src/components/PageLoading/index')
                     .default,
                 })
               : require('../System/User').default,
@@ -154,29 +154,29 @@ const routes = [
               ? _dvaDynamic({
                   app: require('@tmp/dva').getApp(),
                   models: () => [
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/organization.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/System/models/organization.js').then(
                       m => {
                         return { namespace: 'organization', ...m.default };
                       },
                     ),
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/resource.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/System/models/resource.js').then(
                       m => {
                         return { namespace: 'resource', ...m.default };
                       },
                     ),
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/role.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/System/models/role.js').then(
                       m => {
                         return { namespace: 'role', ...m.default };
                       },
                     ),
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/user.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/System/models/user.js').then(
                       m => {
                         return { namespace: 'user', ...m.default };
                       },
                     ),
                   ],
                   component: () => import('../System/Role'),
-                  LoadingComponent: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index')
+                  LoadingComponent: require('D:/zxh/react-admin-web/src/components/PageLoading/index')
                     .default,
                 })
               : require('../System/Role').default,
@@ -188,29 +188,29 @@ const routes = [
               ? _dvaDynamic({
                   app: require('@tmp/dva').getApp(),
                   models: () => [
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/organization.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/System/models/organization.js').then(
                       m => {
                         return { namespace: 'organization', ...m.default };
                       },
                     ),
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/resource.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/System/models/resource.js').then(
                       m => {
                         return { namespace: 'resource', ...m.default };
                       },
                     ),
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/role.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/System/models/role.js').then(
                       m => {
                         return { namespace: 'role', ...m.default };
                       },
                     ),
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/user.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/System/models/user.js').then(
                       m => {
                         return { namespace: 'user', ...m.default };
                       },
                     ),
                   ],
                   component: () => import('../System/Menu'),
-                  LoadingComponent: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index')
+                  LoadingComponent: require('D:/zxh/react-admin-web/src/components/PageLoading/index')
                     .default,
                 })
               : require('../System/Menu').default,
@@ -222,29 +222,29 @@ const routes = [
               ? _dvaDynamic({
                   app: require('@tmp/dva').getApp(),
                   models: () => [
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/organization.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/System/models/organization.js').then(
                       m => {
                         return { namespace: 'organization', ...m.default };
                       },
                     ),
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/resource.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/System/models/resource.js').then(
                       m => {
                         return { namespace: 'resource', ...m.default };
                       },
                     ),
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/role.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/System/models/role.js').then(
                       m => {
                         return { namespace: 'role', ...m.default };
                       },
                     ),
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/user.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/System/models/user.js').then(
                       m => {
                         return { namespace: 'user', ...m.default };
                       },
                     ),
                   ],
                   component: () => import('../System/Organization'),
-                  LoadingComponent: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index')
+                  LoadingComponent: require('D:/zxh/react-admin-web/src/components/PageLoading/index')
                     .default,
                 })
               : require('../System/Organization').default,
@@ -256,29 +256,29 @@ const routes = [
               ? _dvaDynamic({
                   app: require('@tmp/dva').getApp(),
                   models: () => [
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/organization.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/System/models/organization.js').then(
                       m => {
                         return { namespace: 'organization', ...m.default };
                       },
                     ),
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/resource.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/System/models/resource.js').then(
                       m => {
                         return { namespace: 'resource', ...m.default };
                       },
                     ),
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/role.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/System/models/role.js').then(
                       m => {
                         return { namespace: 'role', ...m.default };
                       },
                     ),
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/System/models/user.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/System/models/user.js').then(
                       m => {
                         return { namespace: 'user', ...m.default };
                       },
                     ),
                   ],
                   component: () => import('../System/Resource'),
-                  LoadingComponent: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index')
+                  LoadingComponent: require('D:/zxh/react-admin-web/src/components/PageLoading/index')
                     .default,
                 })
               : require('../System/Resource').default,
@@ -287,7 +287,7 @@ const routes = [
           {
             component: () =>
               React.createElement(
-                require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
+                require('D:/zxh/react-admin-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
                   .default,
                 { pagesPath: 'src/pages', hasRoutesInConfig: true },
               ),
@@ -305,14 +305,14 @@ const routes = [
               ? _dvaDynamic({
                   app: require('@tmp/dva').getApp(),
                   models: () => [
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/FaceRecognition/models/face.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/FaceRecognition/models/face.js').then(
                       m => {
                         return { namespace: 'face', ...m.default };
                       },
                     ),
                   ],
                   component: () => import('../FaceRecognition/Face'),
-                  LoadingComponent: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index')
+                  LoadingComponent: require('D:/zxh/react-admin-web/src/components/PageLoading/index')
                     .default,
                 })
               : require('../FaceRecognition/Face').default,
@@ -325,14 +325,14 @@ const routes = [
               ? _dvaDynamic({
                   app: require('@tmp/dva').getApp(),
                   models: () => [
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/FaceRecognition/models/face.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/FaceRecognition/models/face.js').then(
                       m => {
                         return { namespace: 'face', ...m.default };
                       },
                     ),
                   ],
                   component: () => import('../FaceRecognition/Recognize'),
-                  LoadingComponent: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index')
+                  LoadingComponent: require('D:/zxh/react-admin-web/src/components/PageLoading/index')
                     .default,
                 })
               : require('../FaceRecognition/Recognize').default,
@@ -345,14 +345,14 @@ const routes = [
               ? _dvaDynamic({
                   app: require('@tmp/dva').getApp(),
                   models: () => [
-                    import('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/pages/FaceRecognition/models/face.js').then(
+                    import('D:/zxh/react-admin-web/src/pages/FaceRecognition/models/face.js').then(
                       m => {
                         return { namespace: 'face', ...m.default };
                       },
                     ),
                   ],
                   component: () => import('../FaceRecognition/Album'),
-                  LoadingComponent: require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/src/components/PageLoading/index')
+                  LoadingComponent: require('D:/zxh/react-admin-web/src/components/PageLoading/index')
                     .default,
                 })
               : require('../FaceRecognition/Album').default,
@@ -361,7 +361,7 @@ const routes = [
           {
             component: () =>
               React.createElement(
-                require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
+                require('D:/zxh/react-admin-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
                   .default,
                 { pagesPath: 'src/pages', hasRoutesInConfig: true },
               ),
@@ -371,7 +371,7 @@ const routes = [
       {
         component: () =>
           React.createElement(
-            require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
+            require('D:/zxh/react-admin-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
               .default,
             { pagesPath: 'src/pages', hasRoutesInConfig: true },
           ),
@@ -381,7 +381,7 @@ const routes = [
   {
     component: () =>
       React.createElement(
-        require('/Users/bruce.zheng/Desktop/test/koa/xinhong-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
+        require('D:/zxh/react-admin-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
           .default,
         { pagesPath: 'src/pages', hasRoutesInConfig: true },
       ),

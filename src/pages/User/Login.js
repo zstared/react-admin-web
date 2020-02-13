@@ -109,7 +109,7 @@ class Login extends PureComponent {
                         <a href='https://umijs.org/' target="_blank" >UmiJS</a>
                         <a href='https://www.csdn.net' target="_blank" >CSDN</a>
                     </div>
-                    <div className={styles.copyright}>Copyright  2018 © zhengxinhong</div>
+                    <div className={styles.copyright}>Copyright  2018 © zhengxinhong  <a href="http://www.beian.miit.gov.cn" target="_blank" >粤ICP备19046566号</a></div>
                 </div>
             </div>
         )

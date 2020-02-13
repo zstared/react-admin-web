@@ -5,7 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import findRoute, {
   getUrlQuery,
-} from '/Users/bruce.zheng/Desktop/test/koa/xinhong-web/node_modules/umi-build-dev/lib/findRoute.js';
+} from 'D:/zxh/react-admin-web/node_modules/umi-build-dev/lib/findRoute.js';
 
 // runtime plugins
 const plugins = require('umi/_runtimePlugin');
@@ -221,14 +221,12 @@ export default (__IS_BROWSER ? null : serverRender);
     if (isIE) return;
 
     // Umi UI Bubble
-    require('../../../node_modules/umi-build-dev/node_modules/umi-plugin-ui/lib/bubble').default(
-      {
-        port: 3001,
-        path: '/Users/bruce.zheng/Desktop/test/koa/xinhong-web',
-        currentProject: '',
-        isBigfish: undefined,
-      },
-    );
+    require('../../../node_modules/umi-plugin-ui/lib/bubble').default({
+      port: 3000,
+      path: 'D:/zxh/react-admin-web',
+      currentProject: '',
+      isBigfish: undefined,
+    });
   } catch (e) {
     console.warn('Umi UI render error:', e);
   }

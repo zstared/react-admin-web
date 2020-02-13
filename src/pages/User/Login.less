@@ -94,18 +94,20 @@
     color: @text-color-secondary;
     .links {
         margin-bottom: 8px;
-        a {
-            transition: all 0.3s;
-            color: @text-color-secondary;
-            &:not(:last-child) {
-                margin-right: 40px;
-            }
-            &:hover {
-                color: @text-color;
-            }
-        }
+       
     }
     .copyright {
         font-size: @font-size-base;
+    }
+
+    a {
+        transition: all 0.3s;
+        color: @text-color-secondary;
+        &:not(:last-child) {
+            margin-right: 40px;
+        }
+        &:hover {
+            color: @text-color;
+        }
     }
 }
