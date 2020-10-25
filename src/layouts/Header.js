@@ -60,15 +60,21 @@ class HeaderContent extends PureComponent {
                         // <span className={styles.nav}> <Icon type="truck" size="lg" /> <span>进销存</span></span>
                     }
                     <div className={styles.right}>
-                        <a className={styles.action} href="https://github.com/zstared/react-admin-web" target="_blank" ><Icon type="github" /></a>
-                        <SelectLang className={styles.action} type="icon" />
-                        <Notification className={styles.action}></Notification>
-                        <Dropdown overlay={userMenu} className={`${styles.action} ${styles.account}`} >
+                        {/* <a className={styles.action} href="https://github.com/zstared/react-admin-web" target="_blank" ><Icon type="github" /></a> */}
+                        {/* <SelectLang className={styles.action} type="icon" /> */}
+                        {/* <Notification className={styles.action}></Notification> */}
+                        {/* <Dropdown overlay={userMenu} className={`${styles.action} ${styles.account}`} >
                             <span>
                                 <Avatar className={styles.avatar} src={currentUser.avatar_file ? currentUser.avatar_file.thumbUrl : avatar} ></Avatar>
                                 <span className={styles.name}>{currentUser.name_cn}</span>
                             </span>
-                        </Dropdown>
+                        </Dropdown> */}
+                        <div className={`${styles.action} ${styles.account}`}>
+                            <span>
+                                <Avatar className={styles.avatar} src={currentUser.avatar_file ? currentUser.avatar_file.thumbUrl : avatar} ></Avatar>
+                                <span className={styles.name}>{currentUser.name_cn}</span>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </Header>

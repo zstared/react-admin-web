@@ -44,7 +44,7 @@ class Login extends PureComponent {
                     <div className={styles.container}>
                         <div className={styles.logo}>
                             <img src={logo}></img>
-                            <span className={styles.title}>React+Koa 后台管理系统</span>
+                            <span className={styles.title}>生产管理系统</span>
                         </div>
                         <div className={styles.toolbar}>
                              <SelectLang />
@@ -55,7 +55,7 @@ class Login extends PureComponent {
                     <Row>
                         <Col span={13} offset={2} className={styles.banner}>
                             <img src={banner}></img>
-                            <p><FormattedMessage id="login.slogan" /></p>
+                            {/* <p><FormattedMessage id="login.slogan" /></p> */}
                         </Col>
                         <Col span={9}>
                             <div className={styles.loginTab}>
@@ -93,22 +93,22 @@ class Login extends PureComponent {
                                             </FormItem>
                                         </Form>
                                     </TabPane>
-                                    <TabPane tab={formatMessage({id:'login.tab-qrcode'})} key="2">
+                                    {/* <TabPane tab={formatMessage({id:'login.tab-qrcode'})} key="2">
 
-                                    </TabPane>
+                                    </TabPane> */}
                                 </Tabs>
                             </div>
                         </Col>
                     </Row>
                 </div>
                 <div className={styles.footer}>
-                    <div className={styles.links}>
+                    {/* <div className={styles.links}>
                         <a href='https://react.docschina.org/' target="_blank" >React</a>
                         <a href='https://ant.design/index-cn' target="_blank" >Ant Design</a>
                         <a href='https://preview.pro.ant.design/user/login' target="_blank" >Ant Design Pro</a>
                         <a href='https://umijs.org/' target="_blank" >UmiJS</a>
                         <a href='https://www.csdn.net' target="_blank" >CSDN</a>
-                    </div>
+                    </div> */}
                     <div className={styles.copyright}>Copyright  2018 © zhengxinhong  <a href="http://www.beian.miit.gov.cn" target="_blank" >粤ICP备19046566号</a></div>
                 </div>
             </div>

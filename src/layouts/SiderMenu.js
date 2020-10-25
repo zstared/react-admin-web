@@ -29,7 +29,7 @@ class SiderMenu extends PureComponent {
                 <div className={styles.logo} id="logo">
                     <Link to="/">
                         <img src={logo} alt="logo" />
-                        <h1>Management Sys</h1>
+                        <h1>生产管理系统</h1>
                     </Link>
                 </div>
                 <MenuBase {...this.props} theme={theme} mode="inline" menuData={menuData} >

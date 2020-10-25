@@ -1,7 +1,7 @@
 module.exports = {
   //api_url: 'http://47.112.194.62:8081',
 
-  siderStyle: localStorage.getItem('siderStyle') ? localStorage.getItem('siderStyle') : 'light', //侧边栏风格 dark light
+  siderStyle: localStorage.getItem('siderStyle') ? localStorage.getItem('siderStyle') : 'dark', //侧边栏风格 dark light
   navStyle: localStorage.getItem('navStyle') ? localStorage.getItem('navStyle') : 'breadcrumb', //导航类型  breadcrumb-面包屑 nav-导航栏,
   colorWeak: localStorage.getItem('colorWeak') ? localStorage.getItem('colorWeak') : false, //色弱模式
 };
