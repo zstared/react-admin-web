@@ -15,4 +15,10 @@ export default {
     "menu.face_recognition.face":"人脸库",
     "menu.face_recognition.recognize":"人脸识别",
     "menu.face_recognition.album":"相册",
+
+    "menu.production":"生产管理",
+    "menu.production.order":"订单任务采购",
+    "menu.production.inventory":"安全库存",
+    "menu.production.purchase":"投料单生成采购",
 }
+

@@ -35,6 +35,15 @@ export default [
                     { path: '/face_recognition/recognize', name: 'recognize', component: './FaceRecognition/Recognize' },
                     { path: '/face_recognition/album', name: 'album', component: './FaceRecognition/Album' },
                 ]
+            },
+            {
+                path: '/production',
+                name: 'production',
+                routes: [
+                    { path: '/production/order', name: 'order', component: './Production/Order' },
+                    { path: '/production/inventory', name: 'inventory', component: './Production/Inventory' },
+                    { path: '/production/purchase', name: 'purchase', component: './Production/Purchase' },
+                ]
             }
         ]
     }

@@ -46,9 +46,9 @@ class Login extends PureComponent {
                             <img src={logo}></img>
                             <span className={styles.title}>生产管理系统</span>
                         </div>
-                        <div className={styles.toolbar}>
+                        {/* <div className={styles.toolbar}>
                              <SelectLang />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className={styles.content}>

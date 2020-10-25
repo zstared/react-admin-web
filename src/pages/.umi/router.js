@@ -218,6 +218,45 @@ models: () => [
         ]
       },
       {
+        "path": "/production",
+        "name": "production",
+        "routes": [
+          {
+            "path": "/production/order",
+            "name": "order",
+            "component": _dvaDynamic({
+  
+  component: () => import('../Production/Order'),
+  LoadingComponent: require('F:/Project-xinhong/react-admin-web/src/components/PageLoading/index').default,
+}),
+            "exact": true
+          },
+          {
+            "path": "/production/inventory",
+            "name": "inventory",
+            "component": _dvaDynamic({
+  
+  component: () => import('../Production/Inventory'),
+  LoadingComponent: require('F:/Project-xinhong/react-admin-web/src/components/PageLoading/index').default,
+}),
+            "exact": true
+          },
+          {
+            "path": "/production/purchase",
+            "name": "purchase",
+            "component": _dvaDynamic({
+  
+  component: () => import('../Production/Purchase'),
+  LoadingComponent: require('F:/Project-xinhong/react-admin-web/src/components/PageLoading/index').default,
+}),
+            "exact": true
+          },
+          {
+            "component": () => React.createElement(require('F:/Project-xinhong/react-admin-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'src/pages', hasRoutesInConfig: true })
+          }
+        ]
+      },
+      {
         "component": () => React.createElement(require('F:/Project-xinhong/react-admin-web/node_modules/umi-build-dev/lib/plugins/404/NotFound.js').default, { pagesPath: 'src/pages', hasRoutesInConfig: true })
       }
     ]

@@ -34,10 +34,10 @@ class HeaderContent extends PureComponent {
         const { collapsed, currentUser } = this.props;
         const userMenu = (
             <Menu onClick={this.handleClick}>
-                <MenuItem key="setting">
+                {/* <MenuItem key="setting">
                     <Icon type="setting" /> <FormattedMessage id='home.account.setting' />
                 </MenuItem>
-                <Menu.Divider />
+                <Menu.Divider /> */}
                 <MenuItem key="logout">
                     <Icon type="logout" /> <FormattedMessage id='home.account.logout' />
                 </MenuItem>
@@ -63,18 +63,12 @@ class HeaderContent extends PureComponent {
                         {/* <a className={styles.action} href="https://github.com/zstared/react-admin-web" target="_blank" ><Icon type="github" /></a> */}
                         {/* <SelectLang className={styles.action} type="icon" /> */}
                         {/* <Notification className={styles.action}></Notification> */}
-                        {/* <Dropdown overlay={userMenu} className={`${styles.action} ${styles.account}`} >
+                        <Dropdown overlay={userMenu} className={`${styles.action} ${styles.account}`} >
                             <span>
                                 <Avatar className={styles.avatar} src={currentUser.avatar_file ? currentUser.avatar_file.thumbUrl : avatar} ></Avatar>
                                 <span className={styles.name}>{currentUser.name_cn}</span>
                             </span>
-                        </Dropdown> */}
-                        <div className={`${styles.action} ${styles.account}`}>
-                            <span>
-                                <Avatar className={styles.avatar} src={currentUser.avatar_file ? currentUser.avatar_file.thumbUrl : avatar} ></Avatar>
-                                <span className={styles.name}>{currentUser.name_cn}</span>
-                            </span>
-                        </div>
+                        </Dropdown>
                     </div>
                 </div>
             </Header>
