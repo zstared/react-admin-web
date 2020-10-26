@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import TablePage from '../../components/TablePage'
 import { Button, Input, Select, Tag, Divider, Popconfirm, Form, Modal, TreeSelect, InputNumber,Icon, message } from 'antd';
-import { formatMessage, FormattedMessage } from 'umi/locale'
+import { formatMessage, FormattedMessage } from 'umi'
 import { connect } from 'dva'
 import { formatTime } from '../../utils/utils'
 import { regTitle, regCode } from '../../utils/validate'

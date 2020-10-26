@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Layout,Icon} from 'antd'
 import className from 'classnames'
-import Link from 'umi/link'
+import {Link} from 'umi'
 import styles from './SiderMenu.less'
 import MenuBase from './SiderMenuBase';
 import logo from '../assets/react.svg'

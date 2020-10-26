@@ -10,10 +10,9 @@
     "author": "zhengxinhong",
     "license": "ISC",
     "dependencies": {
-        "@antv/data-set": "^0.10.2",
+        "@umijs/preset-react": "^1.6.14",
+        "antd": "^4.7.3",
         "axios": "^0.18.1",
-        "bizcharts": "^3.5.6",
-        "bizcharts-plugin-slider": "^2.1.1-beta.1",
         "classnames": "^2.2.6",
         "lodash-decorators": "^6.0.1",
         "mockjs": "^1.1.0",
@@ -23,11 +22,10 @@
         "react-document-title": "^2.0.3",
         "react-fittext": "^1.0.0",
         "react-viewer": "^2.11.1",
-        "umi": "^2.12.9",
-        "umi-plugin-react": "^1.14.12"
+        "umi": "^3.2.24"
     },
     "devDependencies": {
-        "cross-env": "^5.2.1",
+        "cross-env": "^7.0.2",
         "koa": "^2.11.0",
         "koa-static": "^5.0.0",
         "webpack-ant-icon-loader": "^1.0.8"

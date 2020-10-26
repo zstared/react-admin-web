@@ -1,7 +1,7 @@
 
 import { login,logout } from '../services/oauth';
 import { getPermissionList } from '../services/resource'
-import router from 'umi/router';
+import {history} from 'umi';
 import { encryptData } from '../utils/utils'
 
 let expandedKeys = []
@@ -30,7 +30,7 @@ export default {
                 const { code, data: { token } } = response;
                 if (!code) {
                     localStorage.setItem('token', token);
-                    router.push('/');
+                    history.push('/');
                     //记住密码
                     const { user_name, password, remember } = payload;
                     localStorage.setItem('user_name', remember ? user_name : '');
@@ -47,7 +47,7 @@ export default {
                 const { code } = response;
                 if (!code) {
                     localStorage.removeItem('token')
-                    // router.push('/login');
+                    // history.push('/login');
                     window.location.pathname = '/login';
                 }
             } catch (e) {

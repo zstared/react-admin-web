@@ -1,53 +1,51 @@
-import React, { PureComponent } from 'react'
-import {  FormattedMessage } from 'umi/locale'
-import { Tree, Modal,Icon } from 'antd'
-import { connect } from 'dva'
-const TreeNode = Tree.TreeNode
-import styles from './index.less'
+import React, { PureComponent } from 'react';
+import { FormattedMessage,connect } from 'umi';
+import { Tree, Modal, Icon } from 'antd';
+const TreeNode = Tree.TreeNode;
+import styles from './index.less';
 
 @connect(({ oauth, loading }) => ({
     resourceTreeData: oauth.resourceTreeData,
     defaultExpandedKeys: oauth.defaultExpandedKeys,
-    loading: loading.effects['oauth/treePermissionList']
+    loading: loading.effects['oauth/treePermissionList'],
 }))
 class Permission extends PureComponent {
-
     state = {
         expandedKeys: [],
         checkedKeys: [],
         disabledKeys: [],
         autoExpandParent: true,
-    }
+    };
 
     componentDidMount() {
         const { dispatch, triggerRef } = this.props;
-        triggerRef(this)
+        triggerRef(this);
         dispatch({
             type: 'oauth/treePermissionList',
             callback: () => {
                 const { defaultExpandedKeys } = this.props;
                 this.setState({
-                    expandedKeys: defaultExpandedKeys
-                })
-            }
-        })
+                    expandedKeys: defaultExpandedKeys,
+                });
+            },
+        });
     }
     onExpand = (expandedKeys) => {
         this.setState({
             expandedKeys,
             autoExpandParent: false,
         });
-    }
+    };
 
     onCheck = (checkedKeys) => {
         this.setState({ checkedKeys });
-    }
+    };
 
     setCheckedKeys(checkedKeys, disabledKeys = []) {
         this.setState({
             checkedKeys,
-            disabledKeys
-        })
+            disabledKeys,
+        });
     }
 
     /**保存 */
@@ -56,25 +54,32 @@ class Permission extends PureComponent {
         const checkedKeys = this.state.checkedKeys;
         let keys = checkedKeys;
         if (this.state.disabledKeys.length > 0) {
-            keys = checkedKeys.filter(key => {
-                return !this.state.disabledKeys.some(item => item == key)
-            })
+            keys = checkedKeys.filter((key) => {
+                return !this.state.disabledKeys.some((item) => item == key);
+            });
         }
-        handleSave(keys)
-    }
+        handleSave(keys);
+    };
 
-    
     /**
      * 渲染子菜单
      */
-    renderTreeNodes = data => {
+    renderTreeNodes = (data) => {
         const { disabledKeys } = this.state;
         return data.map((item) => {
             if (item.children) {
                 return (
                     <TreeNode
-                        disabled={disabledKeys.some(key => item.key == key) ? true : false}
-                        className={item.resource_type == 2 ? styles.horizontalTreeNode : null}
+                        disabled={
+                            disabledKeys.some((key) => item.key == key)
+                                ? true
+                                : false
+                        }
+                        className={
+                            item.resource_type == 2
+                                ? styles.horizontalTreeNode
+                                : null
+                        }
                         title={item.title}
                         key={item.key}
                         dataRef={item}>
@@ -82,34 +87,49 @@ class Permission extends PureComponent {
                     </TreeNode>
                 );
             }
-            return <TreeNode className={item.resource_type == 2 ? styles.horizontalTreeNode : null} {...item} />;
-        })
-    }
-
+            return (
+                <TreeNode
+                    className={
+                        item.resource_type == 2
+                            ? styles.horizontalTreeNode
+                            : null
+                    }
+                    {...item}
+                />
+            );
+        });
+    };
 
     render() {
-        const { handleModalVisible, modalVisible, resourceTreeData } = this.props;
+        const {
+            handleModalVisible,
+            modalVisible,
+            resourceTreeData,
+        } = this.props;
         return (
             <Modal
-                width="50%"
+                width='50%'
                 destroyOnClose
-                title={<span><Icon type="safety-certificate" /> <FormattedMessage id="label.permissions" /></span>}
+                title={
+                    <span>
+                        <Icon type='safety-certificate' />{' '}
+                        <FormattedMessage id='label.permissions' />
+                    </span>
+                }
                 visible={modalVisible}
                 onOk={this.handleOk}
-                onCancel={handleModalVisible}
-            >
+                onCancel={handleModalVisible}>
                 <Tree
                     checkable
                     onExpand={this.onExpand}
                     expandedKeys={this.state.expandedKeys}
                     onCheck={this.onCheck}
                     checkedKeys={this.state.checkedKeys}
-                    autoExpandParent={this.state.autoExpandParent}
-                >
+                    autoExpandParent={this.state.autoExpandParent}>
                     {this.renderTreeNodes(resourceTreeData)}
                 </Tree>
             </Modal>
-        )
+        );
     }
 }
 

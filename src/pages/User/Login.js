@@ -1,43 +1,49 @@
 import React, { PureComponent } from 'react';
 import styles from './Login.less';
-import { formatMessage,FormattedMessage } from 'umi/locale';
-import {connect} from 'dva';
-import logo from '../../assets/logo.svg'
-import banner from '../../assets/banner.svg'
-import { Row, Col, Button, Tabs, Form, Input,Checkbox,Icon } from 'antd'
+import { formatMessage, FormattedMessage } from 'umi';
+import { connect } from 'dva';
+import logo from '../../assets/logo.svg';
+import banner from '../../assets/banner.svg';
+import { Row, Col, Button, Tabs, Form, Input, Checkbox, Icon } from 'antd';
 import SelectLang from '@/components/SelectLang';
-import {decryptData} from '../../utils/utils'
+import { decryptData } from '../../utils/utils';
 const TabPane = Tabs.TabPane;
-const FormItem=Form.Item;
+const FormItem = Form.Item;
 
-
-@connect(({loading})=>({
-    submitting:loading.effects['oauth/login']
+@connect(({ loading }) => ({
+    submitting: loading.effects['oauth/login'],
 }))
 class Login extends PureComponent {
-
-    state={
-        user_name:localStorage.getItem('user_name'),
-        password:localStorage.getItem('password')?decryptData(localStorage.getItem('password'),'zhengxinhong'):''
-    }
+    state = {
+        user_name: localStorage.getItem('user_name'),
+        password: localStorage.getItem('password')
+            ? decryptData(localStorage.getItem('password'), 'zhengxinhong')
+            : '',
+    };
 
     /**
      * 登录
      */
-    login=()=>{
-        const { dispatch, form: { validateFields } } = this.props;
-        validateFields((err,values)=>{
-            if(!err){
+    login = () => {
+        const {
+            dispatch,
+            form: { validateFields },
+        } = this.props;
+        validateFields((err, values) => {
+            if (!err) {
                 dispatch({
-                    type:'oauth/login',
-                    payload:values
-                })
+                    type: 'oauth/login',
+                    payload: values,
+                });
             }
-        })
-    }
+        });
+    };
 
     render() {
-        const {submitting,form:{getFieldDecorator}}=this.props;
+        const {
+            submitting,
+            form: { getFieldDecorator },
+        } = this.props;
         return (
             <div className={styles.container}>
                 <div className={styles.header}>
@@ -59,36 +65,116 @@ class Login extends PureComponent {
                         </Col>
                         <Col span={9}>
                             <div className={styles.loginTab}>
-                                <Tabs >
-                                    <TabPane tab={formatMessage({id:'login.tab-account'})} key="1">
-                                        <Form className="login-form" ref="loginForm" >
+                                <Tabs>
+                                    <TabPane
+                                        tab={formatMessage({
+                                            id: 'login.tab-account',
+                                        })}
+                                        key='1'>
+                                        <Form
+                                            className='login-form'
+                                            ref='loginForm'>
                                             <FormItem>
-                                                {getFieldDecorator('user_name', {
-                                                    initialValue:this.state.user_name,
-                                                    rules: [{ required: true, message: formatMessage({id:'validation.username.required'}) }],
-                                                })(
-                                                    <Input size="large" prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={formatMessage({id:'login.placeholder.username'})+':admin/testA'} />
+                                                {getFieldDecorator(
+                                                    'user_name',
+                                                    {
+                                                        initialValue: this.state
+                                                            .user_name,
+                                                        rules: [
+                                                            {
+                                                                required: true,
+                                                                message: formatMessage(
+                                                                    {
+                                                                        id:
+                                                                            'validation.username.required',
+                                                                    }
+                                                                ),
+                                                            },
+                                                        ],
+                                                    }
+                                                )(
+                                                    <Input
+                                                        size='large'
+                                                        prefix={
+                                                            <Icon
+                                                                type='user'
+                                                                style={{
+                                                                    color:
+                                                                        'rgba(0,0,0,.25)',
+                                                                }}
+                                                            />
+                                                        }
+                                                        placeholder={
+                                                            formatMessage({
+                                                                id:
+                                                                    'login.placeholder.username',
+                                                            }) + ':admin/testA'
+                                                        }
+                                                    />
                                                 )}
                                             </FormItem>
                                             <FormItem>
                                                 {getFieldDecorator('password', {
-                                                    initialValue:this.state.password,
-                                                    rules: [{ required: true, message: formatMessage({id:'validation.password.required'}) }],
+                                                    initialValue: this.state
+                                                        .password,
+                                                    rules: [
+                                                        {
+                                                            required: true,
+                                                            message: formatMessage(
+                                                                {
+                                                                    id:
+                                                                        'validation.password.required',
+                                                                }
+                                                            ),
+                                                        },
+                                                    ],
                                                 })(
-                                                    <Input size="large" prefix={<Icon  type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder={formatMessage({id:'login.placeholder.password'})+':admin/abc123456'} 
-                                                    onPressEnter={this.login}/>
+                                                    <Input
+                                                        size='large'
+                                                        prefix={
+                                                            <Icon
+                                                                type='lock'
+                                                                style={{
+                                                                    color:
+                                                                        'rgba(0,0,0,.25)',
+                                                                }}
+                                                            />
+                                                        }
+                                                        type='password'
+                                                        placeholder={
+                                                            formatMessage({
+                                                                id:
+                                                                    'login.placeholder.password',
+                                                            }) +
+                                                            ':admin/abc123456'
+                                                        }
+                                                        onPressEnter={
+                                                            this.login
+                                                        }
+                                                    />
                                                 )}
                                             </FormItem>
-                                            <FormItem style={{marginBottom:'0'}}>
+                                            <FormItem
+                                                style={{ marginBottom: '0' }}>
                                                 {getFieldDecorator('remember', {
                                                     valuePropName: 'checked',
                                                     initialValue: true,
                                                 })(
-                                                    <Checkbox><FormattedMessage id="login.remember-me"></FormattedMessage></Checkbox>
+                                                    <Checkbox>
+                                                        <FormattedMessage id='login.remember-me'></FormattedMessage>
+                                                    </Checkbox>
                                                 )}
-                                                
-                                                <Button size="large" type="primary" onClick={this.login} loading={submitting} style={{width:'100%',marginTop:'10px'}}>
-                                                    <FormattedMessage id="login.btn.login"></FormattedMessage>
+
+                                                <Button
+                                                    size='large'
+                                                    type='primary'
+                                                    onClick={this.login}
+                                                    loading={submitting}
+                                                    style={{
+                                                        width: '100%',
+                                                        marginTop: '10px',
+                                                    }}>
+                                                    <FormattedMessage id='login.btn.login'></FormattedMessage>
                                                 </Button>
                                             </FormItem>
                                         </Form>
@@ -109,10 +195,15 @@ class Login extends PureComponent {
                         <a href='https://umijs.org/' target="_blank" >UmiJS</a>
                         <a href='https://www.csdn.net' target="_blank" >CSDN</a>
                     </div> */}
-                    <div className={styles.copyright}>Copyright  2018 © zhengxinhong  <a href="http://www.beian.miit.gov.cn" target="_blank" >粤ICP备19046566号</a></div>
+                    <div className={styles.copyright}>
+                        Copyright 2018 © zhengxinhong{' '}
+                        <a href='http://www.beian.miit.gov.cn' target='_blank'>
+                            粤ICP备19046566号
+                        </a>
+                    </div>
                 </div>
             </div>
-        )
+        );
     }
 }
 
