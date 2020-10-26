@@ -1,10 +1,8 @@
 import React, { PureComponent } from 'react';
 import { Layout, Avatar, Dropdown, Menu, Icon } from 'antd';
 import { FormattedMessage,history } from 'umi';
-import SelectLang from '../components/SelectLang';
-import Notification from './Notification';
 import styles from './Header.less';
-import avatar from '../assets/avatar.svg';
+import avatar from '../assets/images/logo.png';
 const { Header } = Layout;
 const MenuItem = Menu.Item;
 
