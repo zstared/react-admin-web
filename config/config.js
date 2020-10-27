@@ -21,7 +21,7 @@ export default {
     theme: {
         'primary-color': '#1890FF',
     },
-    outputPath: process.env.BUILD_TYPE == 'docs' ? './docs' : './dist',
+    outputPath: process.env.BUILD_TYPE == 'mes' ? './mes' : './dist',
 
     lessLoader: { javascriptEnabled: true },
     //配置图片文件是否走 base64 编译的阈值。默认是 10000 字节，少于他会被编译为 base64 编码，否则会生成单独的文件

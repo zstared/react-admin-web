@@ -5,7 +5,7 @@
     "scripts": {
         "dev": "cross-env NODE_ENV=production umi dev",
         "build": "cross-env NODE_ENV=production BUILD_TYPE=build umi build",
-        "build:docs": "cross-env NODE_ENV=production BUILD_TYPE=docs umi build"
+        "build:mes": "cross-env NODE_ENV=production BUILD_TYPE=mes umi build"
     },
     "author": "zhengxinhong",
     "license": "ISC",
