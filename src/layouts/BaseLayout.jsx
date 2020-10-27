@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Menu, Breadcrumb, Dropdown, Avatar, Icon } from 'antd';
 import styled from 'styled-components';
-import { UserOutlined, SettingOutlined, AppstoreOutlined, HomeOutlined } from '@ant-design/icons';
+import { UserOutlined, SettingOutlined, AppstoreOutlined, HomeOutlined ,LogoutOutlined} from '@ant-design/icons';
 import { Link } from 'umi';
 
 import logo from '../assets/images/logo.png'
@@ -122,10 +122,10 @@ const BaseLayout = ({ children }) => {
             code: 'system',
             icon: <SettingOutlined />,
             children: [
-                { name: "用户管理", code: "user", path: "/system/user" },
-                { name: "角色管理", code: "role", path: "/system/role" },
-                { name: "资源管理", code: "resource", path: "/system/resource" },
-                { name: "日志管理", code: "log", path: "/system/log" },
+                { name: "权限管理", code: "user", path: "/system/user" },
+                // { name: "角色管理", code: "role", path: "/system/role" },
+                // { name: "资源管理", code: "resource", path: "/system/resource" },
+                 { name: "操作日志", code: "log", path: "/system/log" },
             ]
         },
     ]
@@ -191,9 +191,13 @@ const BaseLayout = ({ children }) => {
 
                             </Breadcrumb>
                             <div>
-                                <Dropdown overlay={userMenu} className=''>
-                                    <Avatar style={{ backgroundColor: '#1890ff' }} icon={<UserOutlined />} />
-                                </Dropdown>
+                                {/* <Dropdown overlay={userMenu} className=''>
+                                    <Avatar size="small" icon={<UserOutlined />} />
+                                </Dropdown> */}
+                                
+                                <span style={{marginRight:'16px'}}> <UserOutlined /></span>
+
+                                <LogoutOutlined />
                             </div>
                         </div>
                     </Header>

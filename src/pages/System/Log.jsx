@@ -1,9 +1,8 @@
-
 import React from 'react'
 import Mock from 'mockjs';
 import { Table, Badge, Menu, Dropdown, Icon, Card, Form, Input, DatePicker, Button, Row, Col } from 'antd';
 import styled from 'styled-components'
-
+import { SearchOutlined, SafetyCertificateOutlined } from '@ant-design/icons'
 const Wrapper = styled.div`
    .search{
        background:#fff;
@@ -17,31 +16,24 @@ const Wrapper = styled.div`
    }
 `
 
-const Inventory = () => {
+const Log = () => {
 
-    
+
     let columns = [
-        { title: '仓库', dataIndex: 'Field1', key: 'Field1', width: 150, fixed: 'left' },
-        { title: '仓位', dataIndex: 'Field2', key: 'Field2', width: 150, fixed: 'left' },
-        { title: '安全库存数量', dataIndex: 'Field3', key: 'Field3', width: 150 },
-        { title: '预计入库量', dataIndex: 'Field4', key: 'Field4', width: 150 },
-        { title: '即时库存量', dataIndex: 'Field5', key: 'Field5', width: 150 },
-        { title: '需采购数', dataIndex: 'Field6', key: 'Field6', width: 150 },
-        { title: '供应商', dataIndex: 'Field7', key: 'Field7', width: 150 },
-
-    ];
+        { title: '操作类型', dataIndex: 'Field1', key: 'Field1', width: 150, fixed: 'left' },
+        { title: '操作内容', dataIndex: 'Field2', key: 'Field2', width: 150, fixed: 'left' },
+        { title: '操作人', dataIndex: 'Field3', key: 'Field3', width: 150 },
+        { title: '操作时间', dataIndex: 'Field4', key: 'Field4', width: 150 }
+      ]
 
     const data = [];
-    for (let i = 0; i < 10; ++i) {
+    for (let i = 0; i < 100; ++i) {
         data.push(Mock.mock({
             key: i,
             Field1: '@string("number", 10)',
-            Field2: '@string("number", 4)',
-            Field3: '@integer(60,200)',
-            Field4: '@integer(60,200)',
-            Field5: '@integer(60,200)',
-            Field6: '@integer(60,200)',
-            Field7: '@string("upper", 6, 6)',
+            Field2: '@sentence(3, 5)',
+            Field3:'@cname',
+            Field4:'@datetime',
         }));
 
     }
@@ -51,18 +43,12 @@ const Inventory = () => {
 
                 <Row style={{ width: '100%' }}>
                     <Col span={20}>
-                        {/* <Form layout="inline" >
-                            <Form.Item label="安全库存">
+                        <Form layout="inline" >
+                            <Form.Item label="操作内容">
                                 <Input placeholder="请输入" />
                             </Form.Item>
-                            <Form.Item label="交货日期">
-                                <DatePicker />
-                            </Form.Item>
                             <Button icon={<SearchOutlined />} type="primary">查询</Button>
-                        </Form> */}
-                    </Col>
-                    <Col span={4} style={{ textAlign: 'right' }}>
-                        <Button  type="primary"> 生成采购订单 </Button>
+                        </Form>
                     </Col>
                 </Row>
 
@@ -86,5 +72,6 @@ const Inventory = () => {
     );
 }
 
-export default Inventory;
+export default Log;
+
 
