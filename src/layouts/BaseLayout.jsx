@@ -10,12 +10,12 @@ const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu
 
 const Wrapper = styled.div`
-
+  height:100%;
   .content{
     display: flex;
     flex: auto;
     flex-direction: column;
-    min-height: 0;
+    min-height: 100%;
     background: #f0f2f5;
     overflow-x:hidden;
 
@@ -35,7 +35,10 @@ const Wrapper = styled.div`
         padding: 0 16px;
         background: #fff;
         box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-    }
+	}
+	.main{
+		flex:auto;
+	}
   }
 }
 
@@ -145,7 +148,7 @@ const BaseLayout = ({ children }) => {
 
     return (
         <Wrapper>
-            <Layout>
+            <Layout style={{minHeight:'100%'}}>
                 <Sider
                     collapsible
                     className="sider"
@@ -159,7 +162,7 @@ const BaseLayout = ({ children }) => {
                     <Menu theme="dark" mode="inline" style={{ width: '100%' }} onClick={handleMenuItemClick}>
                         {
                             menus.map(item => {
-                                return <SubMenu key={item.code} icon={<AppstoreOutlined />} title={item.name}>
+                                return <SubMenu key={item.code} icon={item.icon} title={item.name}>
                                     {
                                         item.children.map(child => {
                                             return <Menu.Item key={child.code}> <Link to={child.path}>{child.name}</Link></Menu.Item>
@@ -181,8 +184,8 @@ const BaseLayout = ({ children }) => {
                                     </Link>
                                 </Breadcrumb.Item> : null}
                                 {
-                                    breadcrumb.map(bread => (
-                                        <Breadcrumb.Item>{bread}</Breadcrumb.Item>
+                                    breadcrumb.map((bread,index) => (
+                                        <Breadcrumb.Item key={index}>{bread}</Breadcrumb.Item>
                                     ))
                                 }
 
@@ -194,7 +197,7 @@ const BaseLayout = ({ children }) => {
                             </div>
                         </div>
                     </Header>
-                    <Content>{children}</Content>
+                    <Content className="main">{children}</Content>
                 </Layout>
             </Layout>
         </Wrapper>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table, Badge, Menu, Dropdown, Icon } from 'antd';
+import Mock from 'mockjs';
 
 const Order = () => {
     const menu = (
@@ -102,11 +103,19 @@ const Order = () => {
             creator: 'Jack',
             createdAt: '2014-12-24 23:12:00',
         });
+        Mock.mock({
+            FOrderNo:'@string("number", 10)',
+            'FOrderStatus|1':['待生产','生产中','已完成'],
+            FMaterialNo:'@string("upper", 6, 6)',
+            FMaterialName:'',
+            FProductType:'',
+            createdAt:'',
+            FOrderQty:'',
+        })
     }
 
     return (
         <Table
-            className='components-table-demo-nested'
             columns={columns}
             expandedRowRender={expandedRowRender}
             dataSource={data}
