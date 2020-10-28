@@ -189,7 +189,7 @@ const Order = () => {
                 columns={columns}
                 dataSource={data}
                 scroll={{ x:'max-content'}}
-                 
+                bordered
                 pagination={{
                     pageSize: 15,
                 }} />;
@@ -205,11 +205,11 @@ const Order = () => {
                 width: 150,
                 render: (text) => {
                     if (text == "待生产") {
-                        return <>< Badge status='default' /> {text}</>
+                        return <React.Fragment>< Badge status='default' /> {text}</React.Fragment>
                     } else if (text == "生产中") {
-                        return <> < Badge status='processing' />{text}</>
+                        return <React.Fragment> < Badge status='processing' />{text}</React.Fragment>
                     } else {
-                        return <>< Badge status='success' />{text}</>
+                        return <React.Fragment>< Badge status='success' />{text}</React.Fragment>
                     }
                 }
             },
@@ -288,6 +288,7 @@ const Order = () => {
                 </Row>
             )
         }}
+            bordered
             size="small"
             columns={columns}
             dataSource={data}
@@ -309,11 +310,11 @@ const Order = () => {
             title: '订单状态', dataIndex: 'FOrderStatus', key: 'FOrderStatus', width: 150, fixed: 'left',
             render: (text) => {
                 if (text == "待生产") {
-                    return <>< Badge status='default' /> {text}</>
+                    return <React.Fragment>< Badge status='default' /> {text}</React.Fragment>
                 } else if (text == "生产中") {
-                    return <> < Badge status='processing' />{text}</>
+                    return <React.Fragment> < Badge status='processing' />{text}</React.Fragment>
                 } else {
-                    return <>< Badge status='success' />{text}</>
+                    return <React.Fragment>< Badge status='success' />{text}</React.Fragment>
                 }
             }
 
