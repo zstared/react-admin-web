@@ -14,6 +14,7 @@ export default [
                     //                 { path: '/system/role', component: './System/Role' },
                     //                 { path: '/system/menu', component: './System/Menu' },
                     //                 { path: '/system/resource', component: './System/Resource' },
+                    { path: '/system/table', component: './System/TableColumn' },
                     { path: '/system/log', component: './System/Log' },
                     
                 ]

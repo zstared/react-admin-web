@@ -420,7 +420,7 @@ const Order = () => {
             </div>
             <div className="table">
                 <Table
-                                 components={components}
+                    components={components}
                     size="small"
                     columns={columns}
                     expandedRowRender={expandedRowRender}

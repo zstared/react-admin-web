@@ -42,13 +42,12 @@ const Login = ({ dispatch, submitting }) => {
             type: 'oauth/login',
             payload: values,
         });
-	};
-
+    };
 
     return (
         <Wrapper>
             <div className='header'>
-                <span className='title'>生产管理系统</span>
+                <span className='title'>后台管理系统</span>
             </div>
             <Form className='login-form' onFinish={onFinish}>
                 <Form.Item
