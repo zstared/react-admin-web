@@ -115,14 +115,19 @@ const BaseLayout = ({ children }) => {
             icon: <AppstoreOutlined />,
             children: [
                 {
-                    name: '订单任务采购',
-                    code: 'order',
-                    path: '/production/order',
+                    name: '生产供应链协同',
+                    code: 'supplyChainCoordination',
+                    path: '/production/supply-chain-coordination',
                 },
                 {
-                    name: '库存安全',
+                    name: '库存管理',
                     code: 'inventory',
                     path: '/production/inventory',
+				},
+				{
+                    name: '安全库存预警',
+                    code: 'inventoryWarning',
+                    path: '/production/inventory-warning',
                 },
                 {
                     name: '投料单生成采购',
