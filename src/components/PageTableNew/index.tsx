@@ -17,9 +17,10 @@ export const QueryItem: React.FC<IQueryItem> = ({children}) => {
 
 interface ITablePageProps {
     tableCode: string;
-    columns: [];
+    tableColumns: [];
     queryItem: IQueryItem[];
     buttons: React.ReactNode;
+    
 }
 
 const Wrapper = styled.div`
@@ -39,6 +40,9 @@ const Wrapper = styled.div`
 `;
 
 export const TablePage: React.FC<ITablePageProps> = (props) => {
+
+    const {tableCode,tableColumns,buttons}=props;
+
     const [loading, setLoading] = useState(true);
     const [columns, setColumns] = useState([]);
     const [data, setData] = useState([]);
@@ -77,7 +81,6 @@ export const TablePage: React.FC<ITablePageProps> = (props) => {
         });
         if (code == 0) {
             const { columns } = data;
-
             setColumns(columns);
         }
         setLoading(false);
@@ -98,7 +101,11 @@ export const TablePage: React.FC<ITablePageProps> = (props) => {
     useEffect(() => {
         initQuery();
         const init = async () => {
-            await initTable();
+            if(props.tableCode){
+                await initTable();
+            }else{
+                setColumns(tableColumns)
+            }
         };
         init();
     }, []);
