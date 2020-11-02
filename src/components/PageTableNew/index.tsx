@@ -11,7 +11,9 @@ interface IQueryItem {
     name: string;
 }
 
-export const QueryItem: React.FC<IQueryItem> = () => {};
+export const QueryItem: React.FC<IQueryItem> = ({children}) => {
+	return <>{children}</>
+};
 
 interface ITablePageProps {
     tableCode: string;
@@ -121,27 +123,21 @@ export const TablePage: React.FC<ITablePageProps> = (props) => {
                                         style={{ marginLeft: 8 }}>
                                         重置
                                     </Button>
-                                    {itemMore.length > 0 ? (
-                                        <a
-                                            style={{ marginLeft: 8 }}
-                                            onClick={handleExpand}>
-                                            {expand ? (
-                                                <span>
-                                                    <DownOutLined />
-                                                </span>
-                                            ) : (
-                                                <span>
-                                                    <UpOutLined />
-                                                </span>
-                                            )}
-                                        </a>
-                                    ) : null}
+									{
+									// itemMore.length > 0 ? (
+                                    //     <a
+                                    //         style={{ marginLeft: 8 }}
+                                    //         onClick={handleExpand}>
+                                    //         {expand ? <DownOutLined />: <UpOutLined />}
+                                    //     </a>
+                                    // ) : null
+									}
                                 </FormItem>
                             </Col>
                         ) : null}
                         <Col
                             span={6}
-                            offset={12}
+                            offset={24-(itemBase.length*6+12)}
                             style={{ textAlign: 'right' }}>
                             <FormItem>{props.buttons}</FormItem>
                         </Col>

@@ -10,6 +10,12 @@ const TableColumn = () => {
             <QueryItem label='名称' name='name'>
                 <Input placeholder='请输入'></Input>
             </QueryItem>
+            <QueryItem label='名称' name='name'>
+                <Input placeholder='请输入'></Input>
+            </QueryItem>
+            <QueryItem label='名称' name='name'>
+                <Input placeholder='请输入'></Input>
+            </QueryItem>
         </TablePage>
     );
 };
