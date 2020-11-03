@@ -10,6 +10,7 @@ export default {
         /**获取表格列表 */
         *getList({ payload }, { call, put }) {
             try {
+                console.log('getList:',payload)
                 const { code, data } = yield call(getList, payload);
                 if (!code) {
                     yield put({
@@ -78,7 +79,7 @@ export default {
         setData(state, { payload }) {
             return {
                 ...state,
-                data: { ...payload.data },
+                data: payload.data ,
                 params: { ...payload.params }
             }
         },

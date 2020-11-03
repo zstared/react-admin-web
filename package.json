@@ -26,6 +26,7 @@
         "react-redux": "^7.2.1",
         "react-viewer": "^2.11.1",
         "redux": "^4.0.5",
+        "redux-logger": "^3.0.6",
         "styled-components": "^5.2.0",
         "umi": "^3.2.24"
     },

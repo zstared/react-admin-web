@@ -25,7 +25,7 @@ export default {
     lessLoader: { javascriptEnabled: true },
     //配置图片文件是否走 base64 编译的阈值。默认是 10000 字节，少于他会被编译为 base64 编码，否则会生成单独的文件
     inlineLimit: 10000,
-    favicon:'/favicon.ico',
+    favicon: '/favicon.ico',
     define: {
         'process.env':
             process.env.NODE_ENV == 'production'

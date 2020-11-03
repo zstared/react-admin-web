@@ -6,8 +6,13 @@ export async function getList(params) {
 }
 
 /**获取表格字段列表 */
-export async function getColumns(params) {
+export async function getTableAndColumns(params) {
     return await request.get('/core/table/columns', params)
+}
+
+/**获取表格字段列表 */
+export async function getTableColumns(params) {
+    return await request.get('/core/table/tableColumns', params)
 }
 
 /**创建表格字段 */
