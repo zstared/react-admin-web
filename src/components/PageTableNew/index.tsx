@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Table, Form, Col, Row, Button } from 'antd';
 import { ConnectProps, connect, Dispatch } from 'umi';
+import { DndProvider, useDrag, useDrop, createDndContext } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import update from 'immutability-helper';
 import {
     CaretUpOutlined,
     CaretDownOutlined,
@@ -22,7 +25,9 @@ interface ITablePageProps extends ConnectProps {
     loading: boolean;
     rowKey?: string;
     expandable?: object;
-    bordered:boolean,
+    bordered: boolean;
+    draggabled: boolean;
+    onDraggabed: Function;
 }
 
 const Wrapper = styled.div`
@@ -39,7 +44,61 @@ const Wrapper = styled.div`
             flex: 1;
         }
     }
+    tr.drop-over-downward td {
+        border-bottom: 2px dashed #1890ff;
+    }
+
+    tr.drop-over-upward td {
+        border-top: 2px dashed #1890ff;
+    }
 `;
+
+//拖拽 排序
+const RNDContext = createDndContext(HTML5Backend);
+const type = 'DragableBodyRow';
+const DragableBodyRow = ({
+    index,
+    moveRow,
+    className,
+    style,
+    ...restProps
+}) => {
+    const ref = React.useRef();
+    const [{ isOver, dropClassName }, drop] = useDrop({
+        accept: type,
+        collect: (monitor) => {
+            const { index: dragIndex } = monitor.getItem() || {};
+            if (dragIndex === index) {
+                return {};
+            }
+            return {
+                isOver: monitor.isOver(),
+                dropClassName:
+                    dragIndex < index
+                        ? ' drop-over-downward'
+                        : ' drop-over-upward',
+            };
+        },
+        drop: (item) => {
+            moveRow(item.index, index);
+        },
+    });
+    const [, drag] = useDrag({
+        item: { type, index },
+        collect: (monitor) => ({
+            isDragging: monitor.isDragging(),
+        }),
+    });
+    drop(drag(ref));
+    return (
+        <tr
+            ref={ref}
+            className={`${className}${isOver ? dropClassName : ''}`}
+            style={{ cursor: 'move', ...style }}
+            {...restProps}
+        />
+    );
+};
 
 const TablePage: React.FC<ITablePageProps> = (props) => {
     const {
@@ -53,7 +112,9 @@ const TablePage: React.FC<ITablePageProps> = (props) => {
         loading,
         rowKey,
         expandable,
-        bordered
+        bordered,
+        draggabled,
+        onDraggabed,
     } = props;
     const [form] = Form.useForm();
 
@@ -149,8 +210,90 @@ const TablePage: React.FC<ITablePageProps> = (props) => {
         console.log('handleExpand');
     };
 
-    console.log(data);
+    //移动 排序
+    const moveRow = useCallback(
+        (dragIndex, hoverIndex) => {
+            const rows = data.rows ? data.rows : data;
+            console.log(
+                dragIndex,
+                hoverIndex,
+                data,
+                rows,
+                rows[dragIndex],
+                rows[hoverIndex]
+            );
+            const drag_row = rows[dragIndex];
+            const hover_row = rows[hoverIndex];
+            if (onDraggabed) onDraggabed(drag_row, hover_row,dragIndex,hoverIndex);
+        },
+        [data]
+    );
 
+    const manager = useRef(RNDContext);
+
+    //渲染表格
+    const renderTable = () => {
+        const attrs = {
+            rowKey: rowKey,
+            loading: loading,
+            dataSource: data.rows ? data.rows : data,
+            columns: columns,
+            onChange: handleChange,
+            scroll: { x: 'max-content' },
+            size: 'small',
+            expandable: { ...expandable },
+            bordered: bordered,
+            pagination: data.rows
+                ? {
+                      showSizeChanger: true,
+                      showQuickJumper: true,
+                      showTotal: (total) => `共 ${total} 条记录`,
+                      pageSizeOptions: ['10', '20', '50', '100'],
+                      total: data.count,
+                      current: data.page_index,
+                      pageSize: data.page_size,
+                  }
+                : false,
+        };
+        if (draggabled) {
+            attrs.components = {
+                body: {
+                    row: DragableBodyRow,
+                },
+            };
+            attrs.onRow = (record, index) => ({
+                index,
+                moveRow,
+            });
+        }
+        return (
+            <Table
+                {...attrs}
+                // rowKey={rowKey}
+                // loading={loading}
+                // dataSource={data.rows ? data.rows : data}
+                // columns={columns}
+                // onChange={handleChange}
+                // scroll={{ x: 'max-content' }}
+                // size='small'
+                // expandable={{ ...expandable }}
+                // bordered={bordered}
+                // pagination={
+                //     data.rows
+                //         ? {
+                //               showSizeChanger: true,
+                //               showQuickJumper: true,
+                //               showTotal: (total) => `共 ${total} 条记录`,
+                //               pageSizeOptions: ['10', '20', '50', '100'],
+                //               total: data.count,
+                //               current: data.page_index,
+                //               pageSize: data.page_size,
+                //           }
+                //         : false
+                // }
+            ></Table>
+        );
+    };
     return (
         <Wrapper>
             {buttons || querys ? (
@@ -198,29 +341,13 @@ const TablePage: React.FC<ITablePageProps> = (props) => {
                     </Form>
                 </header>
             ) : null}
-            <Table
-                rowKey={rowKey}
-                loading={loading}
-                dataSource={data.rows ? data.rows : data}
-                columns={columns}
-                onChange={handleChange}
-                scroll={{ x: 'max-content' }}
-                size='small'
-                expandable={{ ...expandable }}
-                bordered={bordered}
-                pagination={
-                    data.rows
-                        ? {
-                              showSizeChanger: true,
-                              showQuickJumper: true,
-                              showTotal: (total) => `共 ${total} 条记录`,
-                              pageSizeOptions: ['10', '20', '50', '100'],
-                              total: data.count,
-                              current: data.page_index,
-                              pageSize: data.page_size,
-                          }
-                        : false
-                }></Table>
+            {draggabled ? (
+                <DndProvider manager={manager.current.dragDropManager}>
+                    {renderTable()}
+                </DndProvider>
+            ) : (
+                renderTable()
+            )}
         </Wrapper>
     );
 };
